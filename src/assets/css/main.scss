@@ -1,0 +1,47 @@
+/* tailwind样式 */
+@tailwind base;
+
+@tailwind components;
+
+@layer components {
+}
+
+@tailwind utilities;
+
+/* 全局样式 */
+body {
+  line-height: 1.5;
+  font-size: 0.875rem; //14px
+  color: var(--cp-text1);
+  margin: 0 auto;
+}
+
+:root:root {
+  --cp-primary: #166fe5;
+  --cp-plain: #eaf8f6;
+  --cp-orange: #fca21c;
+  --cp-text1: #121826;
+  --cp-text2: #3c3e42;
+  --cp-text3: #6f6f6f;
+  --cp-tag: #848484;
+  --cp-dark: #979797;
+  --cp-tip: #c3c3c5;
+  --cp-disable: #d9dbde;
+  --cp-line: #ededed;
+  --cp-bg: #f6f7f9;
+  --cp-price: #eb5757;
+  // 覆盖vant的变量
+  --van-primary-color: var(--cp-primary);
+  --van-nav-bar-height:3.25rem;
+  --van-nav-bar-text-color:var(--cp-plain);
+  // 单元格上下间距
+  --van-cell-group-inset-radius:1rem;
+  --van-padding-base:0.75rem;
+  --van-nav-bar-icon-color:#323233;
+  
+
+}
+
+#nprogress .bar {
+  // background-color: var(--cp-price);
+}
