@@ -6,22 +6,20 @@ import { useRouter } from "vue-router";
 import { usernameRules, passwordRules } from "@/utils/rules";
 const userStore = useUserStore();
 const router = useRouter();
-const form = ref();
-const username = ref("");
-const password = ref("");
+const username = ref("test123");
+const password = ref("test123");
 const onSubmit = async () => {
-  //提交的时候再次验证
-  form.value.validate();
-  showLoadingToast({
-    message: "loading...",
-    forbidClick: true,
-    duration: -1,
-  });
-  await loginApi(username.value, password.value).then((res) => {
-    userStore.setUser(res.data);
-    router.push("/");
-    closeToast();
-  });
+  // showLoadingToast({
+  //   message: "loading...",
+  //   forbidClick: true,
+  //   duration: -1,
+  // });
+  router.push("/");
+  // await loginApi(username.value, password.value).then((res) => {
+  //   userStore.setUser(res.data);
+  //   router.push("/");
+  //   closeToast();
+  // });
 };
 </script>
 
@@ -54,7 +52,13 @@ const onSubmit = async () => {
           />
         </van-cell-group>
         <div class="pt-12">
-          <van-button native-type="submit" block round type="primary">
+          <van-button
+            native-type="submit"
+            block
+            round
+            type="primary"
+            @click="onSubmit()"
+          >
             <span class="font-[600] text-base">登录</span>
           </van-button>
         </div>

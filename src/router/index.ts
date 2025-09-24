@@ -17,6 +17,11 @@ const router = createRouter({
       meta: { title: "广告中心" },
     },
     {
+      path: "/news", // 文章
+      component: () => import("@/views/home/news.vue"),
+      meta: { title: "文章详情" },
+    },
+    {
       path: "/login", // 登录
       component: () => import("@/views/login/login.vue"),
       meta: { title: t("routes.login") },
@@ -71,6 +76,11 @@ const router = createRouter({
       component: () => import("@/views/user/bindCard.vue"),
       meta: { title: "设置" },
     },
+    {
+      path: "/coupons", // 优惠券
+      component: () => import("@/views/user/coupons.vue"),
+      meta: { title: "优惠券" },
+    },
   ],
 });
 
@@ -80,7 +90,7 @@ router.beforeEach((to) => {
   const notLogin = ["/login", "/register"];
   const userStore = useUserStore();
   if (!notLogin.includes(to.path) && !userStore.user?.token) {
-    return "/login";
+    // return "/login";
   }
 });
 

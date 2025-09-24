@@ -162,7 +162,7 @@ const copy = () => {
     </div>
   </div>
   <div class="tab-bar">
-    <div class="tab-bar-item">
+    <div class="tab-bar-item" @click="$router.push('coupons')">
       <CpSvg name="discount-shape" size="5vw"></CpSvg>
       <div class="name">优惠卷</div>
     </div>
@@ -181,7 +181,7 @@ const copy = () => {
     <div class="section-title">常见问题</div>
     <div class="question-list">
       <!---->
-      <div class="question-item">
+      <div class="question-item" @click="$router.push('news')">
         <div class="name">What is The 7 Star's Advertising Solution?</div>
         <van-icon name="arrow" />
       </div>

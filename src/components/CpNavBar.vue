@@ -45,7 +45,8 @@ const loginOut = () => {
     message: "确定要退出登录吗？",
   }).then(async () => {
     // on confirm
-    await loginOutApi();
+    // await loginOutApi();
+    router.push("login");
   });
 };
 </script>
