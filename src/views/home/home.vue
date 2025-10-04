@@ -98,7 +98,7 @@ onMounted(async () => {
   <div class="banner-wrap">
     <div class="banner" @click="$router.push('market')">
       <img
-        src="/src/assets/img/banner1-D_iNypES.png"
+        src="@/assets/img/banner1-D_iNypES.png"
         alt="Plan To Launch In Plaza"
         class="banner-image"
       />
@@ -109,7 +109,7 @@ onMounted(async () => {
     </div>
     <div class="banner" @click="$router.push('order')">
       <img
-        src="/src/assets/img/banner2-FQGNIWdl.png"
+        src="@/assets/img/banner2-FQGNIWdl.png"
         alt="Plan Management	"
         class="banner-image"
       />

@@ -15,9 +15,6 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     VanButton: typeof import('vant/es')['Button']
     VanCellGroup: typeof import('vant/es')['CellGroup']
-    VanCheckbox: typeof import('vant/es')['Checkbox']
-    VanDropdownItem: typeof import('vant/es')['DropdownItem']
-    VanDropdownMenu: typeof import('vant/es')['DropdownMenu']
     VanEmpty: typeof import('vant/es')['Empty']
     VanField: typeof import('vant/es')['Field']
     VanForm: typeof import('vant/es')['Form']
@@ -30,12 +27,8 @@ declare module 'vue' {
     VanPasswordInput: typeof import('vant/es')['PasswordInput']
     VanPicker: typeof import('vant/es')['Picker']
     VanPopup: typeof import('vant/es')['Popup']
-    VanProgress: typeof import('vant/es')['Progress']
     VanPullRefresh: typeof import('vant/es')['PullRefresh']
-    VanSwipe: typeof import('vant/es')['Swipe']
-    VanSwipeItem: typeof import('vant/es')['SwipeItem']
     VanTab: typeof import('vant/es')['Tab']
     VanTabs: typeof import('vant/es')['Tabs']
-    VanTag: typeof import('vant/es')['Tag']
   }
 }

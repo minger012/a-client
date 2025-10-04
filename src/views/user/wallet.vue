@@ -345,7 +345,7 @@ onMounted(async () => {
       <img
         class="banner"
         width="343"
-        src="/src/assets/img/recharge-banner-Bkr9lTMK.png"
+        src="@/assets/img/recharge-banner-Bkr9lTMK.png"
         alt=""
       />
       <p class="text">由于不同国家货币承兑问题</p>

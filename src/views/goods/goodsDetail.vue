@@ -85,7 +85,7 @@ onMounted(() => {
     display: flex;
     align-items: center;
     flex-direction: column;
-    background: url(/src/assets/img/goods-detail-header-bg-BbrPUqL6.png)
+    background: url(../../assets/img/goods-detail-header-bg-BbrPUqL6.png)
       no-repeat;
     padding: 6.66667vw 6.41026vw;
     padding-top: calc(constant(safe-area-inset-top) + 20vw);

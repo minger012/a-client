@@ -7,9 +7,9 @@ import Components from "unplugin-vue-components/vite";
 import { VantResolver } from "@vant/auto-import-resolver";
 
 // https://vite.dev/config/
-export default defineConfig(({ command }) => {
+export default defineConfig(() => {
   return {
-    base: "/",
+    base: process.env.VITE_APP_BASE || "/",
     plugins: [
       vue(),
       //vant自动加载
@@ -31,12 +31,12 @@ export default defineConfig(({ command }) => {
       host: "0.0.0.0",
       proxy: {
         "/home": {
-          // target: "http://107.148.41.97:12123",
-          target: "http://127.0.0.1:8000",
+          target: "http://137.175.102.158:3001",
+          //target: "http://127.0.0.1:8000",
           changeOrigin: true,
         },
         "/upload": {
-          target: "http://107.148.41.97:12123",
+          target: "http://137.175.102.158:3001",
           changeOrigin: true,
         },
       },
