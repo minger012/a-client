@@ -1,12 +1,68 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { useNumber, useTime } from "@/composables/common";
+import {
+  getCouponListApi,
+  getUserInfoApi,
+  planOrderAddApi,
+} from "@/services/api";
+import { onMounted, ref, watch } from "vue";
+const number = useNumber();
+const time = useTime();
+// 下单
+const money = ref("");
+const cd = ref("");
+const plan_id = ref("");
+const pay_password = ref("");
+const disabled = ref(true);
+// 支付密码
+watch(pay_password, (newVal) => {
+  // 限制只能输入数字且最多6位
+  pay_password.value = newVal.replace(/[^\d]/g, "").slice(0, 6);
+  if (pay_password.value.length == 6) {
+    disabled.value = false;
+  } else {
+    disabled.value = true;
+  }
+});
+// 下单
+const orderAdd = async () => {
+  showBottom2.value = false;
+  showLoadingToast({
+    message: "loading...",
+    forbidClick: true,
+    duration: -1,
+  });
+  await planOrderAddApi(
+    plan_id.value,
+    money.value,
+    pay_password.value,
+    cd.value,
+    checkCouponData.value?.id || ""
+  ).then((res) => {
+    showBottom.value = false;
+    money.value = "";
+    cd.value = "";
+    pay_password.value = "";
+    showSuccessToast(res.msg);
+    getUserInfo();
+  });
+};
+// 玩家信息
+const userInfo = ref();
+const getUserInfo = async () => {
+  await getUserInfoApi().then((res) => {
+    userInfo.value = res.data;
+  });
+};
 // 定义传参
-const params = ref<{}>({
+const params = ref<PageParams>({
   page: 0,
   pageSize: 10,
 });
 // 弹出层-下单
 const showBottom = ref(false);
+const showBottom2 = ref(false);
+const showBottom3 = ref(false);
 // 弹出层-优惠券
 const showCoupon = ref(false);
 const tabsActive = ref(0);
@@ -20,17 +76,128 @@ const onLoad = async () => {
   }
   loading.value = true;
   params.value.page++;
-  if (params.value.page >= 11) {
-    finished.value = true;
+  await getCouponListApi(params.value, tabsActive.value)
+    .then((res) => {
+      CouponList.value.push(...res.data.list);
+      if (params.value.page >= res.data.total_page) {
+        finished.value = true;
+      }
+      loading.value = false;
+    })
+    .catch(() => {
+      loading.value = false;
+    });
+};
+// 下拉刷新
+const refreshing = ref(false);
+const onRefresh = async () => {
+  params.value.page = 1;
+  await getCouponListApi(params.value, tabsActive.value)
+    .then((res) => {
+      CouponList.value = res.data.list;
+      refreshing.value = false;
+    })
+    .catch(() => {
+      refreshing.value = false;
+    });
+};
+watch(tabsActive, async (newVal) => {
+  params.value.page = 1;
+  CouponList.value = [];
+  refreshing.value = true;
+  await getCouponListApi(params.value, newVal)
+    .then((res) => {
+      CouponList.value = res.data.list;
+      refreshing.value = false;
+    })
+    .catch(() => {
+      refreshing.value = false;
+    });
+});
+// 选择优惠券
+const checkCouponData = ref();
+const checkCoupon = (detail: any) => {
+  if (detail.state != 1) {
+    return;
   }
-  loading.value = false;
+  showCoupon.value = false;
+  checkCouponData.value = detail;
+};
+let couponTypeName = {
+  1: "增值",
+  2: "抵扣",
+  3: "团队",
+  4: "自定义",
+  5: "固定金额",
+};
+let stateName = {
+  1: "未使用",
+  2: "已使用",
+  3: "已过期",
 };
 // 暴露变量和方法给父组件
 defineExpose({
   showBottom,
+  showBottom3,
+  plan_id,
+});
+onMounted(async () => {
+  getUserInfo();
 });
 </script>
 <template>
+  <van-popup
+    v-model:show="showBottom3"
+    round
+    closeable
+    position="bottom"
+    :style="{ height: '55%' }"
+  >
+    <div class="dialog-wrap">
+      <div class="dialog-title">投放金额</div>
+      <div class="form-wrap">
+        <div class="input-wrap">
+          <span class="label">$</span>
+          <div class="van-cell van-field">
+            <!----><!---->
+            <div class="van-cell__value van-field__value">
+              <div class="van-field__body">
+                <input
+                  type="text"
+                  id="van-field-8-input"
+                  class="van-field__control"
+                  placeholder="1.00 ~ 2.00"
+                  data-allow-mismatch="attribute"
+                  v-model="money"
+                /><!----><!----><!---->
+              </div>
+              <!----><!---->
+            </div>
+            <!----><!---->
+          </div>
+        </div>
+        <div class="form-tips">
+          <span class="count-money"
+            >可用余额 ${{ number.formatMoney(userInfo.money) }}</span
+          ><span class="all-text" @click="money = userInfo.money">全部</span>
+        </div>
+        <div class="coupon-item" @click="showCoupon = true">
+          <span class="title">优惠卷 </span>
+          <div class="status">
+            <span class="status-text">
+              {{ checkCouponData?.name || "未使用" }}
+            </span>
+            <van-icon name="arrow" />
+          </div>
+        </div>
+      </div>
+      <div class="mt-6">
+        <van-button block round type="primary" @click="showBottom2 = true">
+          <span class="font-[600] text-base">实时投放</span>
+        </van-button>
+      </div>
+    </div>
+  </van-popup>
   <van-popup
     v-model:show="showBottom"
     round
@@ -48,7 +215,9 @@ defineExpose({
           <div class="summary-info">
             <div class="summary-item">
               <span class="label compact">可用余额: </span
-              ><span class="value">$139</span>
+              ><span class="value"
+                >${{ number.formatMoney(userInfo.money) }}</span
+              >
             </div>
           </div>
         </div>
@@ -59,7 +228,11 @@ defineExpose({
                 <label class="field-label">投放金额</label>
                 <div class="field-input-wrapper">
                   <span class="currency-symbol">$</span
-                  ><input class="field-input" placeholder="请输入投放金额" />
+                  ><input
+                    class="field-input"
+                    placeholder="请输入投放金额"
+                    v-model="money"
+                  />
                 </div>
               </div>
               <div class="field-wrapper">
@@ -69,6 +242,7 @@ defineExpose({
                     type="number"
                     class="field-input"
                     placeholder="请输入投放秒数"
+                    v-model="cd"
                   /><span class="duration-unit">秒</span>
                 </div>
               </div>
@@ -76,7 +250,9 @@ defineExpose({
             <div class="coupon-item" @click="showCoupon = true">
               <span class="title">优惠卷 </span>
               <div class="status">
-                <span class="status-text">未使用</span>
+                <span class="status-text">
+                  {{ checkCouponData?.name || "未使用" }}
+                </span>
                 <van-icon name="arrow" />
               </div>
             </div>
@@ -91,7 +267,12 @@ defineExpose({
               </div>
             </div>
             <div class="form-actions">
-              <van-button native-type="submit" block round type="primary">
+              <van-button
+                block
+                round
+                type="primary"
+                @click="showBottom2 = true"
+              >
                 <span class="font-[600] text-base">确认投放</span>
               </van-button>
             </div>
@@ -113,34 +294,77 @@ defineExpose({
         <van-tab title="已使用"></van-tab>
       </van-tabs>
     </div>
-    <van-list
-      v-model:loading="loading"
-      :finished="finished"
-      finished-text="no more"
+    <van-pull-refresh
+      v-model="refreshing"
+      @refresh="onRefresh"
+      pulling-text="Pull down to refresh..."
+      loosing-text="Release to refresh..."
       loading-text="loading..."
-      error-text="fail"
-      @load="onLoad"
     >
-      <div class="coupon-list">
-        <div role="feed" class="van-list" aria-busy="false">
-          <div class="coupon-item used">
-            <div class="item-left">
-              <div class="coupon-type">增值劵</div>
-              <div class="tag"></div>
-            </div>
-            <div class="item-content">
-              <div class="title-line">
-                <div class="title">New user value added 30% coupon</div>
-                <span class="text">已過期</span>
+      <van-list
+        v-model:loading="loading"
+        :finished="finished"
+        finished-text="no more"
+        loading-text="loading..."
+        error-text="fail"
+        @load="onLoad"
+      >
+        <div class="coupon-list">
+          <div role="feed" class="van-list" aria-busy="false">
+            <div
+              class="coupon-item"
+              :class="value.state == 1 ? '' : 'used'"
+              v-for="value in CouponList"
+              @click="checkCoupon(value)"
+            >
+              <div class="item-left">
+                <div class="coupon-type">
+                  {{ (couponTypeName as any)[value.type] }}
+                </div>
+                <div class="tag"></div>
               </div>
-              <div class="name">Minimum threshold of $5000</div>
-              <div class="time">2025/08/31 09:53:53過期</div>
+              <div class="item-content">
+                <div class="title-line">
+                  <div class="title">{{ value.name }}</div>
+                  <span class="text">{{
+                    (stateName as any)[value.state]
+                  }}</span>
+                </div>
+                <div class="name">{{ value.intro }}</div>
+                <div class="time">
+                  {{ time.formatToMonthDay(value.create_time, 1) }} 過期
+                </div>
+              </div>
             </div>
+            <div class="van-list__placeholder"></div>
           </div>
-          <div class="van-list__placeholder"></div>
         </div>
-      </div>
-    </van-list>
+      </van-list>
+    </van-pull-refresh>
+  </van-popup>
+  <van-popup
+    v-model:show="showBottom2"
+    position="bottom"
+    round
+    :style="{ height: '95%' }"
+  >
+    <div class="dialog-wrap">
+      <div class="dialog-title">交易密码</div>
+      <div class="desc">请输入您的交易密码</div>
+      <!-- 密码输入框 -->
+      <van-password-input :value="pay_password" :length="6" />
+      <van-number-keyboard v-model="pay_password" :show="true" />
+      <van-button
+        type="primary"
+        round
+        block
+        style="margin-top: 2rem"
+        :disabled="disabled"
+        @click="orderAdd()"
+      >
+        <span class="text-sm">确认</span>
+      </van-button>
+    </div>
   </van-popup>
 </template>
 <style lang="scss" scoped>
@@ -282,7 +506,6 @@ defineExpose({
     -webkit-align-items: center;
     align-items: stretch;
     min-height: 28.61538vw;
-    margin-bottom: 3.84615vw;
     padding-left: 30.76923vw;
     &.used .item-left,
     &.used .item-left .tab {
@@ -360,6 +583,7 @@ defineExpose({
       display: -webkit-box;
       display: -webkit-flex;
       display: flex;
+      justify-content: space-between;
       -webkit-box-orient: vertical;
       -webkit-box-direction: normal;
       -webkit-flex-direction: column;

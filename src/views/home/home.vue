@@ -1,11 +1,38 @@
 <script setup lang="ts">
-import { ref } from "vue";
-const tabsActive = ref(1);
+import { useNumber } from "@/composables/common";
+import { getIndexApi, signApi } from "@/services/api";
+import { onMounted, ref, watch } from "vue";
+const number = useNumber();
 // 签到
-const isSign = ref(false);
+const sign = async () => {
+  showLoadingToast({
+    message: "loading...",
+    forbidClick: true,
+    duration: -1,
+  });
+  await signApi().then(() => {
+    indexData.value.userData.isSign = 1;
+    closeToast();
+  });
+};
 const copy = () => {
   showToast("复制成功");
 };
+
+// 首页数据
+const tabsActive = ref(0);
+const indexData = ref();
+const getIndexData = async (id: number) => {
+  await getIndexApi(id).then((res) => {
+    indexData.value = res.data;
+  });
+};
+watch(tabsActive, async (newVal: number) => {
+  await getIndexData(newVal);
+});
+onMounted(async () => {
+  await getIndexData(tabsActive.value);
+});
 </script>
 
 <template>
@@ -24,13 +51,18 @@ const copy = () => {
       </div>
     </div>
     <div class="ml-5 flex-1">
-      <div>username</div>
-      <div class="tag">信誉分：00</div>
-      <div class="tag">签到次数：4</div>
+      <div>{{ indexData?.userData.username }}</div>
+      <div class="tag">信誉分：{{ indexData?.userData.score }}</div>
+      <div class="tag">签到次数：{{ indexData?.userData.sign }}</div>
       <div class="tag">
         店铺星级：
-        <van-icon name="photo" size="11" color="#fff" />
-        <van-icon name="photo" size="11" color="#fff" />
+        <CpImage
+          name="star"
+          width="12px"
+          height="12px"
+          :round="true"
+          v-for="value in indexData?.userData.lv"
+        ></CpImage>
       </div>
     </div>
     <div class="flex flex-col space-y-2">
@@ -38,11 +70,11 @@ const copy = () => {
         type="primary"
         size="small"
         class="button-sign"
-        v-if="isSign == true"
+        v-if="!indexData || indexData?.userData.isSign == 1"
       >
         <span class="text-[12px] text-gray-400">已签到</span>
       </van-button>
-      <van-button type="primary" size="small" v-else>
+      <van-button type="primary" size="small" @click="sign()" v-else>
         <span class="text-[12px]">签到</span>
       </van-button>
       <van-button type="primary" size="small" @click="$router.push('wallet')">
@@ -97,63 +129,77 @@ const copy = () => {
   <div class="data-view">
     <div class="title-wrap">
       <div class="title">数据概览</div>
-      <div class="desc">
+      <div class="desc" @click="getIndexData(tabsActive)">
         <span>数据每30s更新一次</span>
         <CpSvg name="refresh"></CpSvg>
       </div>
     </div>
     <div class="data-list">
       <div class="data-item">
-        <div class="number-row">$ 0.00</div>
+        <div class="number-row">
+          $ {{ number.formatMoney(indexData?.planOrderData.money) }}
+        </div>
         <div class="name-row">
           <span>投放金额</span>
           <CpSvg name="data-1"></CpSvg>
         </div>
       </div>
       <div class="data-item">
-        <div class="number-row">0</div>
+        <div class="number-row">{{ indexData?.planOrderData.count || 0 }}</div>
         <div class="name-row">
           <span>投放订单</span>
           <CpSvg name="data-2"></CpSvg>
         </div>
       </div>
       <div class="data-item">
-        <div class="number-row">$ 0.00</div>
+        <div class="number-row">
+          $ {{ number.formatMoney(indexData?.planOrderData.putIn) }}
+        </div>
         <div class="name-row">
           <span>已消耗</span>
           <CpSvg name="data-3"></CpSvg>
         </div>
       </div>
       <div class="data-item">
-        <div class="number-row">$ 0.00</div>
+        <div class="number-row">
+          $ {{ number.formatMoney(indexData?.planOrderData.wait_putIn) }}
+        </div>
         <div class="name-row">
           <span>待消耗</span>
           <CpSvg name="data-4"></CpSvg>
         </div>
       </div>
       <div class="data-item">
-        <div class="number-row">0</div>
+        <div class="number-row">
+          {{ indexData?.planOrderData.show_num || 0 }}
+        </div>
         <div class="name-row">
           <span>展示数</span>
           <CpSvg name="data-5"></CpSvg>
         </div>
       </div>
       <div class="data-item">
-        <div class="number-row">0</div>
+        <div class="number-row">
+          {{ indexData?.planOrderData.click_num || 0 }}
+        </div>
         <div class="name-row">
           <span>点击数</span>
           <CpSvg name="data-6"></CpSvg>
         </div>
       </div>
       <div class="data-item">
-        <div class="number-row">$ 0.00</div>
+        <div class="number-row">
+          $ {{ number.formatMoney(indexData?.planOrderData.click_money) }}
+        </div>
         <div class="name-row">
           <span>广告收入</span>
           <CpSvg name="data-7"></CpSvg>
         </div>
       </div>
       <div class="data-item">
-        <div class="number-row">$ 0.00</div>
+        <div class="number-row">
+          $ {{ number.formatMoney(indexData?.planOrderData.profit) }}
+        </div>
         <div class="name-row">
           <span>利润</span>
           <CpSvg name="data-8"></CpSvg>
@@ -181,25 +227,25 @@ const copy = () => {
     <div class="section-title">常见问题</div>
     <div class="question-list">
       <!---->
-      <div class="question-item" @click="$router.push('news')">
+      <div class="question-item" @click="$router.push('news?id=1')">
         <div class="name">What is The 7 Star's Advertising Solution?</div>
         <van-icon name="arrow" />
       </div>
-      <div class="question-item">
+      <div class="question-item" @click="$router.push('news?id=2')">
         <div class="name">
           Why can't we cancel the Audience Network program?
         </div>
         <van-icon name="arrow" />
       </div>
-      <div class="question-item">
+      <div class="question-item" @click="$router.push('news?id=3')">
         <div class="name">Online Deposit Issues?</div>
         <van-icon name="arrow" />
       </div>
-      <div class="question-item">
+      <div class="question-item" @click="$router.push('news?id=4')">
         <div class="name">How long does it take to complete a plan?</div>
         <van-icon name="arrow" />
       </div>
-      <div class="question-item">
+      <div class="question-item" @click="$router.push('news?id=5')">
         <div class="name">Can I become a program partner?</div>
         <van-icon name="arrow" />
       </div>
@@ -228,7 +274,9 @@ const copy = () => {
     border: 0.53333vw solid #fff;
   }
   .tag {
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: max-content;
     font-size: 2.5641vw;
     color: #65676a;

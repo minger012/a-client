@@ -38,10 +38,126 @@ body {
   --van-cell-group-inset-radius:1rem;
   --van-padding-base:0.75rem;
   --van-nav-bar-icon-color:#323233;
-  
-
 }
-
+// 弹窗样式
+.dialog-wrap {
+  display: flex;
+  flex-direction: column;
+  padding: 10.25641vw 8.10256vw 4.10256vw;
+  background: var(--van-white);
+  .dialog-title {
+    text-align: center;
+    font-weight: 700;
+    font-size: 6.41026vw;
+    margin-bottom: 12.82051vw;
+  }
+  .content-wrap {
+    margin-top: 12.82051vw;
+    .content-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 4.35897vw;
+      margin-bottom: 8.71795vw;
+      .label {
+        color: var(--van-gray-7);
+        min-width: 20.51282vw;
+      }
+      .input-wrap {
+        display: flex;
+        align-items: center;
+        height: 16.9231vw;
+        border-bottom: 1px solid rgb(229, 229, 229);
+      }
+      .text {
+        flex: 1;
+        flex-shrink: 0;
+        margin-left: 2.5641vw;
+        text-align: right;
+        color: var(--van-black);
+        font-weight: 500;
+        word-break: break-all;
+      }
+    }
+  }
+  .desc {
+    text-align: center;
+    font-size: 3.84615vw;
+    color: var(--van-gray-7);
+    margin-bottom: 7.69231vw;
+  }
+  .form-wrap {
+    .label {
+      font-size: 3.84615vw;
+      color: var(--van-gray-7);
+    }
+    .input-wrap {
+      display: flex;
+      align-items: center;
+      height: 16.9231vw;
+      border-bottom: 1px solid rgb(229, 229, 229);
+      .label {
+        margin-right: 2.5641vw;
+        font-size: 5.64103vw;
+        color: var(--van-black);
+        font-weight: 700;
+      }
+      .van-cell {
+        font-size: 5.64103vw;
+        font-weight: 700;
+        padding-left: 0;
+      }
+    }
+    .form-tips {
+      display: flex;
+      align-items: center;
+      margin-top: 3.84615vw;
+      font-size: 3.07692vw;
+      color: var(--van-primary-color);
+      .count-money {
+        margin-right: 2.5641vw;
+        color: var(--van-black);
+      }
+      .all-text {
+        color: var(--van-primary-color);
+        cursor: pointer;
+      }
+    }
+    .coupon-item{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #f0f2f5;
+      border-radius: 3.07692vw;
+      height: 12.82051vw;
+      padding: 0 4.61538vw;
+      color: var(--van-black);
+      font-size: 3.07692vw;
+      margin-top: 4.61538vw;
+      .status {
+        display: flex;
+        align-items: center;
+        .status-text{
+          margin-right: 1.53846vw;
+          font-size: 3.07692vw;
+          font-weight: 500;
+          color: #adadad;
+        }
+      }
+    }
+  }
+  .banner {
+    display: block;
+    margin: 5.12821vw auto;
+  }
+  .text {
+    font-size: 4.61538vw;
+    font-weight: 500;
+    color: var(--van-black);
+    text-align: center;
+    padding: 0 4.10256vw;
+  }
+}
 #nprogress .bar {
   // background-color: var(--cp-price);
 }

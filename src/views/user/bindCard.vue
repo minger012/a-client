@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { bankCardAddApi, bankCardListApi } from "@/services/api";
+import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
 // 提现方式
 const methods = ref("");
 const methodsShowPicker = ref(false);
@@ -36,6 +39,31 @@ const networkOnConfirm = ({ selectedOptions }: any) => {
   network.value = selectedOptions[0]?.text;
   networkShowPicker.value = false;
 };
+// 提交
+const onSubmit = async () => {
+  showLoadingToast({
+    message: "loading...",
+    forbidClick: true,
+    duration: -1,
+  });
+  await bankCardAddApi(
+    methods.value,
+    currency.value,
+    address.value,
+    network.value
+  ).then((res) => {
+    showToast(res.msg);
+    router.back();
+  });
+};
+onMounted(async () => {
+  await bankCardListApi().then((res) => {
+    methods.value = res.data.methods;
+    address.value = res.data.address;
+    currency.value = res.data.currency;
+    network.value = res.data.network;
+  });
+});
 </script>
 <template>
   <CpNavBar> </CpNavBar>

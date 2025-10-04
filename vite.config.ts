@@ -31,7 +31,8 @@ export default defineConfig(({ command }) => {
       host: "0.0.0.0",
       proxy: {
         "/home": {
-          target: "http://107.148.41.97:12123",
+          // target: "http://107.148.41.97:12123",
+          target: "http://127.0.0.1:8000",
           changeOrigin: true,
         },
         "/upload": {

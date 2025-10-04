@@ -91,7 +91,7 @@ export default {
     order_no: "订单单号",
     merchant: "数据端商家",
     order_money: "下单积分",
-    cumulative_increase_amount:"累计增加金额：",
+    cumulative_increase_amount: "累计增加金额：",
   },
   user: {
     username: "账号",
@@ -156,7 +156,7 @@ export default {
     password_label: "提现密码",
     password_placeholder: "请输入提现密码（6位密码）",
     formattedDate_label: "提现时间",
-    cumulative_withdrawal_amount:"累计提现金额："
+    cumulative_withdrawal_amount: "累计提现金额：",
   },
   withdrawLog: {
     status1: "审核中",

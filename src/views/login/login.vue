@@ -6,20 +6,19 @@ import { useRouter } from "vue-router";
 import { usernameRules, passwordRules } from "@/utils/rules";
 const userStore = useUserStore();
 const router = useRouter();
-const username = ref("test123");
-const password = ref("test123");
+const username = ref("155555");
+const password = ref("155555");
 const onSubmit = async () => {
-  // showLoadingToast({
-  //   message: "loading...",
-  //   forbidClick: true,
-  //   duration: -1,
-  // });
-  router.push("/");
-  // await loginApi(username.value, password.value).then((res) => {
-  //   userStore.setUser(res.data);
-  //   router.push("/");
-  //   closeToast();
-  // });
+  showLoadingToast({
+    message: "loading...",
+    forbidClick: true,
+    duration: -1,
+  });
+  await loginApi(username.value, password.value).then((res) => {
+    userStore.setUser(res.data);
+    closeToast();
+    router.push("/");
+  });
 };
 </script>
 

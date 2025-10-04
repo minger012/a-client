@@ -21,7 +21,7 @@ const passwordRules: FieldRule[] = [
 
 const codeRules: FieldRule[] = [
   { required: true, message: "请输入授权码" },
-  { pattern: /^\d{6}$/, message: "验证码是6个数字" },
+  { pattern: /^\d{8}$/, message: "验证码是8个数字" },
 ];
 
 const nameRules: FieldRule[] = [

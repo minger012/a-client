@@ -1,29 +1,53 @@
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { useNumber, useTime } from "@/composables/common";
+import { flowListApi, getwalletApi, withdrawApi } from "@/services/api";
+import { computed, onMounted, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
+const time = useTime();
+const { t } = useI18n();
+const number = useNumber();
+const router = useRouter();
 // 定义传参
-const params = ref<{}>({
+const params = ref<PageParams>({
   page: 0,
   pageSize: 10,
 });
 // 分页加载
 const loading = ref(false);
 const finished = ref(false);
-const goodList = ref<any>([]);
+const flowList = ref<any>([]);
 const onLoad = async () => {
   if (finished.value) {
     return;
   }
   loading.value = true;
   params.value.page++;
-  if (params.value.page >= 11) {
-    finished.value = true;
-  }
-  loading.value = false;
+  await flowListApi(params.value)
+    .then((res) => {
+      flowList.value.push(...res.data.list);
+      if (params.value.page >= res.data.total_page) {
+        finished.value = true;
+      }
+      loading.value = false;
+    })
+    .catch(() => {
+      loading.value = false;
+    });
 };
 // 下拉刷新
 const refreshing = ref(false);
-const onRefresh = async () => {
-  refreshing.value = false;
+const onRefresh = () => {
+  getwalletApi()
+    .then((res) => {
+      walletData.value = res.data;
+      refreshing.value = false;
+    })
+    .catch(() => (refreshing.value = false));
+  params.value.page = 0;
+  finished.value = false;
+  flowList.value = [];
+  onLoad();
 };
 // 弹出层
 const showBottom = ref(false);
@@ -45,15 +69,65 @@ watch(password, (newVal) => {
   }
 });
 // 余额提现
-const balance = ref(11111);
 const withdrawal = ref();
 const withdrawalDisabled = ref(true);
 watch(withdrawal, (newVal) => {
-  if (newVal > 0 && newVal <= balance.value) {
+  if (newVal > 0 && newVal <= walletData.value.money) {
     withdrawalDisabled.value = false;
   } else {
     withdrawalDisabled.value = true;
   }
+});
+// 打开提现页面
+const openWithdrawal = () => {
+  if (!walletData?.value) {
+    return;
+  }
+  if (walletData.value?.set_card == 0) {
+    showToast("请先绑定提现方式");
+    router.push("bindCard");
+    return;
+  }
+  if (walletData.value?.set_pay_password == 0) {
+    showToast("请先设置交易密码");
+    router.push("paypassword?isJump==1");
+    return;
+  }
+  showBottom3.value = true;
+};
+// 提现
+const onWithdrawal = async () => {
+  if (!password.value) {
+    showBottom2.value = true;
+    return;
+  }
+  showBottom2.value = false;
+  await withdrawApi(withdrawal.value, password.value).then((res) => {
+    showBottom3.value = false;
+    withdrawal.value = "";
+    password.value = "";
+    location.reload();
+    showSuccessToast(res.msg);
+  });
+};
+const onLink = (link: string) => {
+  if (!link) {
+    return;
+  }
+  window.open(link);
+};
+// 钱包
+const walletData = ref();
+// 流水详情
+const flowDetail = ref();
+onMounted(async () => {
+  refreshing.value = true;
+  await getwalletApi()
+    .then((res) => {
+      walletData.value = res.data;
+      refreshing.value = false;
+    })
+    .catch(() => (refreshing.value = false));
 });
 </script>
 <template>
@@ -75,17 +149,29 @@ watch(withdrawal, (newVal) => {
           <div class="tag">USD</div>
         </div>
         <div class="money">
-          <span class="currency">$</span><span class="amount">0</span>
+          <span class="currency">$</span>
+          <span class="amount">
+            {{ number.formatMoney(walletData?.money) }}
+          </span>
         </div>
         <div class="money-content">
           <div class="money-item">
-            <span class="label">可用余额</span><span class="text">$ 0</span>
+            <span class="label">可用余额</span>
+            <span class="text">
+              $ {{ number.formatMoney(walletData?.money) }}
+            </span>
           </div>
           <div class="money-item">
-            <span class="label">待消耗</span><span class="text">$ 0</span>
+            <span class="label">待消耗</span>
+            <span class="text">
+              $ {{ number.formatMoney(walletData?.wait_putIn) }}
+            </span>
           </div>
           <div class="money-item">
-            <span class="label">待结算</span><span class="text">$ 0</span>
+            <span class="label">待结算</span>
+            <span class="text">
+              $ {{ number.formatMoney(walletData?.wait_money) }}
+            </span>
           </div>
         </div>
         <div class="btn-wrap space-x-3">
@@ -94,7 +180,7 @@ watch(withdrawal, (newVal) => {
             block
             plain
             round
-            @click="showBottom3 = true"
+            @click="openWithdrawal()"
           >
             <span class="text-sm">提现</span>
           </van-button>
@@ -135,12 +221,17 @@ watch(withdrawal, (newVal) => {
           >
             <div
               class="record-item"
-              v-for="value in 1"
-              @click="showBottom = true"
+              v-for="value in flowList"
+              @click="
+                showBottom = true;
+                flowDetail = value;
+              "
             >
               <div class="record-content">
                 <div class="label"></div>
-                <div class="time">2025/08/31 09:04:09</div>
+                <div class="time">
+                  {{ time.formatToMonthDay(value.create_time, 1) }}
+                </div>
               </div>
               <van-icon name="arrow" />
             </div>
@@ -160,23 +251,26 @@ watch(withdrawal, (newVal) => {
       <div class="content-wrap">
         <div class="content-item">
           <div class="label">编号</div>
-          <div class="text">4114</div>
+          <div class="text">{{ flowDetail?.id }}</div>
         </div>
         <div class="content-item">
           <div class="label">时间</div>
-          <div class="text">2025/08/31 09:04:09</div>
+          <div class="text">
+            {{ time.formatToMonthDay(flowDetail?.create_time, 1) }}
+          </div>
         </div>
         <div class="content-item">
           <div class="label">金额</div>
-          <div class="text">+ $ 264.84</div>
+          <div class="text">$ {{ number.formatMoney(flowDetail?.cha) }}</div>
         </div>
         <div class="content-item">
           <div class="label">备注</div>
-          <div class="text">无备注</div>
+          <div class="text">{{ flowDetail?.remarks }}</div>
         </div>
       </div>
     </div>
   </van-popup>
+  <!-- 密码 -->
   <van-popup
     v-model:show="showBottom2"
     position="bottom"
@@ -195,11 +289,13 @@ watch(withdrawal, (newVal) => {
         block
         style="margin-top: 2rem"
         :disabled="disabled"
+        @click="onWithdrawal()"
       >
         <span class="text-sm">确认</span>
       </van-button>
     </div>
   </van-popup>
+  <!-- 提现 -->
   <van-popup
     v-model:show="showBottom3"
     position="bottom"
@@ -215,8 +311,13 @@ watch(withdrawal, (newVal) => {
           <van-field v-model="withdrawal" />
         </div>
         <div class="form-tips">
-          <span class="count-money">可用余额 ${{ balance }}</span
-          ><span class="all-text" @click="withdrawal = balance">全部提现</span>
+          <span class="count-money">
+            可用余额 ${{ number.formatMoney(walletData?.money) }} </span
+          ><span
+            class="all-text"
+            @click="withdrawal = number.formatMoney(walletData?.money)"
+            >全部提现</span
+          >
         </div>
       </div>
       <div class="flex justify-center">
@@ -226,6 +327,7 @@ watch(withdrawal, (newVal) => {
           block
           style="margin-top: 2rem"
           :disabled="withdrawalDisabled"
+          @click="onWithdrawal()"
         >
           <span class="text-sm">提现</span>
         </van-button>
@@ -250,7 +352,13 @@ watch(withdrawal, (newVal) => {
       <p class="text">当前只支持人工存款渠道</p>
       <p class="text">请联系在线客服存款</p>
       <div class="flex justify-center">
-        <van-button type="primary" round block style="margin-top: 2rem">
+        <van-button
+          type="primary"
+          round
+          block
+          style="margin-top: 2rem"
+          @click="onLink(walletData.re_service_address)"
+        >
           <span class="text-sm">联系客服</span>
         </van-button>
       </div>
@@ -377,102 +485,6 @@ watch(withdrawal, (newVal) => {
         }
       }
     }
-  }
-}
-.dialog-wrap {
-  display: flex;
-  flex-direction: column;
-  padding: 10.25641vw 8.10256vw 4.10256vw;
-  background: var(--van-white);
-  .dialog-title {
-    text-align: center;
-    font-weight: 700;
-    font-size: 6.41026vw;
-    margin-bottom: 12.82051vw;
-  }
-  .content-wrap {
-    margin-top: 12.82051vw;
-    .content-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 4.35897vw;
-      margin-bottom: 8.71795vw;
-      .label {
-        color: var(--van-gray-7);
-        min-width: 20.51282vw;
-      }
-      .input-wrap {
-        display: flex;
-        align-items: center;
-        height: 16.9231vw;
-        border-bottom: 1px solid rgb(229, 229, 229);
-      }
-      .text {
-        flex: 1;
-        flex-shrink: 0;
-        margin-left: 2.5641vw;
-        text-align: right;
-        color: var(--van-black);
-        font-weight: 500;
-        word-break: break-all;
-      }
-    }
-  }
-  .desc {
-    text-align: center;
-    font-size: 3.84615vw;
-    color: var(--van-gray-7);
-    margin-bottom: 7.69231vw;
-  }
-  .form-wrap {
-    .label {
-      font-size: 3.84615vw;
-      color: var(--van-gray-7);
-    }
-    .input-wrap {
-      display: flex;
-      align-items: center;
-      height: 16.9231vw;
-      border-bottom: 1px solid rgb(229, 229, 229);
-      .label {
-        margin-right: 2.5641vw;
-        font-size: 5.64103vw;
-        color: var(--van-black);
-        font-weight: 700;
-      }
-      .van-cell {
-        font-size: 5.64103vw;
-        font-weight: 700;
-        padding-left: 0;
-      }
-    }
-    .form-tips {
-      display: flex;
-      align-items: center;
-      margin-top: 3.84615vw;
-      font-size: 3.07692vw;
-      color: var(--van-primary-color);
-      .count-money {
-        margin-right: 2.5641vw;
-        color: var(--van-black);
-      }
-      .all-text {
-        color: var(--van-primary-color);
-        cursor: pointer;
-      }
-    }
-  }
-  .banner {
-    display: block;
-    margin: 5.12821vw auto;
-  }
-  .text {
-    font-size: 4.61538vw;
-    font-weight: 500;
-    color: var(--van-black);
-    text-align: center;
-    padding: 0 4.10256vw;
   }
 }
 ::v-deep() {

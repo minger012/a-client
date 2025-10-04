@@ -37,9 +37,14 @@ const router = createRouter({
       meta: { title: "计划投放广场" },
     },
     {
-      path: "/goodsDetail", // 详情
+      path: "/planDetail", // 计划详情
       component: () => import("@/views/goods/detail.vue"),
       meta: { title: "计划详情" },
+    },
+    {
+      path: "/goodsDetail", // 商品详情
+      component: () => import("@/views/goods/goodsDetail.vue"),
+      meta: { title: "商品详情" },
     },
     {
       path: "/order", // 订单
@@ -90,7 +95,7 @@ router.beforeEach((to) => {
   const notLogin = ["/login", "/register"];
   const userStore = useUserStore();
   if (!notLogin.includes(to.path) && !userStore.user?.token) {
-    // return "/login";
+    return "/login";
   }
 });
 

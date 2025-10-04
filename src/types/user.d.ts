@@ -22,7 +22,7 @@ type PageParams = {
   /** 第几页 */
   page: number;
 };
-type OrderListType = -1 | 0 | 1 | 2;
+type OrderListType = -1 | 0 | 1 | 2 | 3 | 4;
 type OrderPageParams = PageParams & {
   type: OrderListType;
 };

@@ -1,32 +1,80 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { useTime } from "@/composables/common";
+import { getMailListApi, mailReadApi } from "@/services/api";
+import { ref, watch } from "vue";
+const time = useTime();
 // 定义传参
-const params = ref<{}>({
+const params = ref<PageParams>({
   page: 0,
   pageSize: 10,
 });
 // 分页加载
 const loading = ref(false);
 const finished = ref(false);
-const goodList = ref<any>([]);
+const mailList = ref<any>([]);
 const onLoad = async () => {
   if (finished.value) {
     return;
   }
   loading.value = true;
   params.value.page++;
-  if (params.value.page >= 11) {
-    finished.value = true;
-  }
-  loading.value = false;
+  await getMailListApi(params.value, value1.value, value2.value)
+    .then((res) => {
+      mailList.value.push(...res.data.list);
+      if (params.value.page >= res.data.total_page) {
+        finished.value = true;
+      }
+      loading.value = false;
+    })
+    .catch(() => {
+      loading.value = false;
+    });
 };
 // 下拉刷新
 const refreshing = ref(false);
 const onRefresh = async () => {
-  refreshing.value = false;
+  params.value.page = 1;
+  await getMailListApi(params.value, value1.value, value2.value)
+    .then((res) => {
+      mailList.value = res.data.list;
+      refreshing.value = false;
+    })
+    .catch(() => {
+      refreshing.value = false;
+    });
+};
+// 查看消息
+const readMail = (detail: any) => {
+  if (detail.read_time == 0) {
+    mailReadApi(detail.id);
+    mailList.value = mailList.value.map((item: any) => {
+      if (item.id == detail.id) {
+        item.read_time = 1;
+      }
+      return item;
+    });
+  }
+  showDialog({
+    title: detail.title,
+    message: detail.content,
+  }).then(() => {});
 };
 const value1 = ref(0);
 const value2 = ref(0);
+// 监听多个响应式引用
+watch([value1, value2], async ([newValue1, newValue2]) => {
+  params.value.page = 1;
+  mailList.value = [];
+  refreshing.value = true;
+  await getMailListApi(params.value, newValue1, newValue2)
+    .then((res) => {
+      mailList.value = res.data.list;
+      refreshing.value = false;
+    })
+    .catch(() => {
+      refreshing.value = false;
+    });
+});
 const option1 = [
   { text: "全部消息", value: 0 },
   { text: "系统公告", value: 1 },
@@ -38,6 +86,26 @@ const option2 = [
   { text: "未读消息", value: 1 },
   { text: "已读消息", value: 2 },
 ];
+const typeName = {
+  1: "系统公告",
+  2: "系统维护",
+  3: "活动通知",
+};
+const class1 = {
+  1: "icon-blue",
+  2: "icon-orange",
+  3: "icon-red",
+};
+const class2 = {
+  1: "primary",
+  2: "warning",
+  3: "danger",
+};
+const class3 = {
+  1: "volume-o",
+  2: "setting-o",
+  3: "gift-o",
+};
 </script>
 <template>
   <CpNavBar> </CpNavBar>
@@ -56,7 +124,7 @@ const option2 = [
         loosing-text="Release to refresh..."
         loading-text="loading..."
       >
-        <van-empty description="暂无消息" v-if="true" />
+        <van-empty description="暂无消息" v-if="!mailList" />
         <van-list
           v-model:loading="loading"
           :finished="finished"
@@ -66,7 +134,49 @@ const option2 = [
           @load="onLoad"
           v-else
         >
-          11
+          <div class="p-3 h-full">
+            <div
+              class="message-item type-system_announcement"
+              v-for="value in mailList"
+              @click="readMail(value)"
+            >
+              <div
+                class="message-item-header"
+                :class="value.read_time == 0 ? 'unread' : ''"
+              >
+                <div
+                  class="message-type-indicator"
+                  :class="(class1 as any)[value.type]"
+                ></div>
+                <van-tag :type="(class2 as any)[value.type]">
+                  <span class="text-10">
+                    {{ (typeName as any)[value.type] }}
+                  </span>
+                </van-tag>
+                <span class="message-time">
+                  {{ time.timeAgo(value.create_time) }}
+                </span>
+                <div class="unread-dot" v-if="value.read_time == 0"></div>
+              </div>
+              <div class="message-item-content">
+                <div class="message-icon-wrapper">
+                  <div
+                    class="message-icon"
+                    :class="(class1 as any)[value.type]"
+                  >
+                    <van-icon
+                      :name="(class3 as any)[value.type]"
+                      size="1.125rem"
+                    />
+                  </div>
+                </div>
+                <div class="message-body">
+                  <h3 class="message-title">ni kkk</h3>
+                  <p class="message-text">ni kkk</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </van-list>
       </van-pull-refresh>
     </div>
@@ -79,6 +189,106 @@ const option2 = [
   min-height: calc(100vh - var(--van-nav-bar-height));
   display: flex;
   flex-direction: column;
+  .message-item {
+    margin-bottom: 3.2vw;
+    border-radius: 2.13333vw;
+    background-color: #fff;
+    box-shadow: 0 1px 1.06667vw #0000000d;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.2s ease;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    .message-item-header {
+      display: flex;
+      align-items: center;
+      padding: 2.13333vw 3.2vw;
+      background-color: #fff;
+      border-bottom: 1px solid #dce0e7;
+      position: relative;
+      .message-type-indicator {
+        width: 1.06667vw;
+        height: 4.26667vw;
+        border-radius: 0.53333vw;
+        margin-right: 2.13333vw;
+        flex-shrink: 0;
+      }
+      .icon-blue {
+        color: #1989fa;
+        background-color: #1989fa1a;
+      }
+      .message-time {
+        margin-left: auto;
+        font-size: 3.2vw;
+        color: #606a78;
+      }
+    }
+    .message-item-content {
+      display: flex;
+      padding: 3.2vw;
+      .message-icon-wrapper {
+        margin-right: 3.2vw;
+        flex-shrink: 0;
+        .message-icon {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 9.6vw;
+          height: 9.6vw;
+          border-radius: 2.13333vw;
+        }
+      }
+      .message-body {
+        flex: 1;
+        min-width: 0;
+        .message-title {
+          font-size: 4vw;
+          font-weight: 500;
+          color: #303133;
+          margin: 0 0 1.6vw;
+          line-height: 1.4;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        .message-text {
+          font-size: 3.73333vw;
+          color: #606266;
+          line-height: 1.5;
+          margin: 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+        }
+      }
+    }
+  }
+  .icon-blue {
+    color: #1989fa;
+    background-color: #1989fa1a;
+  }
+  .icon-red {
+    color: #ee0a24;
+    background-color: #ee0a241a;
+  }
+  .icon-orange {
+    color: #ff976a;
+    background-color: #ff976a1a;
+  }
+  .unread-dot {
+    width: 2.13333vw;
+    height: 2.13333vw;
+    border-radius: 50%;
+    background-color: #ff4d4f;
+    margin-left: 2.13333vw;
+  }
+  .unread {
+    background-color: #ecf5ff !important;
+    border-bottom-color: #d4e6fd !important;
+  }
 }
 ::v-deep() {
   .van-dropdown-menu__bar--opened {

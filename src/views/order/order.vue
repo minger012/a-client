@@ -1,26 +1,88 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { useTime } from "@/composables/common";
+import CpPutin from "../goods/components/CpPutin.vue";
+import { planOrderListApi } from "@/services/api";
+import { ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
+const time = useTime();
+const { t } = useI18n();
 // 定义传参
-const params = ref<{}>({
+const tabsActive = ref<OrderListType>(0);
+const params = ref<OrderPageParams>({
   page: 0,
   pageSize: 10,
+  type: tabsActive.value,
 });
 // 分页加载
 const loading = ref(false);
 const finished = ref(false);
-const goodList = ref<any>([]);
+const planOrderList = ref<any>([]);
 const onLoad = async () => {
   if (finished.value) {
     return;
   }
   loading.value = true;
   params.value.page++;
-  if (params.value.page >= 11) {
-    finished.value = true;
-  }
-  loading.value = false;
+  await planOrderListApi(params.value)
+    .then((res) => {
+      planOrderList.value.push(...res.data.list);
+      if (params.value.page >= res.data.total_page) {
+        finished.value = true;
+      }
+      loading.value = false;
+    })
+    .catch(() => {
+      loading.value = false;
+    });
 };
-const tabsActive = ref(0);
+// 下拉刷新
+const refreshing = ref(false);
+const onRefresh = async () => {
+  params.value.page = 1;
+  await planOrderListApi(params.value)
+    .then((res) => {
+      planOrderList.value = res.data.list;
+      refreshing.value = false;
+    })
+    .catch(() => {
+      refreshing.value = false;
+    });
+};
+watch(tabsActive, async (newVal: OrderListType) => {
+  params.value.page = 1;
+  params.value.type = newVal;
+  planOrderList.value = [];
+  refreshing.value = true;
+  await planOrderListApi(params.value)
+    .then((res) => {
+      planOrderList.value = res.data.list;
+      refreshing.value = false;
+    })
+    .catch(() => {
+      refreshing.value = false;
+    });
+});
+// 弹出层-下单
+const childRef = ref(null);
+const updateChildData = (plan_id: number) => {
+  if (childRef.value) {
+    // 直接修改子组件的变量
+    childRef.value.showBottom3 = true;
+    childRef.value.plan_id = plan_id;
+  }
+};
+let formName = {
+  1: "官方推送",
+  2: "非官方推送",
+};
+let stateName = {
+  0: "待投放",
+  1: "匹配中",
+  2: "投放中",
+  3: "投放失败",
+  4: "等待结算",
+  5: "结算成功",
+};
 </script>
 <template>
   <CpNavBar :isLoginOut="true"> </CpNavBar>
@@ -36,115 +98,116 @@ const tabsActive = ref(0);
       </van-tabs>
     </div>
     <div class="p-4">
-      <van-list
-        v-model:loading="loading"
-        :finished="finished"
-        finished-text="no more"
+      <van-pull-refresh
+        v-model="refreshing"
+        @refresh="onRefresh"
+        pulling-text="Pull down to refresh..."
+        loosing-text="Release to refresh..."
         loading-text="loading..."
-        error-text="fail"
-        @load="onLoad"
       >
-        <div
-          class="plan-item"
-          v-for="value in 4"
-          @click="$router.push('orderDetail')"
+        <van-list
+          v-model:loading="loading"
+          :finished="finished"
+          finished-text="no more"
+          loading-text="loading..."
+          error-text="fail"
+          @load="onLoad"
         >
-          <div class="push-tag">非官方推送</div>
-          <div class="title-line">
-            <span class="title">計劃編號: P_1960114030689390592</span
-            ><span class="status">結算成功</span>
-          </div>
-          <div class="plan-content">
-            <div class="banner">
-              <div class="van-swipe my-swipe">
-                <div
-                  class="van-swipe__track"
-                  style="
-                    transition-duration: 0ms;
-                    transform: translateX(0px);
-                    width: 165px;
-                  "
-                >
-                  <div class="van-swipe-item" style="width: 165px">
+          <div
+            class="plan-item"
+            v-for="value in planOrderList"
+            @click="$router.push('orderDetail?id=' + value.id)"
+          >
+            <div class="push-tag">{{ (formName as any)[value.form] }}</div>
+            <div class="title-line">
+              <span class="title">计划编号: {{ value.order_no }}</span
+              ><span class="status">{{ (stateName as any)[value.state] }}</span>
+            </div>
+            <div class="plan-content">
+              <div class="banner">
+                <div class="van-swipe my-swipe">
+                  <div
+                    class="van-swipe__track"
+                    style="
+                      transition-duration: 0ms;
+                      transform: translateX(0px);
+                      width: 165px;
+                    "
+                  >
+                    <div class="van-swipe-item" style="width: 165px">
+                      <CpImage
+                        :name="value.image"
+                        width="10.3rem"
+                        height="5.75rem"
+                        radius="10%"
+                      ></CpImage>
+                    </div>
+                  </div>
+                  <!---->
+                </div>
+              </div>
+              <div class="app-content">
+                <div class="app-title">
+                  <div class="logo">
                     <CpImage
-                      name="https://facebooks.s3.ap-east-1.amazonaws.com/3534bb6bcf0f406a9fc760780e5c4d72.jpeg"
-                      width="10.3rem"
-                      height="5.75rem"
+                      :name="value.goods_logo"
+                      width="1.875rem"
+                      height="1.875rem"
                       radius="10%"
                     ></CpImage>
                   </div>
+                  <div class="app-title-wrap">
+                    <div class="app-name">{{ value.goods_name }}</div>
+                    <div class="app-desc">{{ value.type_name }}</div>
+                  </div>
                 </div>
-                <!---->
-              </div>
-            </div>
-            <div class="app-content">
-              <div class="app-title">
-                <div class="logo">
-                  <CpImage
-                    name="https://facebooks.s3.ap-east-1.amazonaws.com/e850726155a5434ca1d077a4e899290b.jpg"
-                    width="1.875rem"
-                    height="1.875rem"
-                    radius="10%"
-                  ></CpImage>
-                </div>
-                <div class="app-title-wrap">
-                  <div class="app-name">MONOPOLY GO!</div>
-                  <div class="app-desc">Games</div>
+                <div class="app-tag">
+                  <div class="tag">視頻</div>
+                  <div class="tag">落地頁</div>
                 </div>
               </div>
-              <div class="app-tag">
-                <div class="tag">視頻</div>
-                <div class="tag">落地頁</div>
+            </div>
+            <div class="plan-text">
+              {{ value.goods_intro }}
+            </div>
+            <div class="put-wrap">
+              <div class="put-item">
+                <span class="label">投放金額</span
+                ><span class="value">$ {{ value.money }}</span>
               </div>
-            </div>
-          </div>
-          <div class="plan-text">
-            Roll the dice and get rich in MONOPOLY GO! Own it all by exploring
-            boards and building cities. Play with friends and family to enjoy
-            this new twist on a classic game! Hit GO! Roll the dice! Earn
-            MONOPOLY money, interact with your friends, family members and
-            fellow Tycoons from around the world as you explore the expanding
-            universe of MONOPOLY GO! It’s the new way to play - board flipping
-            cleanup not required! Take a Break! Escape, enjoy, dream, scheme and
-            stay in touch with this newly reimagined twist on MONOPOLY! Let
-            everyone’s favorite zillionaire, Mr. MONOPOLY, be your guide as you
-            explore new boards themed after world-famous cities, fantastical
-            lands and imaginative locales. So MONOPOLY GO! Experience classic
-            fun and visuals with gameplay fit for your phone! Collect
-            Properties, build Houses and Hotels, pull Chance Cards, and of
-            course, earn that MONOPOLY Money! Play with your favorite game
-            Tokens such as the Racecar, Top Hat, Battleship, and more. Earn more
-            tokens as you go! See MONOPOLY icons like Mr. M, Scottie and Ms.
-            MONOPOLY come to life, and brand new characters too! Your Family
-            Table! Help or hinder! - You and friends can earn easy money with
-            Community Chest and co-op events! Or heist their banks to help
-            yourself get to the top. Don’t feel bad! Collect and trade
-            story-filled Stickers with friends and family and in our MONOPOLY
-            GO! Facebook Trading Groups! Complete gorgeous, clever albums for
-            huge rewards!
-          </div>
-          <div class="put-wrap">
-            <div class="put-item">
-              <span class="label">投放金額</span
-              ><span class="value">$ 235.83</span>
-            </div>
-            <div class="put-item">
-              <span class="label">投放進度</span>
-              <div class="progress">
-                <van-progress :percentage="100" style="height: 5px" />
+              <div class="put-item">
+                <span class="label">投放進度</span>
+                <div class="progress">
+                  <van-progress :percentage="100" style="height: 5px" />
 
-                <span class="progress-text">100%</span>
+                  <span class="progress-text">{{ value.schedule }}%</span>
+                </div>
               </div>
             </div>
+            <div class="title-line mt-2">
+              <span class="title">
+                創建時間:
+                {{ time.formatToMonthDay(value.create_time, 2) }}</span
+              >
+            </div>
+            <div class="btn-wrap" v-if="value.state == 0">
+              <van-button
+                type="primary"
+                size="small"
+                round
+                class="button"
+                @click="updateChildData(value.plan_id)"
+                style="width: 6.5rem; height: 2.125rem; z-index: 999"
+              >
+                <span class="text-[3.2vw]">投放</span>
+              </van-button>
+            </div>
           </div>
-          <div class="title-line mt-2">
-            <span class="title">創建時間: 26/08/2025 06:56:17</span>
-          </div>
-          <div class="btn-wrap"></div>
-        </div>
-      </van-list>
+        </van-list>
+      </van-pull-refresh>
     </div>
   </div>
+  <CpPutin ref="childRef"></CpPutin>
 </template>
 <style lang="scss" scoped>
 .page {
@@ -213,6 +276,7 @@ const tabsActive = ref(0);
         .app-title {
           display: flex;
           align-items: center;
+          height: 2.75rem;
           .logo {
             width: 8.20513vw;
             height: 8.20513vw;
@@ -302,9 +366,10 @@ const tabsActive = ref(0);
       }
     }
     .btn-wrap {
+      margin-top: 3.33333vw;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: end;
     }
   }
 }

@@ -11,7 +11,6 @@ import {
 } from "@/utils/rules";
 const userStore = useUserStore();
 const router = useRouter();
-const form = ref();
 const username = ref("");
 const password = ref("");
 const repassword = ref("");
@@ -19,14 +18,22 @@ const mobile = ref("");
 const code = ref("");
 const checked = ref(false);
 const onSubmit = async () => {
-  //提交的时候再次验证
-  form.value.validate();
+  if (!checked.value) {
+    showToast("请勾选同意服务条款");
+    return;
+  }
   showLoadingToast({
     message: "loading...",
     forbidClick: true,
     duration: -1,
   });
-  await registerApi(username.value, password.value).then((res) => {
+  await registerApi({
+    username: username.value,
+    password: password.value,
+    repassword: repassword.value,
+    mobile: mobile.value,
+    code: code.value,
+  }).then((res) => {
     userStore.setUser(res.data);
     router.push("/");
     closeToast();
@@ -58,12 +65,14 @@ const showBottom = ref(false);
             :rules="usernameRules"
           />
           <van-field
+            type="password"
             v-model="password"
             left-icon="shield-o"
             placeholder="请输入密码"
             :rules="passwordRules"
           />
           <van-field
+            type="password"
             v-model="repassword"
             left-icon="shield-o"
             placeholder="请确认密码"
@@ -91,7 +100,13 @@ const showBottom = ref(false);
           </div>
         </div>
         <div class="pt-6">
-          <van-button native-type="submit" block round type="primary">
+          <van-button
+            native-type="submit"
+            block
+            round
+            type="primary"
+            @click="onSubmit()"
+          >
             <span class="font-[600] text-base">注册</span>
           </van-button>
         </div>

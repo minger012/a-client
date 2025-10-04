@@ -1,20 +1,54 @@
 <script setup lang="ts">
-import { ref } from "vue";
-// 定义传参
-const params = ref<{}>({
-  page: 0,
-  pageSize: 10,
+import { useNumber, useTime } from "@/composables/common";
+import { planOrderDetailApi } from "@/services/api";
+import { onMounted, ref } from "vue";
+import { useI18n } from "vue-i18n";
+import { useRoute, useRouter } from "vue-router";
+const time = useTime();
+const { t } = useI18n();
+const route = useRoute();
+const router = useRouter();
+const number = useNumber();
+const detail = ref<any>();
+const getDetail = async () => {
+  await planOrderDetailApi(route.query.id as unknown as number)
+    .then((res) => {
+      detail.value = res.data;
+    })
+    .catch(() => {
+      router.back();
+    });
+};
+let stateName = {
+  0: "待投放",
+  1: "匹配中",
+  2: "投放中",
+  3: "投放失败",
+  4: "等待结算",
+  5: "结算成功",
+};
+onMounted(() => {
+  getDetail();
 });
 </script>
 <template>
   <CpNavBar> </CpNavBar>
-  <div class="page">
-    <div data-v-cfc93573="" class="container plan">
+  <div class="page" v-if="!detail">
+    <div class="flex justify-center mt-20">
+      <van-loading size="24">loading...</van-loading>
+    </div>
+  </div>
+  <div class="page" v-else>
+    <div class="container plan">
       <div class="plan-status-wrap">
         <div class="status-content">
-          <div class="title">结算成功</div>
+          <div class="title">{{ (stateName as any)[detail.state] }}</div>
         </div>
-        <CpSvg name="status-6" size="10vw" color="#fff"></CpSvg>
+        <CpSvg
+          :name="`status-` + detail.state"
+          size="10vw"
+          color="#fff"
+        ></CpSvg>
       </div>
       <div class="section">
         <div class="section-title">投放产品</div>
@@ -22,17 +56,22 @@ const params = ref<{}>({
           <div class="goods-content">
             <CpImage
               radius="25%"
-              name="https://facebooks.s3.ap-east-1.amazonaws.com/e850726155a5434ca1d077a4e899290b.jpg"
+              :name="detail.logo"
               width="4.375rem"
               height="4.375rem"
             ></CpImage>
             <div class="goods-info">
-              <div class="goods-name">MONOPOLY GO!</div>
-              <div class="goods-desc">Games</div>
-              <div class="goods-sub">Scopely</div>
+              <div class="goods-name">{{ detail.goods_name }}</div>
+              <div class="goods-desc">{{ detail.type_name }}</div>
+              <div class="goods-sub">{{ detail.goods_company }}</div>
             </div>
           </div>
-          <div class="link" @click="$router.push('goodsDetail')">查看详情</div>
+          <div
+            class="link"
+            @click="$router.push('goodsDetail?id=' + detail.goods_id)"
+          >
+            查看详情
+          </div>
         </div>
       </div>
       <div class="section">
@@ -45,7 +84,9 @@ const params = ref<{}>({
         </div>
         <div class="data-section">
           <div class="data-item">
-            <div class="number-row">$ 235.83</div>
+            <div class="number-row">
+              $ {{ number.formatMoney(detail.money) }}
+            </div>
             <div class="name-row">
               投放金额
               <CpSvg name="data-1"></CpSvg>
@@ -54,7 +95,7 @@ const params = ref<{}>({
           <div class="data-item progress-item">
             <div class="number-row">
               <div class="progress-wrap">
-                <div class="number">100</div>
+                <div class="number">{{ detail.schedule }}</div>
                 <div class="van-progress" style="height: 5px">
                   <span
                     class="van-progress__portion"
@@ -69,42 +110,50 @@ const params = ref<{}>({
             </div>
           </div>
           <div class="data-item">
-            <div class="number-row">$ 235.83</div>
+            <div class="number-row">
+              $ {{ number.formatMoney(detail.putIn) }}
+            </div>
             <div class="name-row">
               已消耗
               <CpSvg name="data-3"></CpSvg>
             </div>
           </div>
           <div class="data-item">
-            <div class="number-row">$ 0.00</div>
+            <div class="number-row">
+              $ {{ number.formatMoney(detail.wait_putIn) }}
+            </div>
             <div class="name-row">
               待消耗
               <CpSvg name="data-4"></CpSvg>
             </div>
           </div>
           <div class="data-item">
-            <div class="number-row">247</div>
+            <div class="number-row">{{ detail.show_num }}</div>
             <div class="name-row">
               展示数
               <CpSvg name="data-5"></CpSvg>
             </div>
           </div>
           <div class="data-item">
-            <div class="number-row">193</div>
+            <div class="number-row">{{ detail.click_num }}</div>
             <div class="name-row">
               点击数
               <CpSvg name="data-6"></CpSvg>
             </div>
           </div>
           <div class="data-item">
-            <div class="number-row">$ 264.84</div>
+            <div class="number-row">
+              $ {{ number.formatMoney(detail.click_money) }}
+            </div>
             <div class="name-row">
               广告收入
               <CpSvg name="data-7"></CpSvg>
             </div>
           </div>
           <div class="data-item">
-            <div class="number-row">$ +29.01</div>
+            <div class="number-row">
+              $ +{{ number.formatMoney(detail.profit) }}
+            </div>
             <div class="name-row">
               利润
               <CpSvg name="data-8"></CpSvg>
@@ -115,79 +164,42 @@ const params = ref<{}>({
       <div class="section">
         <div class="section-title">投放内容</div>
         <div class="banner-wrap">
-          <CpImage
-            name="https://facebooks.s3.ap-east-1.amazonaws.com/8710f1e50fb14ca3a3dfc8269ec917df.jpeg"
-          ></CpImage>
+          <CpImage :name="detail.image"></CpImage>
         </div>
         <div class="put-desc">
-          Roll the dice and get rich in MONOPOLY GO! Own it all by exploring
-          boards and building cities. Play with friends and family to enjoy this
-          new twist on a classic game! Hit GO! Roll the dice! Earn MONOPOLY
-          money, interact with your friends, family members and fellow Tycoons
-          from around the world as you explore the expanding universe of
-          MONOPOLY GO! It’s the new way to play - board flipping cleanup not
-          required! Take a Break! Escape, enjoy, dream, scheme and stay in touch
-          with this newly reimagined twist on MONOPOLY! Let everyone’s favorite
-          zillionaire, Mr. MONOPOLY, be your guide as you explore new boards
-          themed after world-famous cities, fantastical lands and imaginative
-          locales. So MONOPOLY GO! Experience classic fun and visuals with
-          gameplay fit for your phone! Collect Properties, build Houses and
-          Hotels, pull Chance Cards, and of course, earn that MONOPOLY Money!
-          Play with your favorite game Tokens such as the Racecar, Top Hat,
-          Battleship, and more. Earn more tokens as you go! See MONOPOLY icons
-          like Mr. M, Scottie and Ms. MONOPOLY come to life, and brand new
-          characters too! Your Family Table! Help or hinder! - You and friends
-          can earn easy money with Community Chest and co-op events! Or heist
-          their banks to help yourself get to the top. Don’t feel bad! Collect
-          and trade story-filled Stickers with friends and family and in our
-          MONOPOLY GO! Facebook Trading Groups! Complete gorgeous, clever albums
-          for huge rewards!
+          {{ detail.goods_intro }}
         </div>
         <div class="form-cell-wrap">
-          <div class="cell-item">
-            <div class="label">Promotional Link</div>
-            <div class="content">https://www.monopolygo.com/</div>
-          </div>
-          <div class="cell-item">
-            <div class="label">Ad Display Format</div>
-            <div class="content">Image</div>
-          </div>
-          <div class="cell-item">
-            <div class="label">Conversion Method</div>
-            <div class="content">Landing Page</div>
+          <div class="cell-item" v-for="value in detail.content">
+            <div class="label">{{ value.title }}</div>
+            <div class="content">{{ value.content }}</div>
           </div>
         </div>
       </div>
       <div class="section">
         <div class="section-title">投放规则</div>
         <div class="form-cell-wrap">
-          <div class="cell-item">
-            <div class="label">Ad Placement Strategy</div>
-            <div class="content">CPM</div>
-          </div>
-          <div class="cell-item">
-            <div class="label">Ad Placement Cost</div>
-            <div class="content">Smart Optimization</div>
-          </div>
-          <div class="cell-item">
-            <div class="label">Payment Method</div>
-            <div class="content">CPC</div>
+          <div class="cell-item" v-for="value in detail.rule">
+            <div class="label">{{ value.title }}</div>
+            <div class="content">{{ value.content }}</div>
           </div>
         </div>
       </div>
       <div class="section">
         <div class="section-title">用户定向</div>
         <div class="form-cell-wrap">
-          <div class="cell-item">
-            <div class="label">Location</div>
-            <div class="content">Global</div>
+          <div class="cell-item" v-for="value in detail.orienteering">
+            <div class="label">{{ value.title }}</div>
+            <div class="content">{{ value.content }}</div>
           </div>
         </div>
       </div>
       <div class="section">
         <div class="section-title">
           <div class="title">创建时间</div>
-          <div class="desc"><span>26/08/2025 06:56:17</span></div>
+          <div class="desc">
+            <span>{{ time.formatToMonthDay(detail.create_time, 2) }}</span>
+          </div>
         </div>
       </div>
     </div>

@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import CpPutin from "./components/CpPutin.vue";
-
+import { planListApi } from "@/services/api";
+import { useTime } from "@/composables/common";
+const time = useTime();
 // 定义传参
-const params = ref<{}>({
+const params = ref<PageParams>({
   page: 0,
   pageSize: 10,
 });
@@ -17,22 +19,31 @@ const onLoad = async () => {
   }
   loading.value = true;
   params.value.page++;
-  if (params.value.page >= 11) {
-    finished.value = true;
-  }
-  loading.value = false;
+  await planListApi(params.value)
+    .then((res) => {
+      goodList.value.push(...res.data.list);
+      if (params.value.page >= res.data.total_page) {
+        finished.value = true;
+      }
+      loading.value = false;
+    })
+    .catch(() => {
+      loading.value = false;
+    });
 };
 // 下拉刷新
 const refreshing = ref(false);
 const onRefresh = async () => {
   refreshing.value = false;
 };
+
 // 弹出层-下单
 const childRef = ref(null);
-const updateChildData = () => {
+const updateChildData = (plan_id: number) => {
   if (childRef.value) {
     // 直接修改子组件的变量
     childRef.value.showBottom = true;
+    childRef.value.plan_id = plan_id;
   }
 };
 </script>
@@ -59,31 +70,26 @@ const updateChildData = () => {
         @load="onLoad"
       >
         <div class="plan-items">
-          <div class="plan-card" v-for="item in 3">
+          <div class="plan-card" v-for="item in goodList">
             <div class="plan-header">
               <div class="plan-logo">
                 <CpImage
-                  name="https://facebooks.s3.ap-east-1.amazonaws.com/b3776533beff47a78fb6fdc44d952149.jpg"
+                  :name="item.image"
                   width="3.625rem"
                   height="3.625rem"
                   radius="15%"
                 ></CpImage>
               </div>
               <div class="plan-main-info">
-                <div class="plan-name">Shadowverse</div>
-                <div class="plan-company">Cygames</div>
-                <div class="plan-time">09/13 22:55</div>
+                <div class="plan-name">{{ item.name }}</div>
+                <div class="plan-company">{{ item.company }}</div>
+                <div class="plan-time">
+                  {{ time.formatToMonthDay(item.create_time) }}
+                </div>
               </div>
             </div>
             <div class="plan-desc">
-              Shadowverse employs an anime art style with some illustrations
-              reused from the developer's previous title, Rage of Bahamut, an
-              earlier digital collectible card game released in 2012. The game
-              has been compared favorably with Hearthstone (2014), a difference
-              being that Cygames sought to minimize the impact of randomness on
-              match outcomes. Another difference is Shadowverse's "Evolve" game
-              mechanic which allows players to grant played cards bonus stats
-              and effects at the cost of an evolution point.
+              {{ item.intro }}
             </div>
             <div class="plan-footer">
               <van-button
@@ -91,7 +97,7 @@ const updateChildData = () => {
                 size="small"
                 round
                 class="button button-detail"
-                @click="$router.push('goodsDetail')"
+                @click="$router.push('planDetail?id=' + item.id)"
               >
                 <span class="text-[12px] text-gray-500">查看详情</span>
               </van-button>
@@ -100,7 +106,7 @@ const updateChildData = () => {
                 size="small"
                 round
                 class="button"
-                @click="updateChildData()"
+                @click="updateChildData(item.id)"
               >
                 <span class="text-[12px]">开始投放</span>
               </van-button>

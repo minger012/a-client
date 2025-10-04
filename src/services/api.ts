@@ -1,9 +1,10 @@
-import { http } from "@/http/http";
+import { http, httpLoading } from "@/http/http";
 //注册
 export const registerApi = (params: {
   username: string;
   password: string;
   repassword: string;
+  mobile: string;
   code?: string;
 }) => {
   return http<any>("/login/register", "POST", params);
@@ -26,106 +27,146 @@ export const setLangApi = (lang: langType) => {
   return http<any>("/user/setLang", "POST", { lang });
 };
 
-//获取积分
-export const getScoreApi = () => {
-  return http<any>("/user/getMoney", "POST", {});
+// 获取玩家信息
+export const getUserInfoApi = () => {
+  return http<any>("/user/info", "POST", {});
 };
-//添加银行卡
-export const bankCardAddApi = (
-  name: string,
-  bank: string,
-  cardno: string,
-  password: string
-) => {
-  return http<any>("/user/bankCardAdd", "POST", {
-    name,
-    bank,
-    cardno,
-    password,
-  });
-};
-//银行卡列表
+
+// 获取银行卡
 export const bankCardListApi = () => {
   return http<any>("/user/bankCardList", "POST", {});
 };
-//银行卡删除
-export const bankCardDelApi = (id: number) => {
-  return http<any>("/user/bankCardDel", "POST", { id });
-};
-//提现
-export const withdrawApi = (
-  money: string,
-  password: string,
-  card_id: string
+
+// 修改银行
+export const bankCardAddApi = (
+  methods: string,
+  currency: string,
+  address: string,
+  network: string
 ) => {
-  return http<any>("/user/withdraw", "POST", { money, password, card_id });
+  return http<any>("/user/bankCardAdd", "POST", {
+    methods,
+    currency,
+    address,
+    network,
+  });
 };
-//获取提现列表
-export const withdrawListApi = (
-  params: PageParams & { sTime?: number; eTime?: number }
-) => {
-  return http<any>("/user/withdrawList", "POST", params);
+
+// 提现
+export const withdrawApi = (money: string, password: string) => {
+  return httpLoading<any>("/user/withdraw", "POST", { money, password });
 };
-//获取流水列表
+
+// 获取流水列表
 export const flowListApi = (
   params: PageParams & { type?: number; sTime?: number; eTime?: number }
 ) => {
   return http<any>("/user/flowList", "POST", params);
 };
-//设置密码
+
+// 设置密码
 export const setPassWordApi = (
   orpassword: string,
   password: string,
   repassword: string
 ) => {
-  return http<any>("/user/setPassWord", "POST", {
+  return httpLoading<any>("/user/setPassWord", "POST", {
     orpassword,
     password,
     repassword,
   });
 };
 
-//首页
-export const getIndexApi = () => {
-  return http<any>("/", "POST", {});
-};
-
-//获取当前期
-export const getLotteryNowApi = (id: number) => {
-  return http<any>("/lottery/getLotteryNow", "POST", { id });
-};
-
-//下单
-export const lotteryOrderAddApi = (
-  goods_id: number,
-  period_no: number,
-  money: number,
-  code: string[],
-  count: number
+// 设置交易密码
+export const setPayPassWordApi = (
+  orpassword: string,
+  password: string,
+  repassword: string
 ) => {
-  return http<any>("/order/lotteryOrderAdd", "POST", {
-    goods_id,
-    period_no,
-    money,
-    code,
-    count,
+  return httpLoading<any>("/user/setPayPassWord", "POST", {
+    orpassword,
+    password,
+    repassword,
   });
 };
 
-//获取订单列表
-export const lotteryOrderListApi = (params: OrderPageParams) => {
-  return http<any>("/order/lotteryOrderList", "POST", params);
-};
-//获取订单详情
-export const lotteryOrderDetailApi = (id: number) => {
-  return http<any>("/order/lotteryOrderDetail", "POST", { id });
-};
-//获取商品列表
-export const goodsListApi = () => {
-  return http<any>("/goods/goodsList", "POST", {});
+// 首页
+export const getIndexApi = (id: number) => {
+  return http<any>("", "POST", { id });
 };
 
-//获取配置
+// 下单
+export const planOrderAddApi = (
+  plan_id: string,
+  money: string,
+  pay_password: string,
+  cd: string,
+  cid: string
+) => {
+  return http<any>("/planOrder/add", "POST", {
+    plan_id,
+    money,
+    pay_password,
+    cd,
+    cid,
+  });
+};
+
+// 获取订单列表
+export const planOrderListApi = (params: OrderPageParams) => {
+  return http<any>("/planOrder/list", "POST", params);
+};
+
+// 获取订单详情
+export const planOrderDetailApi = (id: number) => {
+  return http<any>("/planOrder/detail", "POST", { id });
+};
+
+// 获取计划列表
+export const planListApi = (params: PageParams) => {
+  return http<any>("/plan/list", "POST", params);
+};
+
+// 获取计划详情
+export const planDetailApi = (id: number) => {
+  return http<any>("/plan/detail", "POST", { id });
+};
+
+// 获取计划详情
+export const goodsDetailApi = (id: number) => {
+  return http<any>("/goods/detail", "POST", { id });
+};
+
+// 获取配置
 export const getConfigApi = (id: number) => {
   return http<any>("/login/getConfig", "POST", { id });
+};
+
+// 签到
+export const signApi = () => {
+  return http<any>("/user/sign", "POST", {});
+};
+
+// 优惠券列表
+export const getCouponListApi = (params: PageParams, state: number) => {
+  return http<any>("/user/couponList", "POST", { ...params, state });
+};
+
+// 钱包
+export const getwalletApi = () => {
+  return http<any>("/user/wallet", "POST", {});
+};
+
+// 邮件列表
+export const getMailListApi = (
+  params: PageParams,
+  type: number,
+  state: number
+) => {
+  return http<any>("/user/mailList", "POST", { ...params, type, state });
+};
+
+// 获取配置
+export const mailReadApi = (id: number) => {
+  return http<any>("/user/mailRead", "POST", { id });
 };

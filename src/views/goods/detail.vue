@@ -1,71 +1,98 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import CpPutin from "./components/CpPutin.vue";
-
+import { onMounted } from "vue";
+import { useI18n } from "vue-i18n";
+import { useRoute } from "vue-router";
+import { planDetailApi } from "@/services/api";
+import { useTime } from "@/composables/common";
+const time = useTime();
+const { t } = useI18n();
+const route = useRoute();
+const detail = ref<any>();
+const getDetail = async () => {
+  const res = await planDetailApi(route.query.id as unknown as number);
+  detail.value = res.data;
+};
 const childRef = ref(null);
 const updateChildData = () => {
   if (childRef.value) {
     // 直接修改子组件的变量
     childRef.value.showBottom = true;
+    childRef.value.plan_id = route.query.id as unknown as number;
   }
 };
+const onLink = (link: string) => {
+  if (!link) {
+    return;
+  }
+  window.open(link);
+};
+onMounted(() => {
+  getDetail();
+});
 </script>
 <template>
   <CpNavBar> </CpNavBar>
-  <div class="page">
+  <div class="page" v-if="!detail">
+    <div class="flex justify-center mt-20">
+      <van-loading size="24">loading...</van-loading>
+    </div>
+  </div>
+  <div class="page" v-else>
     <div class="px-3">
       <div class="plan-header">
         <div class="plan-logo">
           <CpImage
-            name="https://facebooks.s3.ap-east-1.amazonaws.com/b3776533beff47a78fb6fdc44d952149.jpg"
+            :name="detail.logo"
             width="3.625rem"
             height="3.625rem"
             radius="30%"
           ></CpImage>
         </div>
         <div class="plan-main-info">
-          <div class="plan-name">Shadowverse</div>
-          <div class="plan-company">Cygames</div>
+          <div class="plan-name">{{ detail.name }}</div>
+          <div class="plan-company">{{ detail.company }}</div>
           <div class="plan-company" style="color: #166fe5">
-            Digital collectible card game
+            {{ detail.type_name }}
           </div>
-          <div class="plan-time">09/13 22:55</div>
+          <div class="plan-time">
+            {{ time.formatToMonthDay(detail.create_time) }}
+          </div>
         </div>
       </div>
       <div class="text-base font-bold my-2">游戏简介</div>
       <div class="plan-desc">
-        Shadowverse employs an anime art style with some illustrations reused
-        from the developer's previous title, Rage of Bahamut, an earlier digital
-        collectible card game released in 2012. The game has been compared
-        favorably with Hearthstone (2014), a difference being that Cygames
-        sought to minimize the impact of randomness on match outcomes. Another
-        difference is Shadowverse's "Evolve" game mechanic which allows players
-        to grant played cards bonus stats and effects at the cost of an
-        evolution point.
+        {{ detail.intro }}
       </div>
     </div>
     <div class="w-full bg-slate-100 h-2 mb-4"></div>
     <div class="px-3 mb-4">
       <div class="text-base font-bold my-2">产品截图</div>
-      <div class="grid grid-cols-3 gap-2">
-        <CpImage
-          name="https://facebooks.s3.ap-east-1.amazonaws.com/b3776533beff47a78fb6fdc44d952149.jpg"
-          width="7rem"
-          height="7rem"
-          radius="10%"
-          v-for="value in 4"
-        ></CpImage>
-      </div>
+      <!-- <div class="grid grid-cols-3 gap-2"> -->
+      <CpImage
+        :name="detail.goods_image"
+        width="7rem"
+        height="7rem"
+        radius="10%"
+      ></CpImage>
+      <!-- </div> -->
     </div>
     <div class="w-full bg-slate-100 h-2 mb-4"></div>
     <div class="px-3 mb-4">
       <div class="text-base font-bold my-4">下载链接</div>
       <div class="flex space-x-3">
-        <div class="flex items-center p-2 bg-gray-100 rounded-lg w-[50%]">
+        <div
+          class="flex items-center p-2 bg-gray-100 rounded-lg w-[50%]"
+          @click="onLink(detail.google_play)"
+        >
           <van-icon name="play-circle" color="#4e7cdc" size="20" />
           <span class="text-[12px] ml-2">Google Play</span>
         </div>
-        <div class="flex items-center p-2 bg-gray-100 rounded-lg w-[50%]">
+        <div
+          class="flex items-center p-2 bg-gray-100 rounded-lg w-[50%]"
+          @click="onLink(detail.app_store)"
+        >
           <van-icon name="shop" color="#4e7cdc" size="20" />
           <span class="text-[12px] ml-2">App Store</span>
         </div>
@@ -75,29 +102,9 @@ const updateChildData = () => {
     <div class="px-3 mb-4">
       <div class="text-base font-bold my-4">应用信息</div>
       <div class="form-cell-wrap">
-        <div class="cell-item">
-          <div class="label">Category</div>
-          <div class="content">Games</div>
-        </div>
-        <div class="cell-item">
-          <div class="label">Languages</div>
-          <div class="content">
-            English, Arabic, Dutch, French, German, Italian, Japanese, Korean,
-            Malay, Polish, Portuguese, Simplified Chinese, Spanish, Thai,
-            Traditional Chinese, Turkish
-          </div>
-        </div>
-        <div class="cell-item">
-          <div class="label">Age Rating</div>
-          <div class="content">9+</div>
-        </div>
-        <div class="cell-item">
-          <div class="label">IOS Requires</div>
-          <div class="content">13.3+</div>
-        </div>
-        <div class="cell-item">
-          <div class="label">Android Requires</div>
-          <div class="content">6.0 and up</div>
+        <div class="cell-item" v-for="value in detail.app_info">
+          <div class="label">{{ value.title }}</div>
+          <div class="content">{{ value.content }}</div>
         </div>
       </div>
     </div>

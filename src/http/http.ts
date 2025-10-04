@@ -1,11 +1,11 @@
 import router from "@/router";
 import { useUserStore } from "@/stores/stores";
-import { getLang } from "@/utils"
+import { getLang } from "@/utils";
 import axios from "axios";
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_URL,
-  timeout: 10000,
+  timeout: 20000,
 });
 
 // 请求拦截器
@@ -56,6 +56,24 @@ type Data<T> = {
 };
 
 export const http = <T>(url: string, method: "GET" | "POST", data: any) => {
+  //response 第一个参数没用, 所以在第二个参数传参
+  return instance<any, Data<T>>({
+    url,
+    method,
+    [method == "GET" ? "params" : "data"]: data,
+  });
+};
+
+export const httpLoading = <T>(
+  url: string,
+  method: "GET" | "POST",
+  data: any
+) => {
+  showLoadingToast({
+    message: "loading...",
+    forbidClick: true,
+    duration: -1,
+  });
   //response 第一个参数没用, 所以在第二个参数传参
   return instance<any, Data<T>>({
     url,

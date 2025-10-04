@@ -14,16 +14,24 @@ export const useUserStore = defineStore(
     const delUser = () => {
       user.value = undefined;
     };
-    
-    const siteTitle = ref('')
-    const setSiteTitle = (val:string)=>{
-      siteTitle.value = val
-    }
+
+    const siteTitle = ref("");
+    const setSiteTitle = (val: string) => {
+      siteTitle.value = val;
+    };
 
     const returnUrl = ref("");
     const setReturnUrl = (url: string) => (returnUrl.value = url);
-    
-    return { user, setUser, delUser, returnUrl, setReturnUrl,siteTitle,setSiteTitle };
+
+    return {
+      user,
+      setUser,
+      delUser,
+      returnUrl,
+      setReturnUrl,
+      siteTitle,
+      setSiteTitle,
+    };
   },
   {
     persist: true,

@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { setPayPassWordApi } from "@/services/api";
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
+import { useRoute, useRouter } from "vue-router";
 const showPassword = ref(false);
 const showPassword2 = ref(false);
 const showPassword3 = ref(false);
@@ -13,14 +16,34 @@ const togglePasswordVisibility2 = () => {
 const togglePasswordVisibility3 = () => {
   showPassword3.value = !showPassword3.value;
 };
+const { t } = useI18n();
+const orpassword = ref("");
+const password = ref("");
+const repassword = ref("");
+const route = useRoute();
+const router = useRouter();
+const isJump = route.query.isJump || 0;
+const onSubmit = async () => {
+  await setPayPassWordApi(
+    orpassword.value,
+    password.value,
+    repassword.value
+  ).then((res) => {
+    showToast(res.msg);
+    setTimeout(() => {
+      router.back();
+    }, 1000);
+  });
+};
 </script>
 <template>
   <CpNavBar> </CpNavBar>
   <div class="page">
     <van-form @submit="onSubmit">
       <van-field
+        v-if="isJump == 0"
         left-icon="lock"
-        v-model="username"
+        v-model="orpassword"
         :type="showPassword ? 'text' : 'password'"
         :right-icon="showPassword ? 'eye-o' : 'closed-eye'"
         @click-right-icon="togglePasswordVisibility"
@@ -42,7 +65,7 @@ const togglePasswordVisibility3 = () => {
       />
       <van-field
         left-icon="lock"
-        v-model="password"
+        v-model="repassword"
         :type="showPassword3 ? 'text' : 'password'"
         :right-icon="showPassword3 ? 'eye-o' : 'closed-eye'"
         @click-right-icon="togglePasswordVisibility3"

@@ -1,34 +1,79 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { useNumber, useTime } from "@/composables/common";
+import { getCouponListApi } from "@/services/api";
+import { ref, watch } from "vue";
+const number = useNumber();
+const time = useTime();
 // 定义传参
-const params = ref<{}>({
+const params = ref<PageParams>({
   page: 0,
   pageSize: 10,
 });
+
+const tabsActive = ref(0);
 // 分页加载
 const loading = ref(false);
 const finished = ref(false);
-const goodList = ref<any>([]);
+const CouponList = ref<any>([]);
 const onLoad = async () => {
   if (finished.value) {
     return;
   }
   loading.value = true;
   params.value.page++;
-  if (params.value.page >= 11) {
-    finished.value = true;
-  }
-  loading.value = false;
+  await getCouponListApi(params.value, tabsActive.value)
+    .then((res) => {
+      CouponList.value.push(...res.data.list);
+      if (params.value.page >= res.data.total_page) {
+        finished.value = true;
+      }
+      loading.value = false;
+    })
+    .catch(() => {
+      loading.value = false;
+    });
 };
 // 下拉刷新
 const refreshing = ref(false);
 const onRefresh = async () => {
-  refreshing.value = false;
+  params.value.page = 1;
+  await getCouponListApi(params.value, tabsActive.value)
+    .then((res) => {
+      CouponList.value = res.data.list;
+      refreshing.value = false;
+    })
+    .catch(() => {
+      refreshing.value = false;
+    });
 };
-const tabsActive = ref(0);
+watch(tabsActive, async (newVal) => {
+  params.value.page = 1;
+  CouponList.value = [];
+  refreshing.value = true;
+  await getCouponListApi(params.value, newVal)
+    .then((res) => {
+      CouponList.value = res.data.list;
+      refreshing.value = false;
+    })
+    .catch(() => {
+      refreshing.value = false;
+    });
+});
+let couponTypeName = {
+  1: "增值",
+  2: "抵扣",
+  3: "团队",
+  4: "自定义",
+  5: "固定金额",
+};
+let stateName = {
+  1: "未使用",
+  2: "已使用",
+  3: "已过期",
+};
 </script>
 <template>
-  <CpNavBar title="优惠券"> </CpNavBar>
+  <CpNavBar> </CpNavBar>
   <div class="tab-wrap">
     <van-tabs v-model:active="tabsActive" line-width="5.625rem">
       <van-tab title="全部"></van-tab>
@@ -36,34 +81,50 @@ const tabsActive = ref(0);
       <van-tab title="已使用"></van-tab>
     </van-tabs>
   </div>
-  <van-list
-    v-model:loading="loading"
-    :finished="finished"
-    finished-text="no more"
+  <van-pull-refresh
+    v-model="refreshing"
+    @refresh="onRefresh"
+    pulling-text="Pull down to refresh..."
+    loosing-text="Release to refresh..."
     loading-text="loading..."
-    error-text="fail"
-    @load="onLoad"
   >
-    <div class="coupon-list">
-      <div role="feed" class="van-list" aria-busy="false">
-        <div class="coupon-item used">
-          <div class="item-left">
-            <div class="coupon-type">增值劵</div>
-            <div class="tag"></div>
-          </div>
-          <div class="item-content">
-            <div class="title-line">
-              <div class="title">New user value added 30% coupon</div>
-              <span class="text">已過期</span>
+    <van-list
+      v-model:loading="loading"
+      :finished="finished"
+      finished-text="no more"
+      loading-text="loading..."
+      error-text="fail"
+      @load="onLoad"
+    >
+      <div class="coupon-list">
+        <div role="feed" class="van-list" aria-busy="false">
+          <div
+            class="coupon-item"
+            :class="value.state == 1 ? '' : 'used'"
+            v-for="value in CouponList"
+          >
+            <div class="item-left">
+              <div class="coupon-type">
+                {{ (couponTypeName as any)[value.type] }}
+              </div>
+              <div class="tag"></div>
             </div>
-            <div class="name">Minimum threshold of $5000</div>
-            <div class="time">2025/08/31 09:53:53過期</div>
+            <div class="item-content">
+              <div class="title-line">
+                <div class="title">{{ value.name }}</div>
+                <span class="text">{{ (stateName as any)[value.state] }}</span>
+              </div>
+              <div class="name">{{ value.intro }}</div>
+              <div class="time">
+                {{ time.formatToMonthDay(value.create_time, 1) }} 過期
+              </div>
+            </div>
           </div>
+          <div class="van-list__placeholder"></div>
         </div>
-        <div class="van-list__placeholder"></div>
       </div>
-    </div>
-  </van-list>
+    </van-list>
+  </van-pull-refresh>
 </template>
 <style lang="scss" scoped>
 .tab-wrap {
@@ -156,6 +217,7 @@ const tabsActive = ref(0);
       display: -webkit-box;
       display: -webkit-flex;
       display: flex;
+      justify-content: space-between;
       -webkit-box-orient: vertical;
       -webkit-box-direction: normal;
       -webkit-flex-direction: column;
