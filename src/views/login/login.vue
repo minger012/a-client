@@ -7,7 +7,7 @@ import { usernameRules, passwordRules } from "@/utils/rules";
 const userStore = useUserStore();
 const router = useRouter();
 const username = ref("155555");
-const password = ref("155555");
+const password = ref("123456");
 const onSubmit = async () => {
   showLoadingToast({
     message: "loading...",

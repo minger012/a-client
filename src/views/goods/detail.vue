@@ -44,7 +44,7 @@ onMounted(() => {
       <div class="plan-header">
         <div class="plan-logo">
           <CpImage
-            :name="detail.logo"
+            :name="detail.goods_logo"
             width="3.625rem"
             height="3.625rem"
             radius="30%"
@@ -71,7 +71,7 @@ onMounted(() => {
       <div class="text-base font-bold my-2">产品截图</div>
       <!-- <div class="grid grid-cols-3 gap-2"> -->
       <CpImage
-        :name="detail.goods_image"
+        :name="detail.image"
         width="7rem"
         height="7rem"
         radius="10%"

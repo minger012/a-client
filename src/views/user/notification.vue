@@ -171,8 +171,8 @@ const class3 = {
                   </div>
                 </div>
                 <div class="message-body">
-                  <h3 class="message-title">ni kkk</h3>
-                  <p class="message-text">ni kkk</p>
+                  <h3 class="message-title">{{ value.title }}</h3>
+                  <p class="message-text">{{ value.content }}</p>
                 </div>
               </div>
             </div>

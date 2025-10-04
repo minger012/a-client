@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import vue from "@vitejs/plugin-vue";
 import path from "path"; //@解析根目录
 //vant自动加载
@@ -7,9 +7,11 @@ import Components from "unplugin-vue-components/vite";
 import { VantResolver } from "@vant/auto-import-resolver";
 
 // https://vite.dev/config/
-export default defineConfig(() => {
+export default defineConfig(({ mode, command }) => {
+  // 加载环境变量
+  const env = loadEnv(mode, process.cwd(), "");
   return {
-    base: process.env.VITE_APP_BASE || "/",
+    base: env.VITE_APP_BASE || "/",
     plugins: [
       vue(),
       //vant自动加载
@@ -31,12 +33,11 @@ export default defineConfig(() => {
       host: "0.0.0.0",
       proxy: {
         "/home": {
-          target: "http://137.175.102.158:3001",
-          //target: "http://127.0.0.1:8000",
+          target: env.VITE_APP_domain,
           changeOrigin: true,
         },
         "/upload": {
-          target: "http://137.175.102.158:3001",
+          target: env.VITE_APP_domain,
           changeOrigin: true,
         },
       },

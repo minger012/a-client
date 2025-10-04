@@ -56,7 +56,7 @@ onMounted(() => {
           <div class="goods-content">
             <CpImage
               radius="25%"
-              :name="detail.logo"
+              :name="detail.goods_logo"
               width="4.375rem"
               height="4.375rem"
             ></CpImage>
