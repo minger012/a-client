@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { updateI18nLanguage } from "@/plugins/i18n";
-import { loginOutApi } from "@/services/api";
+import { loginOutApi, setLangApi } from "@/services/api";
 import { useUserStore } from "@/stores/stores";
 import { ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
@@ -39,7 +39,8 @@ const showPicker = ref(false);
 const onConfirm = ({ selectedValues }: any) => {
   showPicker.value = false;
   updateI18nLanguage(selectedValues[0]);
-  location.reload();
+  setLangApi(selectedValues[0]);
+  // location.reload();
 };
 // 退出登录
 const userStore = useUserStore();

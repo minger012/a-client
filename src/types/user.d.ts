@@ -5,16 +5,17 @@ type User = {
   id: string;
   /** 用户名称 */
   username: string;
+  /** 是否有设置收款 */
+  set_card: number;
+  /** 是否有设置支付密码 */
+  set_pay_password: number;
   /** 语言标识 */
-  lang: langType;
+  lang: string;
   /** 最后登录时间 */
   last_login_time: number;
   /** 最后登录IP */
   last_login_ip: string;
 };
-
-// 语言包类型 简体中文 | 英文 | 西班牙
-type langType = "zh-cn" | "zh-tw" | "en-us" | "es-es" | "th-th";
 
 type PageParams = {
   /** 一页几条 */

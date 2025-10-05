@@ -5,14 +5,10 @@ import { onMounted, ref, watch } from "vue";
 const number = useNumber();
 // 签到
 const sign = async () => {
-  showLoadingToast({
-    message: "loading...",
-    forbidClick: true,
-    duration: -1,
-  });
-  await signApi().then(() => {
+  await signApi().then((res) => {
     indexData.value.userData.isSign = 1;
-    closeToast();
+    indexData.value.userData.sign++;
+    showToast(res.msg);
   });
 };
 const copy = () => {

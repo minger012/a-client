@@ -3,7 +3,11 @@ import { ref } from "vue";
 import CpPutin from "./components/CpPutin.vue";
 import { planListApi } from "@/services/api";
 import { useTime } from "@/composables/common";
+import { useUserStore } from "@/stores/stores";
+import { useRouter } from "vue-router";
 const time = useTime();
+const userStore = useUserStore();
+const router = useRouter();
 // 定义传参
 const params = ref<PageParams>({
   page: 0,
@@ -40,6 +44,12 @@ const onRefresh = async () => {
 // 弹出层-下单
 const childRef = ref(null);
 const updateChildData = (plan_id: number) => {
+  // 未设置支付密码
+  if (userStore.user?.set_pay_password != 1) {
+    showToast("请先设置交易密码");
+    router.push("paypassword?isJump=1");
+    return;
+  }
   if (childRef.value) {
     // 直接修改子组件的变量
     childRef.value.showBottom = true;

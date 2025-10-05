@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { bankCardAddApi, bankCardListApi } from "@/services/api";
+import { useUserStore } from "@/stores/stores";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
+const userStore = useUserStore();
 // 提现方式
 const methods = ref("");
 const methodsShowPicker = ref(false);
@@ -52,8 +54,11 @@ const onSubmit = async () => {
     address.value,
     network.value
   ).then((res) => {
+    userStore.setUserCard(1);
     showToast(res.msg);
-    router.back();
+    setTimeout(() => {
+      router.back();
+    }, 1000);
   });
 };
 onMounted(async () => {

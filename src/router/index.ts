@@ -86,6 +86,11 @@ const router = createRouter({
       component: () => import("@/views/user/coupons.vue"),
       meta: { title: "优惠券" },
     },
+    {
+      path: "/level", // 店铺星级
+      component: () => import("@/views/user/coupons.vue"),
+      meta: { title: "店铺星级" },
+    },
   ],
 });
 

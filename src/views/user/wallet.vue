@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { useNumber, useTime } from "@/composables/common";
 import { flowListApi, getwalletApi, withdrawApi } from "@/services/api";
-import { computed, onMounted, ref, watch } from "vue";
+import { useUserStore } from "@/stores/stores";
+import { onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 const time = useTime();
 const { t } = useI18n();
 const number = useNumber();
 const router = useRouter();
+const userStore = useUserStore();
 // 定义传参
 const params = ref<PageParams>({
   page: 0,
@@ -83,14 +85,14 @@ const openWithdrawal = () => {
   if (!walletData?.value) {
     return;
   }
-  if (walletData.value?.set_card == 0) {
+  if (userStore.user?.set_card != 1) {
     showToast("请先绑定提现方式");
     router.push("bindCard");
     return;
   }
-  if (walletData.value?.set_pay_password == 0) {
+  if (userStore.user?.set_pay_password != 1) {
     showToast("请先设置交易密码");
-    router.push("paypassword?isJump==1");
+    router.push("paypassword?isJump=1");
     return;
   }
   showBottom3.value = true;

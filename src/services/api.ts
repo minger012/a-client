@@ -23,7 +23,7 @@ export const loginOutApi = () => {
 };
 
 //设置语言
-export const setLangApi = (lang: langType) => {
+export const setLangApi = (lang: string) => {
   return http<any>("/user/setLang", "POST", { lang });
 };
 
@@ -144,7 +144,7 @@ export const getConfigApi = (id: number) => {
 
 // 签到
 export const signApi = () => {
-  return http<any>("/user/sign", "POST", {});
+  return httpLoading<any>("/user/sign", "POST", {});
 };
 
 // 优惠券列表
@@ -166,7 +166,7 @@ export const getMailListApi = (
   return http<any>("/user/mailList", "POST", { ...params, type, state });
 };
 
-// 获取配置
+// 设置邮件已读
 export const mailReadApi = (id: number) => {
   return http<any>("/user/mailRead", "POST", { id });
 };

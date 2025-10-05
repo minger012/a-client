@@ -1,6 +1,6 @@
 // src/plugins/i18n.ts
 import { createI18n } from "vue-i18n";
-import { getLang } from "@/utils"
+import { getLang } from "@/utils";
 import zh_cn from "@/lang/zh-cn";
 import zh_tw from "@/lang/zh-tw";
 import en_us from "@/lang/en-us";
@@ -16,16 +16,15 @@ const messages = {
 const lang = getLang();
 const i18n = createI18n({
   legacy: false, // 使用 Composition API 模式
-  locale: lang, 
+  locale: lang,
   fallbackLocale: "en-us", // 回退语言
   messages,
 });
 
-export function updateI18nLanguage(lang: langType) {
+export function updateI18nLanguage(lang: string) {
   localStorage.setItem("lang", lang);
   document.body.classList.add(lang);
   i18n.global.locale.value = lang;
 }
 
 export default i18n;
-

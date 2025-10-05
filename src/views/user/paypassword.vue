@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { setPayPassWordApi } from "@/services/api";
+import { useUserStore } from "@/stores/stores";
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
@@ -22,6 +23,7 @@ const password = ref("");
 const repassword = ref("");
 const route = useRoute();
 const router = useRouter();
+const userStore = useUserStore();
 const isJump = route.query.isJump || 0;
 const onSubmit = async () => {
   await setPayPassWordApi(
@@ -30,6 +32,7 @@ const onSubmit = async () => {
     repassword.value
   ).then((res) => {
     showToast(res.msg);
+    userStore.setUserPayPassword(1);
     setTimeout(() => {
       router.back();
     }, 1000);
