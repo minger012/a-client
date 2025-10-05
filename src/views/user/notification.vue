@@ -2,6 +2,9 @@
 import { useTime } from "@/composables/common";
 import { getMailListApi, mailReadApi } from "@/services/api";
 import { ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const time = useTime();
 // 定义传参
 const params = ref<PageParams>({
@@ -76,20 +79,20 @@ watch([value1, value2], async ([newValue1, newValue2]) => {
     });
 });
 const option1 = [
-  { text: "全部消息", value: 0 },
-  { text: "系统公告", value: 1 },
-  { text: "系统维护", value: 2 },
-  { text: "活动通知", value: 3 },
+  { text: t("notification.allMessages"), value: 0 },
+  { text: t("notification.systemAnnouncement"), value: 1 },
+  { text: t("notification.systemMaintenance"), value: 2 },
+  { text: t("notification.activityNotification"), value: 3 },
 ];
 const option2 = [
-  { text: "全部状态", value: 0 },
-  { text: "未读消息", value: 1 },
-  { text: "已读消息", value: 2 },
+  { text: t("notification.allStatus"), value: 0 },
+  { text: t("notification.unreadMessages"), value: 1 },
+  { text: t("notification.readMessages"), value: 2 },
 ];
 const typeName = {
-  1: "系统公告",
-  2: "系统维护",
-  3: "活动通知",
+  1: t("notification.systemAnnouncement"),
+  2: t("notification.systemMaintenance"),
+  3: t("notification.activityNotification"),
 };
 const class1 = {
   1: "icon-blue",
@@ -120,17 +123,20 @@ const class3 = {
       <van-pull-refresh
         v-model="refreshing"
         @refresh="onRefresh"
-        pulling-text="Pull down to refresh..."
-        loosing-text="Release to refresh..."
-        loading-text="loading..."
+        :pulling-text="t('common.pullDownRefresh')"
+        :loosing-text="t('common.releaseRefresh')"
+        :loading-text="t('common.loading')"
       >
-        <van-empty description="暂无消息" v-if="!mailList" />
+        <van-empty
+          :description="t('notification.noMessages')"
+          v-if="!mailList"
+        />
         <van-list
           v-model:loading="loading"
           :finished="finished"
-          finished-text="no more"
-          loading-text="loading..."
-          error-text="fail"
+          :finished-text="t('common.noMore')"
+          :loading-text="t('common.loading')"
+          :error-text="t('common.fail')"
           @load="onLoad"
           v-else
         >

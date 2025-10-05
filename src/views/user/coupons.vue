@@ -2,6 +2,9 @@
 import { useNumber, useTime } from "@/composables/common";
 import { getCouponListApi } from "@/services/api";
 import { ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const number = useNumber();
 const time = useTime();
 // 定义传参
@@ -60,40 +63,40 @@ watch(tabsActive, async (newVal) => {
     });
 });
 let couponTypeName = {
-  1: "增值",
-  2: "抵扣",
-  3: "团队",
-  4: "自定义",
-  5: "固定金额",
+  1: t("coupons.valueAdded"),
+  2: t("coupons.deduction"),
+  3: t("coupons.team"),
+  4: t("coupons.custom"),
+  5: t("coupons.fixedAmount"),
 };
 let stateName = {
-  1: "未使用",
-  2: "已使用",
-  3: "已过期",
+  1: t("coupons.unused"),
+  2: t("coupons.used"),
+  3: t("coupons.isExpired"),
 };
 </script>
 <template>
   <CpNavBar> </CpNavBar>
   <div class="tab-wrap">
     <van-tabs v-model:active="tabsActive" line-width="5.625rem">
-      <van-tab title="全部"></van-tab>
-      <van-tab title="未使用"></van-tab>
-      <van-tab title="已使用"></van-tab>
+      <van-tab :title="t('coupons.all')"></van-tab>
+      <van-tab :title="t('coupons.unused')"></van-tab>
+      <van-tab :title="t('coupons.used')"></van-tab>
     </van-tabs>
   </div>
   <van-pull-refresh
     v-model="refreshing"
     @refresh="onRefresh"
-    pulling-text="Pull down to refresh..."
-    loosing-text="Release to refresh..."
-    loading-text="loading..."
+    :pulling-text="t('common.pullDownRefresh')"
+    :loosing-text="t('common.releaseRefresh')"
+    :loading-text="t('common.loading')"
   >
     <van-list
       v-model:loading="loading"
       :finished="finished"
-      finished-text="no more"
-      loading-text="loading..."
-      error-text="fail"
+      :finished-text="t('common.noMore')"
+      :loading-text="t('common.loading')"
+      :error-text="t('common.fail')"
       @load="onLoad"
     >
       <div class="coupon-list">
@@ -116,7 +119,8 @@ let stateName = {
               </div>
               <div class="name">{{ value.intro }}</div>
               <div class="time">
-                {{ time.formatToMonthDay(value.create_time, 1) }} 過期
+                {{ time.formatToMonthDay(value.create_time, 1) }}
+                {{ t("coupons.expired") }}
               </div>
             </div>
           </div>

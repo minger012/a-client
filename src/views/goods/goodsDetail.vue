@@ -28,7 +28,7 @@ onMounted(() => {
   <CpNavBar> </CpNavBar>
   <div class="page" v-if="!detail">
     <div class="flex justify-center mt-20">
-      <van-loading size="24">loading...</van-loading>
+      <van-loading size="24">{{ t("goodsDetail.loading") }}</van-loading>
     </div>
   </div>
   <div class="page" v-else>
@@ -40,7 +40,7 @@ onMounted(() => {
           height="24.61538vw"
         ></CpImage>
       </div>
-      <div class="title">Fate/Grand Order</div>
+      <div class="title">{{ detail.name }}</div>
       <div class="btn-wrap">
         <CpImage
           name="google-play-nQbvKhbh"
@@ -62,13 +62,13 @@ onMounted(() => {
       </van-swipe>
     </div>
     <div class="section">
-      <div class="section-title">游戏简介</div>
+      <div class="section-title">{{ t("goodsDetail.gameIntroduction") }}</div>
       <div class="put-desc">
         {{ detail.intro }}
       </div>
     </div>
     <div class="section">
-      <div class="section-title">产品详情</div>
+      <div class="section-title">{{ t("goodsDetail.productDetails") }}</div>
       <div class="form-cell-wrap">
         <div class="cell-item" v-for="value in detail.app_info">
           <div class="label">{{ value.title }}</div>

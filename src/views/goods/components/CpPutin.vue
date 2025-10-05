@@ -6,6 +6,9 @@ import {
   planOrderAddApi,
 } from "@/services/api";
 import { onMounted, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const number = useNumber();
 const time = useTime();
 // 下单
@@ -28,7 +31,7 @@ watch(pay_password, (newVal) => {
 const orderAdd = async () => {
   showBottom2.value = false;
   showLoadingToast({
-    message: "loading...",
+    message: t("common.loading"),
     forbidClick: true,
     duration: -1,
   });
@@ -124,16 +127,16 @@ const checkCoupon = (detail: any) => {
   checkCouponData.value = detail;
 };
 let couponTypeName = {
-  1: "增值",
-  2: "抵扣",
-  3: "团队",
-  4: "自定义",
-  5: "固定金额",
+  1: t("putin.valueAdded"),
+  2: t("putin.deduction"),
+  3: t("putin.team"),
+  4: t("putin.custom"),
+  5: t("putin.fixedAmount"),
 };
 let stateName = {
-  1: "未使用",
-  2: "已使用",
-  3: "已过期",
+  1: t("putin.unused"),
+  2: t("putin.used"),
+  3: t("putin.expired"),
 };
 // 暴露变量和方法给父组件
 defineExpose({
@@ -154,7 +157,7 @@ onMounted(async () => {
     :style="{ height: '55%' }"
   >
     <div class="dialog-wrap">
-      <div class="dialog-title">投放金额</div>
+      <div class="dialog-title">{{ t("putin.placementAmount") }}</div>
       <div class="form-wrap">
         <div class="input-wrap">
           <span class="label">$</span>
@@ -166,7 +169,7 @@ onMounted(async () => {
                   type="text"
                   id="van-field-8-input"
                   class="van-field__control"
-                  placeholder="1.00 ~ 2.00"
+                  :placeholder="t('putin.amountPlaceholder')"
                   data-allow-mismatch="attribute"
                   v-model="money"
                 /><!----><!----><!---->
@@ -178,14 +181,18 @@ onMounted(async () => {
         </div>
         <div class="form-tips">
           <span class="count-money"
-            >可用余额 ${{ number.formatMoney(userInfo.money) }}</span
-          ><span class="all-text" @click="money = userInfo.money">全部</span>
+            >{{ t("putin.availableBalance") }} ${{
+              number.formatMoney(userInfo.money)
+            }}</span
+          ><span class="all-text" @click="money = userInfo.money">{{
+            t("putin.all")
+          }}</span>
         </div>
         <div class="coupon-item" @click="showCoupon = true">
-          <span class="title">优惠卷 </span>
+          <span class="title">{{ t("putin.coupon") }} </span>
           <div class="status">
             <span class="status-text">
-              {{ checkCouponData?.name || "未使用" }}
+              {{ checkCouponData?.name || t("putin.unused") }}
             </span>
             <van-icon name="arrow" />
           </div>
@@ -193,7 +200,9 @@ onMounted(async () => {
       </div>
       <div class="mt-6">
         <van-button block round type="primary" @click="showBottom2 = true">
-          <span class="font-[600] text-base">实时投放</span>
+          <span class="font-[600] text-base">{{
+            t("putin.realTimePlacement")
+          }}</span>
         </van-button>
       </div>
     </div>
@@ -207,14 +216,15 @@ onMounted(async () => {
   >
     <div class="placement-modal">
       <div class="modal-header">
-        <h3>投放设置</h3>
+        <h3>{{ t("putin.placementSettings") }}</h3>
       </div>
       <div class="modal-content">
         <div class="plan-summary">
           <h4>Shadowverse</h4>
           <div class="summary-info">
             <div class="summary-item">
-              <span class="label compact">可用余额: </span
+              <span class="label compact"
+                >{{ t("putin.availableBalance") }}: </span
               ><span class="value"
                 >${{ number.formatMoney(userInfo.money) }}</span
               >
@@ -225,33 +235,37 @@ onMounted(async () => {
           <form class="van-form">
             <div class="form-field-group">
               <div class="field-wrapper">
-                <label class="field-label">投放金额</label>
+                <label class="field-label">{{
+                  t("putin.placementAmount")
+                }}</label>
                 <div class="field-input-wrapper">
                   <span class="currency-symbol">$</span
                   ><input
                     class="field-input"
-                    placeholder="请输入投放金额"
+                    :placeholder="t('putin.enterAmount')"
                     v-model="money"
                   />
                 </div>
               </div>
               <div class="field-wrapper">
-                <label class="field-label">投放时长</label>
+                <label class="field-label">{{
+                  t("putin.placementDuration")
+                }}</label>
                 <div class="field-input-wrapper">
                   <input
                     type="number"
                     class="field-input"
-                    placeholder="请输入投放秒数"
+                    :placeholder="t('putin.enterSeconds')"
                     v-model="cd"
-                  /><span class="duration-unit">秒</span>
+                  /><span class="duration-unit">{{ t("putin.seconds") }}</span>
                 </div>
               </div>
             </div>
             <div class="coupon-item" @click="showCoupon = true">
-              <span class="title">优惠卷 </span>
+              <span class="title">{{ t("putin.coupon") }} </span>
               <div class="status">
                 <span class="status-text">
-                  {{ checkCouponData?.name || "未使用" }}
+                  {{ checkCouponData?.name || t("putin.unused") }}
                 </span>
                 <van-icon name="arrow" />
               </div>
@@ -259,11 +273,11 @@ onMounted(async () => {
             <div class="form-tips">
               <div class="tip-item">
                 <van-icon name="info" color="#4e7cdc" />
-                <span>投放金额将从您的可用余额中扣除</span>
+                <span>{{ t("putin.tip1") }}</span>
               </div>
               <div class="tip-item">
                 <van-icon name="info" color="#4e7cdc" />
-                <span>投放期间系统将自动优化广告效果</span>
+                <span>{{ t("putin.tip2") }}</span>
               </div>
             </div>
             <div class="form-actions">
@@ -273,7 +287,9 @@ onMounted(async () => {
                 type="primary"
                 @click="showBottom2 = true"
               >
-                <span class="font-[600] text-base">确认投放</span>
+                <span class="font-[600] text-base">{{
+                  t("putin.confirmPlacement")
+                }}</span>
               </van-button>
             </div>
           </form>
@@ -282,31 +298,31 @@ onMounted(async () => {
     </div>
   </van-popup>
   <van-popup v-model:show="showCoupon" position="bottom" style="height: 100%">
-    <CpNavBar title="优惠券">
+    <CpNavBar :title="t('putin.coupon')">
       <template #left>
         <CpSvg name="back" size="5.12821vw" @click="showCoupon = false"></CpSvg>
       </template>
     </CpNavBar>
     <div class="tab-wrap">
       <van-tabs v-model:active="tabsActive" line-width="5.625rem">
-        <van-tab title="全部"></van-tab>
-        <van-tab title="未使用"></van-tab>
-        <van-tab title="已使用"></van-tab>
+        <van-tab :title="t('putin.all')"></van-tab>
+        <van-tab :title="t('putin.unused')"></van-tab>
+        <van-tab :title="t('putin.used')"></van-tab>
       </van-tabs>
     </div>
     <van-pull-refresh
       v-model="refreshing"
       @refresh="onRefresh"
-      pulling-text="Pull down to refresh..."
-      loosing-text="Release to refresh..."
-      loading-text="loading..."
+      :pulling-text="t('common.pullDownRefresh')"
+      :loosing-text="t('common.releaseRefresh')"
+      :loading-text="t('common.loading')"
     >
       <van-list
         v-model:loading="loading"
         :finished="finished"
-        finished-text="no more"
-        loading-text="loading..."
-        error-text="fail"
+        :finished-text="t('common.noMore')"
+        :loading-text="t('common.loading')"
+        :error-text="t('common.fail')"
         @load="onLoad"
       >
         <div class="coupon-list">
@@ -332,7 +348,8 @@ onMounted(async () => {
                 </div>
                 <div class="name">{{ value.intro }}</div>
                 <div class="time">
-                  {{ time.formatToMonthDay(value.create_time, 1) }} 過期
+                  {{ time.formatToMonthDay(value.create_time, 1) }}
+                  {{ t("putin.expired") }}
                 </div>
               </div>
             </div>
@@ -349,8 +366,8 @@ onMounted(async () => {
     :style="{ height: '95%' }"
   >
     <div class="dialog-wrap">
-      <div class="dialog-title">交易密码</div>
-      <div class="desc">请输入您的交易密码</div>
+      <div class="dialog-title">{{ t("putin.transactionPassword") }}</div>
+      <div class="desc">{{ t("putin.enterTransactionPassword") }}</div>
       <!-- 密码输入框 -->
       <van-password-input :value="pay_password" :length="6" />
       <van-number-keyboard v-model="pay_password" :show="true" />
@@ -362,7 +379,7 @@ onMounted(async () => {
         :disabled="disabled"
         @click="orderAdd()"
       >
-        <span class="text-sm">确认</span>
+        <span class="text-sm">{{ t("putin.confirm") }}</span>
       </van-button>
     </div>
   </van-popup>

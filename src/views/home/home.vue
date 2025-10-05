@@ -2,7 +2,11 @@
 import { useNumber } from "@/composables/common";
 import { getIndexApi, signApi } from "@/services/api";
 import { onMounted, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const number = useNumber();
+
 // 签到
 const sign = async () => {
   await signApi().then((res) => {
@@ -12,7 +16,7 @@ const sign = async () => {
   });
 };
 const copy = () => {
-  showToast("复制成功");
+  showToast(t("home.copySuccess"));
 };
 
 // 首页数据
@@ -48,10 +52,14 @@ onMounted(async () => {
     </div>
     <div class="ml-5 flex-1">
       <div>{{ indexData?.userData.username }}</div>
-      <div class="tag">信誉分：{{ indexData?.userData.score }}</div>
-      <div class="tag">签到次数：{{ indexData?.userData.sign }}</div>
       <div class="tag">
-        店铺星级：
+        {{ t("home.creditScore") }}：{{ indexData?.userData.score }}
+      </div>
+      <div class="tag">
+        {{ t("home.signInCount") }}：{{ indexData?.userData.sign }}
+      </div>
+      <div class="tag">
+        {{ t("home.storeRating") }}：
         <CpImage
           name="star"
           width="12px"
@@ -68,13 +76,13 @@ onMounted(async () => {
         class="button-sign"
         v-if="!indexData || indexData?.userData.isSign == 1"
       >
-        <span class="text-[12px] text-gray-400">已签到</span>
+        <span class="text-[12px] text-gray-400">{{ t("home.signedIn") }}</span>
       </van-button>
       <van-button type="primary" size="small" @click="sign()" v-else>
-        <span class="text-[12px]">签到</span>
+        <span class="text-[12px]">{{ t("home.signIn") }}</span>
       </van-button>
       <van-button type="primary" size="small" @click="$router.push('wallet')">
-        <span class="text-[12px]">钱包</span>
+        <span class="text-[12px]">{{ t("home.wallet") }}</span>
       </van-button>
     </div>
   </div>
@@ -83,12 +91,12 @@ onMounted(async () => {
       <van-icon name="friends" size="22.5" color="#fff" />
     </div>
     <div class="content">
-      <div class="label">邀请码</div>
+      <div class="label">{{ t("home.invitationCode") }}</div>
       <div class="code">DZHY9SMYX</div>
     </div>
     <div class="copy-hint">
       <van-icon name="description" size="14" color="#4e7cdc" />
-      <span class="copy-text" @click="copy()">复制</span>
+      <span class="copy-text" @click="copy()">{{ t("home.copy") }}</span>
     </div>
   </div>
   <div class="banner-wrap">
@@ -99,34 +107,34 @@ onMounted(async () => {
         class="banner-image"
       />
       <div class="title-wrap">
-        <div class="title">计划投放广场</div>
-        <div class="desc">获取丰厚投放利润</div>
+        <div class="title">{{ t("home.planLaunchPlaza") }}</div>
+        <div class="desc">{{ t("home.getRichProfits") }}</div>
       </div>
     </div>
     <div class="banner" @click="$router.push('order')">
       <img
         src="@/assets/img/banner2-FQGNIWdl.png"
-        alt="Plan Management	"
+        alt="Plan Management"
         class="banner-image"
       />
       <div class="title-wrap">
-        <div class="title">计划管理</div>
+        <div class="title">{{ t("home.planManagement") }}</div>
       </div>
     </div>
   </div>
   <div class="tab-wrap">
     <van-tabs v-model:active="tabsActive" line-width="5.625rem">
-      <van-tab title="今日"></van-tab>
-      <van-tab title="本周"></van-tab>
-      <van-tab title="本月"></van-tab>
-      <van-tab title="所有"></van-tab>
+      <van-tab :title="t('home.today')"></van-tab>
+      <van-tab :title="t('home.thisWeek')"></van-tab>
+      <van-tab :title="t('home.thisMonth')"></van-tab>
+      <van-tab :title="t('home.all')"></van-tab>
     </van-tabs>
   </div>
   <div class="data-view">
     <div class="title-wrap">
-      <div class="title">数据概览</div>
+      <div class="title">{{ t("home.dataOverview") }}</div>
       <div class="desc" @click="getIndexData(tabsActive)">
-        <span>数据每30s更新一次</span>
+        <span>{{ t("home.dataUpdateHint") }}</span>
         <CpSvg name="refresh"></CpSvg>
       </div>
     </div>
@@ -136,14 +144,14 @@ onMounted(async () => {
           $ {{ number.formatMoney(indexData?.planOrderData.money) }}
         </div>
         <div class="name-row">
-          <span>投放金额</span>
+          <span>{{ t("home.placementAmount") }}</span>
           <CpSvg name="data-1"></CpSvg>
         </div>
       </div>
       <div class="data-item">
         <div class="number-row">{{ indexData?.planOrderData.count || 0 }}</div>
         <div class="name-row">
-          <span>投放订单</span>
+          <span>{{ t("home.placementOrders") }}</span>
           <CpSvg name="data-2"></CpSvg>
         </div>
       </div>
@@ -152,7 +160,7 @@ onMounted(async () => {
           $ {{ number.formatMoney(indexData?.planOrderData.putIn) }}
         </div>
         <div class="name-row">
-          <span>已消耗</span>
+          <span>{{ t("home.consumed") }}</span>
           <CpSvg name="data-3"></CpSvg>
         </div>
       </div>
@@ -161,7 +169,7 @@ onMounted(async () => {
           $ {{ number.formatMoney(indexData?.planOrderData.wait_putIn) }}
         </div>
         <div class="name-row">
-          <span>待消耗</span>
+          <span>{{ t("home.pendingConsumption") }}</span>
           <CpSvg name="data-4"></CpSvg>
         </div>
       </div>
@@ -170,7 +178,7 @@ onMounted(async () => {
           {{ indexData?.planOrderData.show_num || 0 }}
         </div>
         <div class="name-row">
-          <span>展示数</span>
+          <span>{{ t("home.impressions") }}</span>
           <CpSvg name="data-5"></CpSvg>
         </div>
       </div>
@@ -179,7 +187,7 @@ onMounted(async () => {
           {{ indexData?.planOrderData.click_num || 0 }}
         </div>
         <div class="name-row">
-          <span>点击数</span>
+          <span>{{ t("home.clicks") }}</span>
           <CpSvg name="data-6"></CpSvg>
         </div>
       </div>
@@ -188,7 +196,7 @@ onMounted(async () => {
           $ {{ number.formatMoney(indexData?.planOrderData.click_money) }}
         </div>
         <div class="name-row">
-          <span>广告收入</span>
+          <span>{{ t("home.adRevenue") }}</span>
           <CpSvg name="data-7"></CpSvg>
         </div>
       </div>
@@ -197,7 +205,7 @@ onMounted(async () => {
           $ {{ number.formatMoney(indexData?.planOrderData.profit) }}
         </div>
         <div class="name-row">
-          <span>利润</span>
+          <span>{{ t("home.profit") }}</span>
           <CpSvg name="data-8"></CpSvg>
         </div>
       </div>
@@ -206,21 +214,21 @@ onMounted(async () => {
   <div class="tab-bar">
     <div class="tab-bar-item" @click="$router.push('coupons')">
       <CpSvg name="discount-shape" size="5vw"></CpSvg>
-      <div class="name">优惠卷</div>
+      <div class="name">{{ t("home.coupons") }}</div>
     </div>
     <!-- <div class="tab-bar-item">
       <svg aria-hidden="true" class="svg-icon" style="width: 5vw; height: 5vw">
         <use href="#icon-device-message" fill="#333"></use>
       </svg>
-      <div class="name">意见反馈</div>
+      <div class="name">{{ t('home.feedback') }}</div>
     </div> -->
     <div class="tab-bar-item" @click="$router.push('password')">
       <CpSvg name="edit-password" size="5vw"></CpSvg>
-      <div class="name">修改登录密码</div>
+      <div class="name">{{ t("home.changeLoginPassword") }}</div>
     </div>
   </div>
   <div class="section">
-    <div class="section-title">常见问题</div>
+    <div class="section-title">{{ t("home.faq") }}</div>
     <div class="question-list">
       <!---->
       <div class="question-item" @click="$router.push('news?id=1')">

@@ -3,12 +3,15 @@ import { bankCardAddApi, bankCardListApi } from "@/services/api";
 import { useUserStore } from "@/stores/stores";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const router = useRouter();
 const userStore = useUserStore();
 // 提现方式
 const methods = ref("");
 const methodsShowPicker = ref(false);
-const methodsColumns = [{ text: "Crypto", value: "Crypto" }];
+const methodsColumns = [{ text: t("bindCard.crypto"), value: "Crypto" }];
 const methodsOnConfirm = ({ selectedOptions }: any) => {
   methods.value = selectedOptions[0]?.text;
   methodsShowPicker.value = false;
@@ -44,7 +47,7 @@ const networkOnConfirm = ({ selectedOptions }: any) => {
 // 提交
 const onSubmit = async () => {
   showLoadingToast({
-    message: "loading...",
+    message: t("common.loading"),
     forbidClick: true,
     duration: -1,
   });
@@ -79,8 +82,8 @@ onMounted(async () => {
         is-link
         readonly
         name="picker"
-        label="提现方式"
-        placeholder="请选择"
+        :label="t('bindCard.withdrawalMethod')"
+        :placeholder="t('bindCard.pleaseSelect')"
         @click="methodsShowPicker = true"
       />
       <van-popup
@@ -99,8 +102,8 @@ onMounted(async () => {
         is-link
         readonly
         name="picker"
-        label="货币类型"
-        placeholder="请选择"
+        :label="t('bindCard.currencyType')"
+        :placeholder="t('bindCard.pleaseSelect')"
         @click="currencyShowPicker = true"
       />
       <van-popup
@@ -117,16 +120,16 @@ onMounted(async () => {
       <van-field
         v-model="address"
         type="text"
-        label="钱包地址"
-        placeholder="请输入"
+        :label="t('bindCard.walletAddress')"
+        :placeholder="t('bindCard.pleaseEnter')"
       />
       <van-field
         v-model="network"
         is-link
         readonly
         name="picker"
-        label="网络"
-        placeholder="请选择"
+        :label="t('bindCard.network')"
+        :placeholder="t('bindCard.pleaseSelect')"
         @click="networkShowPicker = true"
       />
       <van-popup
@@ -142,7 +145,7 @@ onMounted(async () => {
       </van-popup>
       <div class="mt-8 px-4">
         <van-button round block type="primary" native-type="submit">
-          <span class="text-base">提交</span>
+          <span class="text-base">{{ t("bindCard.submit") }}</span>
         </van-button>
       </div>
     </van-form>

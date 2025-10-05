@@ -20,12 +20,12 @@ const getDetail = async () => {
     });
 };
 let stateName = {
-  0: "待投放",
-  1: "匹配中",
-  2: "投放中",
-  3: "投放失败",
-  4: "等待结算",
-  5: "结算成功",
+  0: t("orderDetail.pendingPlacement"),
+  1: t("orderDetail.matching"),
+  2: t("orderDetail.placing"),
+  3: t("orderDetail.placementFailed"),
+  4: t("orderDetail.waitingSettlement"),
+  5: t("orderDetail.settlementSuccess"),
 };
 onMounted(() => {
   getDetail();
@@ -35,7 +35,7 @@ onMounted(() => {
   <CpNavBar> </CpNavBar>
   <div class="page" v-if="!detail">
     <div class="flex justify-center mt-20">
-      <van-loading size="24">loading...</van-loading>
+      <van-loading size="24">{{ t("common.loading") }}</van-loading>
     </div>
   </div>
   <div class="page" v-else>
@@ -51,7 +51,7 @@ onMounted(() => {
         ></CpSvg>
       </div>
       <div class="section">
-        <div class="section-title">投放产品</div>
+        <div class="section-title">{{ t("orderDetail.placementProduct") }}</div>
         <div class="put-goods">
           <div class="goods-content">
             <CpImage
@@ -70,15 +70,15 @@ onMounted(() => {
             class="link"
             @click="$router.push('goodsDetail?id=' + detail.goods_id)"
           >
-            查看详情
+            {{ t("orderDetail.viewDetails") }}
           </div>
         </div>
       </div>
       <div class="section">
         <div class="section-title">
-          <div class="title">数据概览</div>
+          <div class="title">{{ t("orderDetail.dataOverview") }}</div>
           <div class="desc space-x-1">
-            <span>数据每30s更新一次</span>
+            <span>{{ t("orderDetail.dataUpdateHint") }}</span>
             <CpSvg name="refresh" size="1rem"></CpSvg>
           </div>
         </div>
@@ -88,7 +88,7 @@ onMounted(() => {
               $ {{ number.formatMoney(detail.money) }}
             </div>
             <div class="name-row">
-              投放金额
+              {{ t("orderDetail.placementAmount") }}
               <CpSvg name="data-1"></CpSvg>
             </div>
           </div>
@@ -105,7 +105,7 @@ onMounted(() => {
               </div>
             </div>
             <div class="name-row">
-              投放进度
+              {{ t("orderDetail.placementProgress") }}
               <CpSvg name="data-2"></CpSvg>
             </div>
           </div>
@@ -114,7 +114,7 @@ onMounted(() => {
               $ {{ number.formatMoney(detail.putIn) }}
             </div>
             <div class="name-row">
-              已消耗
+              {{ t("orderDetail.consumed") }}
               <CpSvg name="data-3"></CpSvg>
             </div>
           </div>
@@ -123,21 +123,21 @@ onMounted(() => {
               $ {{ number.formatMoney(detail.wait_putIn) }}
             </div>
             <div class="name-row">
-              待消耗
+              {{ t("orderDetail.pendingConsumption") }}
               <CpSvg name="data-4"></CpSvg>
             </div>
           </div>
           <div class="data-item">
             <div class="number-row">{{ detail.show_num }}</div>
             <div class="name-row">
-              展示数
+              {{ t("orderDetail.impressions") }}
               <CpSvg name="data-5"></CpSvg>
             </div>
           </div>
           <div class="data-item">
             <div class="number-row">{{ detail.click_num }}</div>
             <div class="name-row">
-              点击数
+              {{ t("orderDetail.clicks") }}
               <CpSvg name="data-6"></CpSvg>
             </div>
           </div>
@@ -146,7 +146,7 @@ onMounted(() => {
               $ {{ number.formatMoney(detail.click_money) }}
             </div>
             <div class="name-row">
-              广告收入
+              {{ t("orderDetail.adRevenue") }}
               <CpSvg name="data-7"></CpSvg>
             </div>
           </div>
@@ -155,14 +155,14 @@ onMounted(() => {
               $ +{{ number.formatMoney(detail.profit) }}
             </div>
             <div class="name-row">
-              利润
+              {{ t("orderDetail.profit") }}
               <CpSvg name="data-8"></CpSvg>
             </div>
           </div>
         </div>
       </div>
       <div class="section">
-        <div class="section-title">投放内容</div>
+        <div class="section-title">{{ t("orderDetail.placementContent") }}</div>
         <div class="banner-wrap">
           <CpImage :name="detail.image"></CpImage>
         </div>
@@ -177,7 +177,7 @@ onMounted(() => {
         </div>
       </div>
       <div class="section">
-        <div class="section-title">投放规则</div>
+        <div class="section-title">{{ t("orderDetail.placementRules") }}</div>
         <div class="form-cell-wrap">
           <div class="cell-item" v-for="value in detail.rule">
             <div class="label">{{ value.title }}</div>
@@ -186,7 +186,7 @@ onMounted(() => {
         </div>
       </div>
       <div class="section">
-        <div class="section-title">用户定向</div>
+        <div class="section-title">{{ t("orderDetail.userTargeting") }}</div>
         <div class="form-cell-wrap">
           <div class="cell-item" v-for="value in detail.orienteering">
             <div class="label">{{ value.title }}</div>
@@ -196,7 +196,7 @@ onMounted(() => {
       </div>
       <div class="section">
         <div class="section-title">
-          <div class="title">创建时间</div>
+          <div class="title">{{ t("orderDetail.createTime") }}</div>
           <div class="desc">
             <span>{{ time.formatToMonthDay(detail.create_time, 2) }}</span>
           </div>

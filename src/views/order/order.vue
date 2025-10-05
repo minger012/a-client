@@ -49,18 +49,11 @@ const onRefresh = async () => {
     });
 };
 watch(tabsActive, async (newVal: OrderListType) => {
-  params.value.page = 1;
+  params.value.page = 0;
   params.value.type = newVal;
   planOrderList.value = [];
-  refreshing.value = true;
-  await planOrderListApi(params.value)
-    .then((res) => {
-      planOrderList.value = res.data.list;
-      refreshing.value = false;
-    })
-    .catch(() => {
-      refreshing.value = false;
-    });
+  finished.value = false;
+  onLoad();
 });
 // 弹出层-下单
 const childRef = ref(null);
@@ -72,16 +65,16 @@ const updateChildData = (plan_id: number) => {
   }
 };
 let formName = {
-  1: "官方推送",
-  2: "非官方推送",
+  1: t("order.officialPush"),
+  2: t("order.unofficialPush"),
 };
 let stateName = {
-  0: "待投放",
-  1: "匹配中",
-  2: "投放中",
-  3: "投放失败",
-  4: "等待结算",
-  5: "结算成功",
+  0: t("order.pendingPlacement"),
+  1: t("order.matching"),
+  2: t("order.placing"),
+  3: t("order.placementFailed"),
+  4: t("order.waitingSettlement"),
+  5: t("order.settlementSuccess"),
 };
 </script>
 <template>
@@ -89,28 +82,28 @@ let stateName = {
   <div class="page">
     <div class="tab-wrap">
       <van-tabs v-model:active="tabsActive">
-        <van-tab title="全部"></van-tab>
-        <van-tab title="待投放"></van-tab>
-        <van-tab title="匹配中"></van-tab>
-        <van-tab title="投放中"></van-tab>
-        <van-tab title="投放失败"></van-tab>
-        <van-tab title="投放完成"></van-tab>
+        <van-tab :title="t('order.all')"></van-tab>
+        <van-tab :title="t('order.pendingPlacement')"></van-tab>
+        <van-tab :title="t('order.matching')"></van-tab>
+        <van-tab :title="t('order.placing')"></van-tab>
+        <van-tab :title="t('order.placementFailed')"></van-tab>
+        <van-tab :title="t('order.placementCompleted')"></van-tab>
       </van-tabs>
     </div>
     <div class="p-4">
       <van-pull-refresh
         v-model="refreshing"
         @refresh="onRefresh"
-        pulling-text="Pull down to refresh..."
-        loosing-text="Release to refresh..."
-        loading-text="loading..."
+        :pulling-text="t('common.pullDownRefresh')"
+        :loosing-text="t('common.releaseRefresh')"
+        :loading-text="t('common.loading')"
       >
         <van-list
           v-model:loading="loading"
           :finished="finished"
-          finished-text="no more"
-          loading-text="loading..."
-          error-text="fail"
+          :finished-text="t('common.noMore')"
+          :loading-text="t('common.loading')"
+          :error-text="t('common.fail')"
           @load="onLoad"
         >
           <div
@@ -120,7 +113,8 @@ let stateName = {
           >
             <div class="push-tag">{{ (formName as any)[value.form] }}</div>
             <div class="title-line">
-              <span class="title">计划编号: {{ value.order_no }}</span
+              <span class="title"
+                >{{ t("order.planNumber") }}: {{ value.order_no }}</span
               ><span class="status">{{ (stateName as any)[value.state] }}</span>
             </div>
             <div class="plan-content">
@@ -162,8 +156,8 @@ let stateName = {
                   </div>
                 </div>
                 <div class="app-tag">
-                  <div class="tag">視頻</div>
-                  <div class="tag">落地頁</div>
+                  <div class="tag">{{ t("order.video") }}</div>
+                  <div class="tag">{{ t("order.landingPage") }}</div>
                 </div>
               </div>
             </div>
@@ -172,11 +166,11 @@ let stateName = {
             </div>
             <div class="put-wrap">
               <div class="put-item">
-                <span class="label">投放金額</span
+                <span class="label">{{ t("order.placementAmount") }}</span
                 ><span class="value">$ {{ value.money }}</span>
               </div>
               <div class="put-item">
-                <span class="label">投放進度</span>
+                <span class="label">{{ t("order.placementProgress") }}</span>
                 <div class="progress">
                   <van-progress :percentage="100" style="height: 5px" />
 
@@ -186,7 +180,7 @@ let stateName = {
             </div>
             <div class="title-line mt-2">
               <span class="title">
-                創建時間:
+                {{ t("order.createTime") }}:
                 {{ time.formatToMonthDay(value.create_time, 2) }}</span
               >
             </div>
@@ -199,7 +193,7 @@ let stateName = {
                 @click="updateChildData(value.plan_id)"
                 style="width: 6.5rem; height: 2.125rem; z-index: 999"
               >
-                <span class="text-[3.2vw]">投放</span>
+                <span class="text-[3.2vw]">{{ t("order.placement") }}</span>
               </van-button>
             </div>
           </div>

@@ -7,11 +7,11 @@ export const registerApi = (params: {
   mobile: string;
   code?: string;
 }) => {
-  return http<any>("/login/register", "POST", params);
+  return httpLoading<any>("/login/register", "POST", params);
 };
 //登录
 export const loginApi = (username: string, password: string) => {
-  return http<User>("/login/login", "POST", {
+  return httpLoading<User>("/login/login", "POST", {
     username,
     password,
   });
@@ -70,7 +70,7 @@ export const setPassWordApi = (
   password: string,
   repassword: string
 ) => {
-  return httpLoading<any>("/user/setPassWord", "POST", {
+  return http<any>("/user/setPassWord", "POST", {
     orpassword,
     password,
     repassword,
@@ -83,7 +83,7 @@ export const setPayPassWordApi = (
   password: string,
   repassword: string
 ) => {
-  return httpLoading<any>("/user/setPayPassWord", "POST", {
+  return http<any>("/user/setPayPassWord", "POST", {
     orpassword,
     password,
     repassword,

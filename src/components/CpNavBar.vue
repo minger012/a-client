@@ -40,7 +40,7 @@ const onConfirm = ({ selectedValues }: any) => {
   showPicker.value = false;
   updateI18nLanguage(selectedValues[0]);
   setLangApi(selectedValues[0]);
-  // location.reload();
+  location.reload();
 };
 // 退出登录
 const userStore = useUserStore();

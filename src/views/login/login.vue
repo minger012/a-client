@@ -4,16 +4,14 @@ import { useUserStore } from "@/stores/stores";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { usernameRules, passwordRules } from "@/utils/rules";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const userStore = useUserStore();
 const router = useRouter();
 const username = ref("155555");
 const password = ref("123456");
 const onSubmit = async () => {
-  showLoadingToast({
-    message: "loading...",
-    forbidClick: true,
-    duration: -1,
-  });
   await loginApi(username.value, password.value).then((res) => {
     userStore.setUser(res.data);
     closeToast();
@@ -30,8 +28,12 @@ const onSubmit = async () => {
       <div class="flex justify-center mt-16">
         <CpImage name="logo-C8lBymrN" width="10rem" height="7.75rem"></CpImage>
       </div>
-      <div class="text-[1.75rem] font-bold mt-6">欢迎回来</div>
-      <div class="text-base text-gray-500 mt-3">登录您的账号以继续</div>
+      <div class="text-[1.75rem] font-bold mt-6">
+        {{ t("login.welcomeBack") }}
+      </div>
+      <div class="text-base text-gray-500 mt-3">
+        {{ t("login.continueHint") }}
+      </div>
     </div>
     <div class="mt-16">
       <!-- 表单 -->
@@ -40,13 +42,13 @@ const onSubmit = async () => {
           <van-field
             v-model="username"
             left-icon="user-o"
-            placeholder="请输入用户名"
+            :placeholder="t('login.enterUsername')"
             :rules="usernameRules"
           />
           <van-field
             v-model="password"
             left-icon="shield-o"
-            placeholder="请输入密码"
+            :placeholder="t('login.enterPassword')"
             :rules="passwordRules"
           />
         </van-cell-group>
@@ -58,7 +60,7 @@ const onSubmit = async () => {
             type="primary"
             @click="onSubmit()"
           >
-            <span class="font-[600] text-base">登录</span>
+            <span class="font-[600] text-base">{{ t("login.login") }}</span>
           </van-button>
         </div>
       </van-form>
@@ -66,7 +68,7 @@ const onSubmit = async () => {
         class="flex justify-center items-center mt-12 text-primary text-[15px] pb-4"
         @click="$router.push('register')"
       >
-        还没有账号？ 立即注册
+        {{ t("login.noAccount") }} {{ t("login.registerNow") }}
       </div>
     </div>
   </div>

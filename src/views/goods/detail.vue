@@ -36,7 +36,7 @@ onMounted(() => {
   <CpNavBar> </CpNavBar>
   <div class="page" v-if="!detail">
     <div class="flex justify-center mt-20">
-      <van-loading size="24">loading...</van-loading>
+      <van-loading size="24">{{ t("planDetail.loading") }}</van-loading>
     </div>
   </div>
   <div class="page" v-else>
@@ -61,14 +61,18 @@ onMounted(() => {
           </div>
         </div>
       </div>
-      <div class="text-base font-bold my-2">游戏简介</div>
+      <div class="text-base font-bold my-2">
+        {{ t("planDetail.gameIntroduction") }}
+      </div>
       <div class="plan-desc">
         {{ detail.intro }}
       </div>
     </div>
     <div class="w-full bg-slate-100 h-2 mb-4"></div>
     <div class="px-3 mb-4">
-      <div class="text-base font-bold my-2">产品截图</div>
+      <div class="text-base font-bold my-2">
+        {{ t("planDetail.productScreenshots") }}
+      </div>
       <!-- <div class="grid grid-cols-3 gap-2"> -->
       <CpImage
         :name="detail.image"
@@ -80,7 +84,9 @@ onMounted(() => {
     </div>
     <div class="w-full bg-slate-100 h-2 mb-4"></div>
     <div class="px-3 mb-4">
-      <div class="text-base font-bold my-4">下载链接</div>
+      <div class="text-base font-bold my-4">
+        {{ t("planDetail.downloadLinks") }}
+      </div>
       <div class="flex space-x-3">
         <div
           class="flex items-center p-2 bg-gray-100 rounded-lg w-[50%]"
@@ -100,7 +106,7 @@ onMounted(() => {
     </div>
     <div class="w-full bg-slate-100 h-2 mb-4"></div>
     <div class="px-3 mb-4">
-      <div class="text-base font-bold my-4">应用信息</div>
+      <div class="text-base font-bold my-4">{{ t("planDetail.appInfo") }}</div>
       <div class="form-cell-wrap">
         <div class="cell-item" v-for="value in detail.app_info">
           <div class="label">{{ value.title }}</div>
@@ -117,7 +123,7 @@ onMounted(() => {
         type="primary"
         @click="updateChildData()"
       >
-        <span class="text-base">开始投放</span>
+        <span class="text-base">{{ t("planDetail.startLaunch") }}</span>
       </van-button>
     </div>
   </div>

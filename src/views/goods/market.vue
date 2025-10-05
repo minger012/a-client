@@ -5,6 +5,9 @@ import { planListApi } from "@/services/api";
 import { useTime } from "@/composables/common";
 import { useUserStore } from "@/stores/stores";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const time = useTime();
 const userStore = useUserStore();
 const router = useRouter();
@@ -38,7 +41,15 @@ const onLoad = async () => {
 // 下拉刷新
 const refreshing = ref(false);
 const onRefresh = async () => {
-  refreshing.value = false;
+  params.value.page = 1;
+  await planListApi(params.value)
+    .then((res) => {
+      goodList.value = res.data.list;
+      refreshing.value = false;
+    })
+    .catch(() => {
+      refreshing.value = false;
+    });
 };
 
 // 弹出层-下单
@@ -46,7 +57,7 @@ const childRef = ref(null);
 const updateChildData = (plan_id: number) => {
   // 未设置支付密码
   if (userStore.user?.set_pay_password != 1) {
-    showToast("请先设置交易密码");
+    showToast(t("market.setPayPasswordHint"));
     router.push("paypassword?isJump=1");
     return;
   }
@@ -61,22 +72,22 @@ const updateChildData = (plan_id: number) => {
   <CpNavBar> </CpNavBar>
   <div class="page">
     <div class="header-info">
-      <div class="title">计划投放广场</div>
-      <div class="description">选择合适的投放计划，获取丰厚投放利润</div>
+      <div class="title">{{ t("market.planLaunchPlaza") }}</div>
+      <div class="description">{{ t("market.choosePlanHint") }}</div>
     </div>
     <van-pull-refresh
       v-model="refreshing"
       @refresh="onRefresh"
-      pulling-text="Pull down to refresh..."
-      loosing-text="Release to refresh..."
-      loading-text="loading..."
+      :pulling-text="t('market.pullDownRefresh')"
+      :loosing-text="t('market.releaseRefresh')"
+      :loading-text="t('market.loading')"
     >
       <van-list
         v-model:loading="loading"
         :finished="finished"
-        finished-text="no more"
-        loading-text="loading..."
-        error-text="fail"
+        :finished-text="t('market.noMore')"
+        :loading-text="t('market.loading')"
+        :error-text="t('market.fail')"
         @load="onLoad"
       >
         <div class="plan-items">
@@ -109,7 +120,9 @@ const updateChildData = (plan_id: number) => {
                 class="button button-detail"
                 @click="$router.push('planDetail?id=' + item.id)"
               >
-                <span class="text-[12px] text-gray-500">查看详情</span>
+                <span class="text-[12px] text-gray-500">
+                  {{ t("market.viewDetails") }}
+                </span>
               </van-button>
               <van-button
                 type="primary"
@@ -118,7 +131,7 @@ const updateChildData = (plan_id: number) => {
                 class="button"
                 @click="updateChildData(item.id)"
               >
-                <span class="text-[12px]">开始投放</span>
+                <span class="text-[12px]">{{ t("market.startLaunch") }}</span>
               </van-button>
             </div>
           </div>

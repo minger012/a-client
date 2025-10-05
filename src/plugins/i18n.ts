@@ -2,16 +2,18 @@
 import { createI18n } from "vue-i18n";
 import { getLang } from "@/utils";
 import zh_cn from "@/lang/zh-cn";
-import zh_tw from "@/lang/zh-tw";
+import ja_ja from "@/lang/ja-ja";
 import en_us from "@/lang/en-us";
-import es_es from "@/lang/es-es";
-import th_th from "@/lang/th-th";
+import zh_tw from "@/lang/zh-tw";
+import ko_ko from "@/lang/ko-ko";
+import vi_vi from "@/lang/vi-vi";
 const messages = {
   "zh-cn": zh_cn,
-  "zh-tw": zh_tw,
+  "ja-ja": ja_ja,
   "en-us": en_us,
-  "es-es": es_es,
-  "th-th": th_th,
+  "zh-tw": zh_tw,
+  "ko-ko": ko_ko,
+  "vi-vi": vi_vi,
 };
 const lang = getLang();
 const i18n = createI18n({

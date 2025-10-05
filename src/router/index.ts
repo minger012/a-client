@@ -14,12 +14,12 @@ const router = createRouter({
     {
       path: "/", // 首页
       component: () => import("@/views/home/home.vue"),
-      meta: { title: "广告中心" },
+      meta: { title: t("routes.home") },
     },
     {
       path: "/news", // 文章
       component: () => import("@/views/home/news.vue"),
-      meta: { title: "文章详情" },
+      meta: { title: t("routes.news") },
     },
     {
       path: "/login", // 登录
@@ -34,62 +34,62 @@ const router = createRouter({
     {
       path: "/market", // 市场
       component: () => import("@/views/goods/market.vue"),
-      meta: { title: "计划投放广场" },
+      meta: { title: t("routes.market") },
     },
     {
       path: "/planDetail", // 计划详情
       component: () => import("@/views/goods/detail.vue"),
-      meta: { title: "计划详情" },
+      meta: { title: t("routes.planDetail") },
     },
     {
       path: "/goodsDetail", // 商品详情
       component: () => import("@/views/goods/goodsDetail.vue"),
-      meta: { title: "商品详情" },
+      meta: { title: t("routes.goodsDetail") },
     },
     {
       path: "/order", // 订单
       component: () => import("@/views/order/order.vue"),
-      meta: { title: "计划管理" },
+      meta: { title: t("routes.order") },
     },
     {
       path: "/orderDetail", // 订单详情
       component: () => import("@/views/order/detail.vue"),
-      meta: { title: "计划详情" },
+      meta: { title: t("routes.orderDetail") },
     },
     {
       path: "/wallet", // 我的钱包
       component: () => import("@/views/user/wallet.vue"),
-      meta: { title: "我的钱包" },
+      meta: { title: t("routes.wallet") },
     },
     {
       path: "/notification", // 消息通知
       component: () => import("@/views/user/notification.vue"),
-      meta: { title: "消息通知" },
+      meta: { title: t("routes.notification") },
     },
     {
       path: "/password", // 修改密码
       component: () => import("@/views/user/password.vue"),
-      meta: { title: "修改登录密码" },
+      meta: { title: t("routes.password") },
     },
     {
       path: "/paypassword", // 修改交易密码
       component: () => import("@/views/user/paypassword.vue"),
-      meta: { title: "修改交易密码" },
+      meta: { title: t("routes.paypassword") },
     },
     {
       path: "/bindCard", // 绑卡
       component: () => import("@/views/user/bindCard.vue"),
-      meta: { title: "设置" },
+      meta: { title: t("routes.bindCard") },
     },
     {
       path: "/coupons", // 优惠券
       component: () => import("@/views/user/coupons.vue"),
-      meta: { title: "优惠券" },
+      meta: { title: t("routes.coupons") },
     },
     {
       path: "/level", // 店铺星级
       component: () => import("@/views/user/coupons.vue"),
-      meta: { title: "店铺星级" },
+      meta: { title: t("routes.level") },
     },
   ],
 });
