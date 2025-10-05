@@ -19,6 +19,14 @@ export default {
       seconds: "秒",
     },
   },
+  navbar: {
+    logout: {
+      title: "ログアウト",
+      message: "ログアウトしますか？",
+      confirm: "確認",
+      cancel: "キャンセル",
+    },
+  },
   routes: {
     home: "広告センター",
     news: "記事詳細",

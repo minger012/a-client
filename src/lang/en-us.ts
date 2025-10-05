@@ -19,6 +19,14 @@ export default {
       seconds: "seconds",
     },
   },
+  navbar: {
+    logout: {
+      title: "Logout",
+      message: "Are you sure you want to logout?",
+      confirm: "Confirm",
+      cancel: "Cancel",
+    },
+  },
   routes: {
     home: "Ad Center",
     news: "Article Details",
@@ -51,8 +59,8 @@ export default {
     getRichProfits: "Get Rich Profits",
     planManagement: "Plan Management",
     today: "Today",
-    thisWeek: "This Week",
-    thisMonth: "This Month",
+    thisWeek: "Week",
+    thisMonth: "Month",
     all: "All",
     dataOverview: "Overview",
     dataUpdateHint: "Updates every 30s",

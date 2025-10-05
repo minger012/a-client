@@ -19,6 +19,14 @@ export default {
       seconds: "초",
     },
   },
+  navbar: {
+    logout: {
+      title: "로그아웃",
+      message: "로그아웃 하시겠습니까?",
+      confirm: "확인",
+      cancel: "취소",
+    },
+  },
   routes: {
     home: "광고 센터",
     news: "기사 상세",

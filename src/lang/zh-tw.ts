@@ -19,6 +19,14 @@ export default {
       seconds: "秒",
     },
   },
+  navbar: {
+    logout: {
+      title: "登出",
+      message: "確定要登出嗎？",
+      confirm: "確定",
+      cancel: "取消",
+    },
+  },
   routes: {
     home: "廣告中心",
     news: "文章詳情",

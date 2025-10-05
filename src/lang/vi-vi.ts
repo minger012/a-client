@@ -19,6 +19,14 @@ export default {
       seconds: "giây",
     },
   },
+  navbar: {
+    logout: {
+      title: "Đăng xuất",
+      message: "Bạn có chắc muốn đăng xuất?",
+      confirm: "Xác nhận",
+      cancel: "Hủy",
+    },
+  },
   routes: {
     home: "Trung tâm quảng cáo",
     news: "Chi tiết bài viết",

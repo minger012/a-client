@@ -4,7 +4,14 @@ import { loginOutApi, setLangApi } from "@/services/api";
 import { useUserStore } from "@/stores/stores";
 import { ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
-//接收参数
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
+const router = useRouter();
+const route = useRoute();
+const userStore = useUserStore();
+
+// 接收参数
 const props = withDefaults(
   defineProps<{
     title?: string;
@@ -22,9 +29,9 @@ const props = withDefaults(
     isLang: () => true,
   }
 );
-const router = useRouter();
-const route = useRoute();
+
 const routeTitle = route.meta.title as string;
+
 // 返回键
 const back = () => {
   if (history.state?.back) {
@@ -33,26 +40,38 @@ const back = () => {
     router.push("/");
   }
 };
+
 // 语言选择
 const columns = (window as any).LANG_COLUMNS;
 const showPicker = ref(false);
+
 const onConfirm = ({ selectedValues }: any) => {
   showPicker.value = false;
   updateI18nLanguage(selectedValues[0]);
   setLangApi(selectedValues[0]);
   location.reload();
 };
+
 // 退出登录
-const userStore = useUserStore();
 const loginOut = () => {
   showConfirmDialog({
-    title: "退出登录",
-    message: "确定要退出登录吗？",
-  }).then(async () => {
-    await loginOutApi();
-    userStore.delUser();
-    router.push("login");
-  });
+    title: t("navbar.logout.title"),
+    message: t("navbar.logout.message"),
+    confirmButtonText: t("navbar.logout.confirm"),
+    cancelButtonText: t("navbar.logout.cancel"),
+  })
+    .then(async () => {
+      try {
+        await loginOutApi();
+        userStore.delUser();
+        router.push("login");
+      } catch (error) {
+        console.error("Logout failed:", error);
+      }
+    })
+    .catch(() => {
+      // 用户取消操作
+    });
 };
 </script>
 

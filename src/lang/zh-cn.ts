@@ -19,6 +19,14 @@ export default {
       seconds: "秒",
     },
   },
+  navbar: {
+    logout: {
+      title: "退出登录",
+      message: "确定要退出登录吗？",
+      confirm: "确定",
+      cancel: "取消",
+    },
+  },
   routes: {
     home: "广告中心",
     news: "文章详情",
