@@ -120,13 +120,7 @@ const class3 = {
       </van-dropdown-menu>
     </div>
     <div class="message-list">
-      <van-pull-refresh
-        v-model="refreshing"
-        @refresh="onRefresh"
-        :pulling-text="t('common.pullDownRefresh')"
-        :loosing-text="t('common.releaseRefresh')"
-        :loading-text="t('common.loading')"
-      >
+      <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
         <van-empty
           :description="t('notification.noMessages')"
           v-if="!mailList"
@@ -134,10 +128,8 @@ const class3 = {
         <van-list
           v-model:loading="loading"
           :finished="finished"
-          :finished-text="t('common.noMore')"
-          :loading-text="t('common.loading')"
-          :error-text="t('common.fail')"
           @load="onLoad"
+          :finished-text="t('common.noMore')"
           v-else
         >
           <div class="p-3 h-full">

@@ -150,13 +150,7 @@ onMounted(async () => {
 <template>
   <CpNavBar :title="t('wallet.title')"></CpNavBar>
   <div class="page">
-    <van-pull-refresh
-      v-model="refreshing"
-      @refresh="onRefresh"
-      :pulling-text="t('common.pullDownRefresh')"
-      :loosing-text="t('common.releaseRefresh')"
-      :loading-text="t('common.loading')"
-    >
+    <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
       <div class="section">
         <div class="title-line">
           <div class="title">
@@ -230,10 +224,8 @@ onMounted(async () => {
           <van-list
             v-model:loading="loading"
             :finished="finished"
-            :finished-text="t('common.noMore')"
-            :loading-text="t('common.loading')"
-            :error-text="t('common.fail')"
             @load="onLoad"
+            :finished-text="t('common.noMore')"
             v-else
           >
             <div

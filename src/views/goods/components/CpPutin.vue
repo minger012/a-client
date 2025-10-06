@@ -15,6 +15,7 @@ const time = useTime();
 const money = ref("");
 const cd = ref("");
 const plan_id = ref("");
+const plan_name = ref("");
 const pay_password = ref("");
 const disabled = ref(true);
 // 支付密码
@@ -143,6 +144,7 @@ defineExpose({
   showBottom,
   showBottom3,
   plan_id,
+  plan_name,
 });
 onMounted(async () => {
   getUserInfo();
@@ -162,7 +164,6 @@ onMounted(async () => {
         <div class="input-wrap">
           <span class="label">$</span>
           <div class="van-cell van-field">
-            <!----><!---->
             <div class="van-cell__value van-field__value">
               <div class="van-field__body">
                 <input
@@ -172,11 +173,9 @@ onMounted(async () => {
                   :placeholder="t('putin.amountPlaceholder')"
                   data-allow-mismatch="attribute"
                   v-model="money"
-                /><!----><!----><!---->
+                />
               </div>
-              <!----><!---->
             </div>
-            <!----><!---->
           </div>
         </div>
         <div class="form-tips">
@@ -220,7 +219,7 @@ onMounted(async () => {
       </div>
       <div class="modal-content">
         <div class="plan-summary">
-          <h4>Shadowverse</h4>
+          <h4>{{ plan_name }}</h4>
           <div class="summary-info">
             <div class="summary-item">
               <span class="label compact"
@@ -310,20 +309,12 @@ onMounted(async () => {
         <van-tab :title="t('putin.used')"></van-tab>
       </van-tabs>
     </div>
-    <van-pull-refresh
-      v-model="refreshing"
-      @refresh="onRefresh"
-      :pulling-text="t('common.pullDownRefresh')"
-      :loosing-text="t('common.releaseRefresh')"
-      :loading-text="t('common.loading')"
-    >
+    <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
       <van-list
         v-model:loading="loading"
         :finished="finished"
-        :finished-text="t('common.noMore')"
-        :loading-text="t('common.loading')"
-        :error-text="t('common.fail')"
         @load="onLoad"
+        :finished-text="t('common.noMore')"
       >
         <div class="coupon-list">
           <div role="feed" class="van-list" aria-busy="false">
@@ -353,7 +344,6 @@ onMounted(async () => {
                 </div>
               </div>
             </div>
-            <div class="van-list__placeholder"></div>
           </div>
         </div>
       </van-list>

@@ -54,7 +54,7 @@ const onRefresh = async () => {
 
 // 弹出层-下单
 const childRef = ref(null);
-const updateChildData = (plan_id: number) => {
+const updateChildData = (plan_id: number, plan_name: string) => {
   // 未设置支付密码
   if (userStore.user?.set_pay_password != 1) {
     showToast(t("market.setPayPasswordHint"));
@@ -65,6 +65,7 @@ const updateChildData = (plan_id: number) => {
     // 直接修改子组件的变量
     childRef.value.showBottom = true;
     childRef.value.plan_id = plan_id;
+    childRef.value.plan_name = plan_name;
   }
 };
 </script>
@@ -75,19 +76,11 @@ const updateChildData = (plan_id: number) => {
       <div class="title">{{ t("market.planLaunchPlaza") }}</div>
       <div class="description">{{ t("market.choosePlanHint") }}</div>
     </div>
-    <van-pull-refresh
-      v-model="refreshing"
-      @refresh="onRefresh"
-      :pulling-text="t('market.pullDownRefresh')"
-      :loosing-text="t('market.releaseRefresh')"
-      :loading-text="t('market.loading')"
-    >
+    <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
       <van-list
         v-model:loading="loading"
         :finished="finished"
-        :finished-text="t('market.noMore')"
-        :loading-text="t('market.loading')"
-        :error-text="t('market.fail')"
+        :finished-text="t('common.noMore')"
         @load="onLoad"
       >
         <div class="plan-items">
@@ -129,7 +122,7 @@ const updateChildData = (plan_id: number) => {
                 size="small"
                 round
                 class="button"
-                @click="updateChildData(item.id)"
+                @click="updateChildData(item.id, item.name)"
               >
                 <span class="text-[12px]">{{ t("market.startLaunch") }}</span>
               </van-button>

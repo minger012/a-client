@@ -32,6 +32,11 @@ export const getUserInfoApi = () => {
   return http<any>("/user/info", "POST", {});
 };
 
+// 上传头像
+export const uploadImageApi = (formData: FormData) => {
+  return http<any>("/user/uploadImage", "POST", formData);
+};
+
 // 获取银行卡
 export const bankCardListApi = () => {
   return http<any>("/user/bankCardList", "POST", {});

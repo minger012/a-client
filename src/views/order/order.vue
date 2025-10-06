@@ -57,11 +57,12 @@ watch(tabsActive, async (newVal: OrderListType) => {
 });
 // 弹出层-下单
 const childRef = ref(null);
-const updateChildData = (plan_id: number) => {
+const updateChildData = (plan_id: number, plan_name: string) => {
   if (childRef.value) {
     // 直接修改子组件的变量
     childRef.value.showBottom3 = true;
     childRef.value.plan_id = plan_id;
+    childRef.value.plan_name = plan_id;
   }
 };
 let formName = {
@@ -91,20 +92,12 @@ let stateName = {
       </van-tabs>
     </div>
     <div class="p-4">
-      <van-pull-refresh
-        v-model="refreshing"
-        @refresh="onRefresh"
-        :pulling-text="t('common.pullDownRefresh')"
-        :loosing-text="t('common.releaseRefresh')"
-        :loading-text="t('common.loading')"
-      >
+      <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
         <van-list
           v-model:loading="loading"
           :finished="finished"
-          :finished-text="t('common.noMore')"
-          :loading-text="t('common.loading')"
-          :error-text="t('common.fail')"
           @load="onLoad"
+          :finished-text="t('common.noMore')"
         >
           <div
             class="plan-item"
@@ -190,7 +183,7 @@ let stateName = {
                 size="small"
                 round
                 class="button"
-                @click="updateChildData(value.plan_id)"
+                @click="updateChildData(value.plan_id, value.name)"
                 style="width: 6.5rem; height: 2.125rem; z-index: 999"
               >
                 <span class="text-[3.2vw]">{{ t("order.placement") }}</span>

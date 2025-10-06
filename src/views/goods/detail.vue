@@ -20,6 +20,7 @@ const updateChildData = () => {
     // 直接修改子组件的变量
     childRef.value.showBottom = true;
     childRef.value.plan_id = route.query.id as unknown as number;
+    childRef.value.plan_name = detail.value.name;
   }
 };
 const onLink = (link: string) => {

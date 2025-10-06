@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useNumber } from "@/composables/common";
-import { getIndexApi, signApi } from "@/services/api";
+import { getIndexApi, signApi, uploadImageApi } from "@/services/api";
 import { onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
@@ -30,6 +30,32 @@ const getIndexData = async (id: number) => {
 watch(tabsActive, async (newVal: number) => {
   await getIndexData(newVal);
 });
+// 上传图片
+const customFileList = ref([]);
+// 单文件上传处理
+const afterRead = (file: any) => {
+  // 如果是多文件，file 会是数组
+  if (Array.isArray(file)) {
+    file.forEach((item) => uploadFile(item));
+  } else {
+    uploadFile(file);
+  }
+};
+// 上传文件到服务器
+const uploadFile = async (file: any) => {
+  if (!file.file) return;
+  // 显示上传状态
+  file.status = "uploading";
+  const formData = new FormData();
+  formData.append("image", file.file);
+  formData.append("type", "image");
+  // 调用上传 API
+  await uploadImageApi(formData).then((res) => {
+    // 更新文件状态
+    file.status = "done";
+    indexData.value.userData.image = res.data.url;
+  });
+};
 onMounted(async () => {
   await getIndexData(tabsActive.value);
 });
@@ -39,17 +65,25 @@ onMounted(async () => {
   <!-- 导航 -->
   <CpNavBar :isBack="false" :isLoginOut="true"> </CpNavBar>
   <div class="head">
-    <div class="relative">
-      <van-image
-        round
-        width="18.4103vw"
-        height="18.4103vw"
-        src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"
-      />
-      <div class="avatar-edit">
-        <van-icon name="photograph" size="11" color="#fff" />
+    <!-- 自定义上传样式 -->
+    <van-uploader
+      v-model="customFileList"
+      :after-read="afterRead"
+      :preview-image="false"
+    >
+      <div class="relative">
+        <van-image
+          round
+          width="18.4103vw"
+          height="18.4103vw"
+          :src="indexData?.userData.image"
+        />
+        <div class="avatar-edit">
+          <van-icon name="photograph" size="11" color="#fff" />
+        </div>
       </div>
-    </div>
+    </van-uploader>
+
     <div class="ml-5 flex-1">
       <div>{{ indexData?.userData.username }}</div>
       <div class="tag">

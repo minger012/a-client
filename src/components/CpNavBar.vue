@@ -57,8 +57,6 @@ const loginOut = () => {
   showConfirmDialog({
     title: t("navbar.logout.title"),
     message: t("navbar.logout.message"),
-    confirmButtonText: t("navbar.logout.confirm"),
-    cancelButtonText: t("navbar.logout.cancel"),
   })
     .then(async () => {
       try {

@@ -84,20 +84,12 @@ let stateName = {
       <van-tab :title="t('coupons.used')"></van-tab>
     </van-tabs>
   </div>
-  <van-pull-refresh
-    v-model="refreshing"
-    @refresh="onRefresh"
-    :pulling-text="t('common.pullDownRefresh')"
-    :loosing-text="t('common.releaseRefresh')"
-    :loading-text="t('common.loading')"
-  >
+  <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
     <van-list
       v-model:loading="loading"
       :finished="finished"
-      :finished-text="t('common.noMore')"
-      :loading-text="t('common.loading')"
-      :error-text="t('common.fail')"
       @load="onLoad"
+      :finished-text="t('common.noMore')"
     >
       <div class="coupon-list">
         <div role="feed" class="van-list" aria-busy="false">
