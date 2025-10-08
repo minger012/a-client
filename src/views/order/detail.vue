@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useNumber, useTime } from "@/composables/common";
-import { planOrderDetailApi } from "@/services/api";
+import { getConfigApi, planOrderDetailApi } from "@/services/api";
 import { onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
@@ -27,8 +27,15 @@ let stateName = {
   4: t("orderDetail.waitingSettlement"),
   5: t("orderDetail.settlementSuccess"),
 };
+// 后台配置
+const configData = ref<any>([]);
+const getConfigData = async () => {
+  await getConfigApi("1").then((res) => {
+    configData.value = res.data;
+  });
+};
 onMounted(() => {
-  getDetail();
+  Promise.all([getConfigData(), getDetail()]);
 });
 </script>
 <template>
@@ -85,7 +92,7 @@ onMounted(() => {
         <div class="data-section">
           <div class="data-item">
             <div class="number-row">
-              $ {{ number.formatMoney(detail.money) }}
+              {{ configData[1] }} {{ number.formatMoney(detail.money) }}
             </div>
             <div class="name-row">
               {{ t("orderDetail.placementAmount") }}
@@ -96,12 +103,11 @@ onMounted(() => {
             <div class="number-row">
               <div class="progress-wrap">
                 <div class="number">{{ detail.schedule }}</div>
-                <div class="van-progress" style="height: 5px">
-                  <span
-                    class="van-progress__portion"
-                    style="width: 100%"
-                  ></span>
-                </div>
+                <van-progress
+                  :percentage="detail.schedule"
+                  pivot-text=""
+                  style="height: 5px; width: 100%"
+                />
               </div>
             </div>
             <div class="name-row">
@@ -111,7 +117,7 @@ onMounted(() => {
           </div>
           <div class="data-item">
             <div class="number-row">
-              $ {{ number.formatMoney(detail.putIn) }}
+              {{ configData[1] }} {{ number.formatMoney(detail.putIn) }}
             </div>
             <div class="name-row">
               {{ t("orderDetail.consumed") }}
@@ -120,7 +126,7 @@ onMounted(() => {
           </div>
           <div class="data-item">
             <div class="number-row">
-              $ {{ number.formatMoney(detail.wait_putIn) }}
+              {{ configData[1] }} {{ number.formatMoney(detail.wait_putIn) }}
             </div>
             <div class="name-row">
               {{ t("orderDetail.pendingConsumption") }}
@@ -143,7 +149,7 @@ onMounted(() => {
           </div>
           <div class="data-item">
             <div class="number-row">
-              $ {{ number.formatMoney(detail.click_money) }}
+              {{ configData[1] }} {{ number.formatMoney(detail.click_money) }}
             </div>
             <div class="name-row">
               {{ t("orderDetail.adRevenue") }}
@@ -152,7 +158,7 @@ onMounted(() => {
           </div>
           <div class="data-item">
             <div class="number-row">
-              $ +{{ number.formatMoney(detail.profit) }}
+              {{ configData[1] }} +{{ number.formatMoney(detail.profit) }}
             </div>
             <div class="name-row">
               {{ t("orderDetail.profit") }}
@@ -303,6 +309,11 @@ onMounted(() => {
           display: flex;
           align-items: center;
           justify-content: space-between;
+          .progress-wrap {
+            flex: 1;
+            margin-right: 7.69231vw;
+            margin-bottom: 1.28205vw;
+          }
         }
         .name-row {
           display: flex;

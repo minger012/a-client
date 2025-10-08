@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { useNumber } from "@/composables/common";
-import { getIndexApi, signApi, uploadImageApi } from "@/services/api";
+import {
+  getConfigApi,
+  getIndexApi,
+  signApi,
+  uploadImageApi,
+} from "@/services/api";
 import { onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
@@ -25,6 +30,13 @@ const indexData = ref();
 const getIndexData = async (id: number) => {
   await getIndexApi(id).then((res) => {
     indexData.value = res.data;
+  });
+};
+// 后台配置
+const configData = ref<any>([]);
+const getConfigData = async () => {
+  await getConfigApi("1,7,9").then((res) => {
+    configData.value = res.data;
   });
 };
 watch(tabsActive, async (newVal: number) => {
@@ -57,7 +69,7 @@ const uploadFile = async (file: any) => {
   });
 };
 onMounted(async () => {
-  await getIndexData(tabsActive.value);
+  Promise.all([getIndexData(tabsActive.value), getConfigData()]);
 });
 </script>
 
@@ -92,7 +104,7 @@ onMounted(async () => {
       <div class="tag">
         {{ t("home.signInCount") }}：{{ indexData?.userData.sign }}
       </div>
-      <div class="tag">
+      <div class="tag" @click="$router.push('level')">
         {{ t("home.storeRating") }}：
         <CpImage
           name="star"
@@ -134,25 +146,15 @@ onMounted(async () => {
     </div>
   </div>
   <div class="banner-wrap">
-    <div class="banner" @click="$router.push('market')">
-      <img
-        src="@/assets/img/banner1-D_iNypES.png"
-        alt="Plan To Launch In Plaza"
-        class="banner-image"
-      />
+    <div
+      class="banner"
+      @click="$router.push(value.data)"
+      v-for="value in configData[9]"
+    >
+      <img :src="value.image" class="banner-image" v-if="value.image" />
       <div class="title-wrap">
-        <div class="title">{{ t("home.planLaunchPlaza") }}</div>
-        <div class="desc">{{ t("home.getRichProfits") }}</div>
-      </div>
-    </div>
-    <div class="banner" @click="$router.push('order')">
-      <img
-        src="@/assets/img/banner2-FQGNIWdl.png"
-        alt="Plan Management"
-        class="banner-image"
-      />
-      <div class="title-wrap">
-        <div class="title">{{ t("home.planManagement") }}</div>
+        <div class="title">{{ value.title }}</div>
+        <div class="desc">{{ value.desc }}</div>
       </div>
     </div>
   </div>
@@ -175,7 +177,8 @@ onMounted(async () => {
     <div class="data-list">
       <div class="data-item">
         <div class="number-row">
-          $ {{ number.formatMoney(indexData?.planOrderData.money) }}
+          {{ configData[1] }}
+          {{ number.formatMoney(indexData?.planOrderData.money) }}
         </div>
         <div class="name-row">
           <span>{{ t("home.placementAmount") }}</span>
@@ -191,7 +194,8 @@ onMounted(async () => {
       </div>
       <div class="data-item">
         <div class="number-row">
-          $ {{ number.formatMoney(indexData?.planOrderData.putIn) }}
+          {{ configData[1] }}
+          {{ number.formatMoney(indexData?.planOrderData.putIn) }}
         </div>
         <div class="name-row">
           <span>{{ t("home.consumed") }}</span>
@@ -200,7 +204,8 @@ onMounted(async () => {
       </div>
       <div class="data-item">
         <div class="number-row">
-          $ {{ number.formatMoney(indexData?.planOrderData.wait_putIn) }}
+          {{ configData[1] }}
+          {{ number.formatMoney(indexData?.planOrderData.wait_putIn) }}
         </div>
         <div class="name-row">
           <span>{{ t("home.pendingConsumption") }}</span>
@@ -227,7 +232,8 @@ onMounted(async () => {
       </div>
       <div class="data-item">
         <div class="number-row">
-          $ {{ number.formatMoney(indexData?.planOrderData.click_money) }}
+          {{ configData[1] }}
+          {{ number.formatMoney(indexData?.planOrderData.click_money) }}
         </div>
         <div class="name-row">
           <span>{{ t("home.adRevenue") }}</span>
@@ -236,7 +242,8 @@ onMounted(async () => {
       </div>
       <div class="data-item">
         <div class="number-row">
-          $ {{ number.formatMoney(indexData?.planOrderData.profit) }}
+          {{ configData[1] }}
+          {{ number.formatMoney(indexData?.planOrderData.profit) }}
         </div>
         <div class="name-row">
           <span>{{ t("home.profit") }}</span>
@@ -264,27 +271,12 @@ onMounted(async () => {
   <div class="section">
     <div class="section-title">{{ t("home.faq") }}</div>
     <div class="question-list">
-      <!---->
-      <div class="question-item" @click="$router.push('news?id=1')">
-        <div class="name">What is The 7 Star's Advertising Solution?</div>
-        <van-icon name="arrow" />
-      </div>
-      <div class="question-item" @click="$router.push('news?id=2')">
-        <div class="name">
-          Why can't we cancel the Audience Network program?
-        </div>
-        <van-icon name="arrow" />
-      </div>
-      <div class="question-item" @click="$router.push('news?id=3')">
-        <div class="name">Online Deposit Issues?</div>
-        <van-icon name="arrow" />
-      </div>
-      <div class="question-item" @click="$router.push('news?id=4')">
-        <div class="name">How long does it take to complete a plan?</div>
-        <van-icon name="arrow" />
-      </div>
-      <div class="question-item" @click="$router.push('news?id=5')">
-        <div class="name">Can I become a program partner?</div>
+      <div
+        class="question-item"
+        @click="$router.push('news?id=' + key)"
+        v-for="(value, key) in configData[7]"
+      >
+        <div class="name">{{ value.answer }}</div>
         <van-icon name="arrow" />
       </div>
     </div>

@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { useNumber, useTime } from "@/composables/common";
-import { flowListApi, getwalletApi, withdrawApi } from "@/services/api";
+import {
+  flowListApi,
+  getConfigApi,
+  getwalletApi,
+  withdrawApi,
+} from "@/services/api";
 import { useUserStore } from "@/stores/stores";
 import { onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
@@ -135,15 +140,25 @@ const onLink = (link: string) => {
 const walletData = ref();
 // 流水详情
 const flowDetail = ref();
-
+// 后台配置
+const configData = ref<any>([]);
+const getConfigData = async () => {
+  await getConfigApi("1,2,4").then((res) => {
+    configData.value = res.data;
+  });
+};
 onMounted(async () => {
   refreshing.value = true;
-  await getwalletApi()
-    .then((res) => {
-      walletData.value = res.data;
-      refreshing.value = false;
-    })
-    .catch(() => (refreshing.value = false));
+
+  Promise.all([
+    getConfigData(),
+    await getwalletApi()
+      .then((res) => {
+        walletData.value = res.data;
+        refreshing.value = false;
+      })
+      .catch(() => (refreshing.value = false)),
+  ]);
 });
 </script>
 
@@ -157,10 +172,10 @@ onMounted(async () => {
             <span>{{ t("wallet.totalAssets") }}</span>
             <CpSvg name="eye"></CpSvg>
           </div>
-          <div class="tag">USD</div>
+          <div class="tag">{{ configData[2] }}</div>
         </div>
         <div class="money">
-          <span class="currency">$</span>
+          <span class="currency">{{ configData[1] }}</span>
           <span class="amount">
             {{ number.formatMoney(walletData?.money) }}
           </span>
@@ -169,19 +184,21 @@ onMounted(async () => {
           <div class="money-item">
             <span class="label">{{ t("wallet.availableBalance") }}</span>
             <span class="text">
-              $ {{ number.formatMoney(walletData?.money) }}
+              {{ configData[1] }} {{ number.formatMoney(walletData?.money) }}
             </span>
           </div>
           <div class="money-item">
             <span class="label">{{ t("wallet.pendingConsumption") }}</span>
             <span class="text">
-              $ {{ number.formatMoney(walletData?.wait_putIn) }}
+              {{ configData[1] }}
+              {{ number.formatMoney(walletData?.wait_putIn) }}
             </span>
           </div>
           <div class="money-item">
             <span class="label">{{ t("wallet.pendingSettlement") }}</span>
             <span class="text">
-              $ {{ number.formatMoney(walletData?.wait_money) }}
+              {{ configData[1] }}
+              {{ number.formatMoney(walletData?.wait_money) }}
             </span>
           </div>
         </div>
@@ -274,7 +291,9 @@ onMounted(async () => {
         </div>
         <div class="content-item">
           <div class="label">{{ t("wallet.flowDetail.amount") }}</div>
-          <div class="text">$ {{ number.formatMoney(flowDetail?.cha) }}</div>
+          <div class="text">
+            {{ configData[1] }} {{ number.formatMoney(flowDetail?.cha) }}
+          </div>
         </div>
         <div class="content-item">
           <div class="label">{{ t("wallet.flowDetail.remarks") }}</div>
@@ -322,14 +341,14 @@ onMounted(async () => {
       <div class="form-wrap">
         <div class="label">{{ t("wallet.withdrawal.enterAmount") }}</div>
         <div class="input-wrap">
-          <span class="label">$</span>
+          <span class="label">{{ configData[1] }}</span>
           <van-field v-model="withdrawal" />
         </div>
         <div class="form-tips">
           <span class="count-money">
-            {{ t("wallet.withdrawal.available") }} ${{
-              number.formatMoney(walletData?.money)
-            }}
+            {{ t("wallet.withdrawal.available") }}
+            {{ configData[1] }}
+            {{ number.formatMoney(walletData?.money) }}
           </span>
           <span
             class="all-text"
@@ -380,7 +399,7 @@ onMounted(async () => {
           round
           block
           style="margin-top: 2rem"
-          @click="onLink(walletData.re_service_address)"
+          @click="onLink(configData[4][0].link)"
         >
           <span class="text-sm">{{
             t("wallet.depositTips.contactService")

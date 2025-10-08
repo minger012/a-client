@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useNumber, useTime } from "@/composables/common";
 import {
+  getConfigApi,
   getCouponListApi,
   getUserInfoApi,
   planOrderAddApi,
@@ -127,6 +128,14 @@ const checkCoupon = (detail: any) => {
   showCoupon.value = false;
   checkCouponData.value = detail;
 };
+
+// 后台配置
+const configData = ref<any>([]);
+const getConfigData = async () => {
+  await getConfigApi("1").then((res) => {
+    configData.value = res.data;
+  });
+};
 let couponTypeName = {
   1: t("putin.valueAdded"),
   2: t("putin.deduction"),
@@ -147,7 +156,7 @@ defineExpose({
   plan_name,
 });
 onMounted(async () => {
-  getUserInfo();
+  Promise.all([getConfigData(), getUserInfo()]);
 });
 </script>
 <template>
@@ -162,7 +171,7 @@ onMounted(async () => {
       <div class="dialog-title">{{ t("putin.placementAmount") }}</div>
       <div class="form-wrap">
         <div class="input-wrap">
-          <span class="label">$</span>
+          <span class="label">{{ configData[1] }}</span>
           <div class="van-cell van-field">
             <div class="van-cell__value van-field__value">
               <div class="van-field__body">
@@ -179,13 +188,14 @@ onMounted(async () => {
           </div>
         </div>
         <div class="form-tips">
-          <span class="count-money"
-            >{{ t("putin.availableBalance") }} ${{
-              number.formatMoney(userInfo.money)
-            }}</span
-          ><span class="all-text" @click="money = userInfo.money">{{
-            t("putin.all")
-          }}</span>
+          <span class="count-money">
+            {{ t("putin.availableBalance") }}
+            {{ configData[1] }}
+            {{ number.formatMoney(userInfo.money) }}
+          </span>
+          <span class="all-text" @click="money = userInfo.money">
+            {{ t("putin.all") }}
+          </span>
         </div>
         <div class="coupon-item" @click="showCoupon = true">
           <span class="title">{{ t("putin.coupon") }} </span>
@@ -225,7 +235,8 @@ onMounted(async () => {
               <span class="label compact"
                 >{{ t("putin.availableBalance") }}: </span
               ><span class="value"
-                >${{ number.formatMoney(userInfo.money) }}</span
+                >{{ configData[1]
+                }}{{ number.formatMoney(userInfo.money) }}</span
               >
             </div>
           </div>
@@ -238,7 +249,7 @@ onMounted(async () => {
                   t("putin.placementAmount")
                 }}</label>
                 <div class="field-input-wrapper">
-                  <span class="currency-symbol">$</span
+                  <span class="currency-symbol">{{ configData[1] }}</span
                   ><input
                     class="field-input"
                     :placeholder="t('putin.enterAmount')"

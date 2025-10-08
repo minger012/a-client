@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useTime } from "@/composables/common";
 import CpPutin from "../goods/components/CpPutin.vue";
-import { planOrderListApi } from "@/services/api";
-import { ref, watch } from "vue";
+import { getConfigApi, planOrderListApi } from "@/services/api";
+import { onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 const time = useTime();
 const { t } = useI18n();
@@ -65,6 +65,13 @@ const updateChildData = (plan_id: number, plan_name: string) => {
     childRef.value.plan_name = plan_id;
   }
 };
+// 后台配置
+const configData = ref<any>([]);
+const getConfigData = async () => {
+  await getConfigApi("1").then((res) => {
+    configData.value = res.data;
+  });
+};
 let formName = {
   1: t("order.officialPush"),
   2: t("order.unofficialPush"),
@@ -77,6 +84,9 @@ let stateName = {
   4: t("order.waitingSettlement"),
   5: t("order.settlementSuccess"),
 };
+onMounted(() => {
+  Promise.all([getConfigData()]);
+});
 </script>
 <template>
   <CpNavBar :isLoginOut="true"> </CpNavBar>
@@ -160,13 +170,18 @@ let stateName = {
             <div class="put-wrap">
               <div class="put-item">
                 <span class="label">{{ t("order.placementAmount") }}</span
-                ><span class="value">$ {{ value.money }}</span>
+                ><span class="value"
+                  >{{ configData[1] }} {{ value.money }}</span
+                >
               </div>
               <div class="put-item">
                 <span class="label">{{ t("order.placementProgress") }}</span>
                 <div class="progress">
-                  <van-progress :percentage="100" style="height: 5px" />
-
+                  <van-progress
+                    :percentage="value.schedule"
+                    pivot-text=""
+                    style="height: 5px; width: 100%"
+                  />
                   <span class="progress-text">{{ value.schedule }}%</span>
                 </div>
               </div>

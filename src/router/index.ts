@@ -88,7 +88,7 @@ const router = createRouter({
     },
     {
       path: "/level", // 店铺星级
-      component: () => import("@/views/user/coupons.vue"),
+      component: () => import("@/views/user/level.vue"),
       meta: { title: t("routes.level") },
     },
   ],

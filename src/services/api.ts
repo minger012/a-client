@@ -143,8 +143,8 @@ export const goodsDetailApi = (id: number) => {
 };
 
 // 获取配置
-export const getConfigApi = (id: number) => {
-  return http<any>("/login/getConfig", "POST", { id });
+export const getConfigApi = (ids: string) => {
+  return http<any>("/login/getConfig", "POST", { ids });
 };
 
 // 签到

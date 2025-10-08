@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { registerApi } from "@/services/api";
+import { getConfigApi, registerApi } from "@/services/api";
 import { useUserStore } from "@/stores/stores";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import {
   usernameRules,
@@ -40,6 +40,16 @@ const onSubmit = async () => {
 
 // 服务条款
 const showBottom = ref(false);
+// 后台配置
+const configData = ref<any>([]);
+const getConfigData = async () => {
+  await getConfigApi("8").then((res) => {
+    configData.value = res.data;
+  });
+};
+onMounted(async () => {
+  Promise.all([getConfigData()]);
+});
 </script>
 <template>
   <!-- 导航 -->
@@ -134,66 +144,7 @@ const showBottom = ref(false);
       {{ t("register.termsOfService") }}
     </h1>
     <div class="p-3">
-      <div class="content privacy-policy-content">
-        <p>
-          <strong>{{ t("register.terms.welcomeTitle") }}</strong>
-        </p>
-        <p><br /></p>
-        <p>
-          <strong>{{ t("register.terms.purposeTitle") }}</strong>
-        </p>
-        <p><br /></p>
-        <p>{{ t("register.terms.purposeContent") }}</p>
-        <p><br /></p>
-        <p>
-          <strong>{{ t("register.terms.rulesTitle") }}</strong>
-        </p>
-        <p><br /></p>
-        <p>{{ t("register.terms.rulesContent") }}</p>
-        <p><br /></p>
-        <p>
-          <strong>{{ t("register.terms.privacyTitle") }}</strong>
-        </p>
-        <p><br /></p>
-        <p>{{ t("register.terms.privacyContent") }}</p>
-        <p><br /></p>
-        <p>
-          <strong>{{ t("register.terms.amlTitle") }}</strong>
-        </p>
-        <p><br /></p>
-        <p>{{ t("register.terms.amlContent") }}</p>
-        <p><br /></p>
-        <p>
-          <strong>{{ t("register.terms.serviceTitle") }}</strong>
-        </p>
-        <p><br /></p>
-        <p>{{ t("register.terms.serviceContent") }}</p>
-        <p><br /></p>
-        <p>
-          <strong>{{ t("register.terms.rightsTitle") }}</strong>
-        </p>
-        <p><br /></p>
-        <p>{{ t("register.terms.rightsContent") }}</p>
-        <p><br /></p>
-        <p>
-          <strong>{{ t("register.terms.technologyTitle") }}</strong>
-        </p>
-        <p><br /></p>
-        <p>{{ t("register.terms.technologyContent") }}</p>
-        <p><br /></p>
-        <p>
-          <strong>{{ t("register.terms.disputeTitle") }}</strong>
-        </p>
-        <p><br /></p>
-        <p>{{ t("register.terms.disputeContent1") }}</p>
-        <p><br /></p>
-        <p>{{ t("register.terms.disputeContent2") }}</p>
-        <p><br /></p>
-        <p>{{ t("register.terms.disputeContent3") }}</p>
-        <p><br /></p>
-        <p>{{ t("register.terms.disputeContent4") }}</p>
-      </div>
-      <!---->
+      {{ configData[8].length > 0 ? configData[8] : "" }}
     </div>
   </van-popup>
 </template>
