@@ -5,6 +5,7 @@ import {
   getCouponListApi,
   getUserInfoApi,
   planOrderAddApi,
+  planOrderSendAddApi,
 } from "@/services/api";
 import { onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
@@ -17,6 +18,9 @@ const money = ref("");
 const cd = ref("");
 const plan_id = ref("");
 const plan_name = ref("");
+const min = ref("");
+const max = ref("");
+const order_id = ref("");
 const pay_password = ref("");
 const disabled = ref(true);
 // 支付密码
@@ -31,26 +35,44 @@ watch(pay_password, (newVal) => {
 });
 // 下单
 const orderAdd = async () => {
+  if (pay_password.value.length != 6) {
+    showBottom2.value = true;
+    return;
+  }
   showBottom2.value = false;
-  showLoadingToast({
-    message: t("common.loading"),
-    forbidClick: true,
-    duration: -1,
-  });
-  await planOrderAddApi(
-    plan_id.value,
-    money.value,
-    pay_password.value,
-    cd.value,
-    checkCouponData.value?.id || ""
-  ).then((res) => {
-    showBottom.value = false;
-    money.value = "";
-    cd.value = "";
-    pay_password.value = "";
-    showSuccessToast(res.msg);
-    getUserInfo();
-  });
+  if (plan_id.value) {
+    await planOrderAddApi(
+      plan_id.value,
+      money.value,
+      pay_password.value,
+      cd.value,
+      checkCouponData.value?.id || ""
+    ).then((res) => {
+      showBottom.value = false;
+      money.value = "";
+      cd.value = "";
+      pay_password.value = "";
+      plan_id.value = "";
+      showSuccessToast(res.msg);
+      getUserInfo();
+    });
+  } else {
+    await planOrderSendAddApi(
+      order_id.value,
+      money.value,
+      pay_password.value,
+      checkCouponData.value?.id || ""
+    ).then((res) => {
+      showBottom3.value = false;
+      money.value = "";
+      pay_password.value = "";
+      order_id.value = "";
+      min.value = "";
+      max.value = "";
+      showSuccessToast(res.msg);
+      getUserInfo();
+    });
+  }
 };
 // 玩家信息
 const userInfo = ref();
@@ -154,6 +176,9 @@ defineExpose({
   showBottom3,
   plan_id,
   plan_name,
+  min,
+  max,
+  order_id,
 });
 onMounted(async () => {
   Promise.all([getConfigData(), getUserInfo()]);
@@ -179,7 +204,7 @@ onMounted(async () => {
                   type="text"
                   id="van-field-8-input"
                   class="van-field__control"
-                  :placeholder="t('putin.amountPlaceholder')"
+                  :placeholder="min + '~' + max"
                   data-allow-mismatch="attribute"
                   v-model="money"
                 />
@@ -208,10 +233,10 @@ onMounted(async () => {
         </div>
       </div>
       <div class="mt-6">
-        <van-button block round type="primary" @click="showBottom2 = true">
-          <span class="font-[600] text-base">{{
-            t("putin.realTimePlacement")
-          }}</span>
+        <van-button block round type="primary" @click="orderAdd()">
+          <span class="font-[600] text-base">
+            {{ t("putin.realTimePlacement") }}
+          </span>
         </van-button>
       </div>
     </div>

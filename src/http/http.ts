@@ -11,10 +11,10 @@ const instance = axios.create({
 // 请求拦截器
 instance.interceptors.request.use(
   (config) => {
+    config.headers["think-lang"] = getLang();
     const UserStore = useUserStore();
     if (UserStore.user?.token) {
       config.headers["Authorization"] = `${UserStore.user.token}`;
-      config.headers["think-lang"] = getLang();
     }
     return config;
   },

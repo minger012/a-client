@@ -102,7 +102,7 @@ onMounted(() => {
           <div class="data-item progress-item">
             <div class="number-row">
               <div class="progress-wrap">
-                <div class="number">{{ detail.schedule }}</div>
+                <div class="number">{{ detail.schedule }} %</div>
                 <van-progress
                   :percentage="detail.schedule"
                   pivot-text=""

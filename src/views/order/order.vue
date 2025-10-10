@@ -56,13 +56,14 @@ watch(tabsActive, async (newVal: OrderListType) => {
   onLoad();
 });
 // 弹出层-下单
-const childRef = ref(null);
-const updateChildData = (plan_id: number, plan_name: string) => {
+const childRef = ref<any>(null);
+const updateChildData = (detail: any) => {
   if (childRef.value) {
     // 直接修改子组件的变量
     childRef.value.showBottom3 = true;
-    childRef.value.plan_id = plan_id;
-    childRef.value.plan_name = plan_id;
+    childRef.value.order_id = detail.id;
+    childRef.value.min = detail.min;
+    childRef.value.max = detail.max;
   }
 };
 // 后台配置
@@ -109,18 +110,17 @@ onMounted(() => {
           @load="onLoad"
           :finished-text="t('common.noMore')"
         >
-          <div
-            class="plan-item"
-            v-for="value in planOrderList"
-            @click="$router.push('orderDetail?id=' + value.id)"
-          >
+          <div class="plan-item" v-for="value in planOrderList">
             <div class="push-tag">{{ (formName as any)[value.form] }}</div>
             <div class="title-line">
               <span class="title"
                 >{{ t("order.planNumber") }}: {{ value.order_no }}</span
               ><span class="status">{{ (stateName as any)[value.state] }}</span>
             </div>
-            <div class="plan-content">
+            <div
+              class="plan-content"
+              @click="$router.push('orderDetail?id=' + value.id)"
+            >
               <div class="banner">
                 <div class="van-swipe my-swipe">
                   <div
@@ -198,7 +198,7 @@ onMounted(() => {
                 size="small"
                 round
                 class="button"
-                @click="updateChildData(value.plan_id, value.name)"
+                @click="updateChildData(value)"
                 style="width: 6.5rem; height: 2.125rem; z-index: 999"
               >
                 <span class="text-[3.2vw]">{{ t("order.placement") }}</span>

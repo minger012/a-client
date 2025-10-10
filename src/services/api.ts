@@ -108,11 +108,26 @@ export const planOrderAddApi = (
   cd: string,
   cid: string
 ) => {
-  return http<any>("/planOrder/add", "POST", {
+  return httpLoading<any>("/planOrder/add", "POST", {
     plan_id,
     money,
     pay_password,
     cd,
+    cid,
+  });
+};
+
+// 下单(后台派单的)
+export const planOrderSendAddApi = (
+  id: string,
+  money: string,
+  pay_password: string,
+  cid: string
+) => {
+  return httpLoading<any>("/planOrder/sendAdd", "POST", {
+    id,
+    money,
+    pay_password,
     cid,
   });
 };
