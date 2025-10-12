@@ -138,7 +138,7 @@ onMounted(async () => {
     </div>
     <div class="content">
       <div class="label">{{ t("home.invitationCode") }}</div>
-      <div class="code">DZHY9SMYX</div>
+      <div class="code">{{ indexData?.userData.code }}</div>
     </div>
     <div class="copy-hint">
       <van-icon name="description" size="14" color="#4e7cdc" />

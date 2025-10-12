@@ -190,3 +190,8 @@ export const getMailListApi = (
 export const mailReadApi = (id: number) => {
   return http<any>("/user/mailRead", "POST", { id });
 };
+
+// 邮件未读数
+export const mailNoReadApi = () => {
+  return http<any>("/user/mailNoRead", "POST", {});
+};

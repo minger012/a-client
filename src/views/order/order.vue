@@ -17,6 +17,7 @@ const params = ref<OrderPageParams>({
 const loading = ref(false);
 const finished = ref(false);
 const planOrderList = ref<any>([]);
+const waitSendNum = ref(0);
 const onLoad = async () => {
   if (finished.value) {
     return;
@@ -26,6 +27,7 @@ const onLoad = async () => {
   await planOrderListApi(params.value)
     .then((res) => {
       planOrderList.value.push(...res.data.list);
+      waitSendNum.value = res.data.waitSendNum;
       if (params.value.page >= res.data.total_page) {
         finished.value = true;
       }
@@ -42,6 +44,7 @@ const onRefresh = async () => {
   await planOrderListApi(params.value)
     .then((res) => {
       planOrderList.value = res.data.list;
+      waitSendNum.value = res.data.waitSendNum;
       refreshing.value = false;
     })
     .catch(() => {
@@ -95,7 +98,10 @@ onMounted(() => {
     <div class="tab-wrap">
       <van-tabs v-model:active="tabsActive">
         <van-tab :title="t('order.all')"></van-tab>
-        <van-tab :title="t('order.pendingPlacement')"></van-tab>
+        <van-tab
+          :title="t('order.pendingPlacement')"
+          :badge="waitSendNum || ''"
+        ></van-tab>
         <van-tab :title="t('order.matching')"></van-tab>
         <van-tab :title="t('order.placing')"></van-tab>
         <van-tab :title="t('order.placementFailed')"></van-tab>

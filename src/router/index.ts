@@ -3,6 +3,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import i18n from "../plugins/i18n";
 import nProgress from "nprogress";
 import "nprogress/nprogress.css";
+import { tokenManager } from "@/http/http";
 const { t } = i18n.global;
 nProgress.configure({
   easing: "ease", // 动画方式
@@ -99,7 +100,11 @@ router.beforeEach((to) => {
   nProgress.start();
   const notLogin = ["/login", "/register"];
   const userStore = useUserStore();
-  if (!notLogin.includes(to.path) && !userStore.user?.token) {
+  if (
+    !tokenManager.hasUrlToken() &&
+    !notLogin.includes(to.path) &&
+    !userStore.user?.token
+  ) {
     return "/login";
   }
 });

@@ -47,12 +47,15 @@ const onRefresh = async () => {
     });
 };
 // 查看消息
+const childRef = ref<any>(null);
+
 const readMail = (detail: any) => {
   if (detail.read_time == 0) {
     mailReadApi(detail.id);
     mailList.value = mailList.value.map((item: any) => {
       if (item.id == detail.id) {
         item.read_time = 1;
+        childRef.value.fetchUnreadCount();
       }
       return item;
     });
@@ -78,6 +81,7 @@ watch([value1, value2], async ([newValue1, newValue2]) => {
       refreshing.value = false;
     });
 });
+
 const option1 = [
   { text: t("notification.allMessages"), value: 0 },
   { text: t("notification.systemAnnouncement"), value: 1 },
@@ -111,7 +115,7 @@ const class3 = {
 };
 </script>
 <template>
-  <CpNavBar> </CpNavBar>
+  <CpNavBar ref="childRef"> </CpNavBar>
   <div class="page">
     <div class="filter-section">
       <van-dropdown-menu swipe-threshold="2">

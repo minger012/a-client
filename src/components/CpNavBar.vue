@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { updateI18nLanguage } from "@/plugins/i18n";
-import { loginOutApi, setLangApi } from "@/services/api";
+import { loginOutApi, setLangApi, mailNoReadApi } from "@/services/api"; // 导入 API
 import { useUserStore } from "@/stores/stores";
-import { ref } from "vue";
+import { ref, onMounted, onUnmounted } from "vue"; // 添加生命周期函数
 import { useRouter, useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 
@@ -31,6 +31,39 @@ const props = withDefaults(
 );
 
 const routeTitle = route.meta.title as string;
+
+// 未读消息数量
+const unreadCount = ref(0);
+let refreshInterval: number | null = null;
+
+// 获取未读消息数量
+const fetchUnreadCount = async () => {
+  try {
+    // 调用你的 API 接口
+    const response = await mailNoReadApi();
+    unreadCount.value = response.data;
+  } catch (error) {
+    console.error("获取未读消息数量失败:", error);
+    unreadCount.value = 0; // 出错时设为0
+  }
+};
+
+// 初始化加载未读数量
+onMounted(() => {
+  fetchUnreadCount();
+
+  // 可选：设置定时刷新（比如每30秒刷新一次）
+  refreshInterval = window.setInterval(() => {
+    fetchUnreadCount();
+  }, 30000);
+});
+
+// 清理定时器
+onUnmounted(() => {
+  if (refreshInterval) {
+    clearInterval(refreshInterval);
+  }
+});
 
 // 返回键
 const back = () => {
@@ -71,6 +104,18 @@ const loginOut = () => {
       // 用户取消操作
     });
 };
+
+// 点击通知图标
+const goToNotification = () => {
+  router.push("notification");
+  // 可选：跳转后重置未读数量
+  // unreadCount.value = 0;
+};
+
+// 暴露变量和方法给父组件
+defineExpose({
+  fetchUnreadCount,
+});
 </script>
 
 <template>
@@ -100,12 +145,20 @@ const loginOut = () => {
             @click="showPicker = true"
             v-if="props.isLang"
           ></CpSvg>
-          <van-icon
-            name="bell"
-            v-if="props.isLogin == false"
-            size="1.25rem"
-            @click="$router.push('notification')"
-          />
+
+          <!-- 通知图标带未读数量 -->
+          <div class="notification-wrapper" v-if="props.isLogin == false">
+            <van-icon name="bell" size="1.25rem" @click="goToNotification" />
+            <!-- 未读数量徽章 -->
+            <div
+              v-if="unreadCount > 0"
+              class="badge"
+              :class="{ 'badge-large': unreadCount > 99 }"
+            >
+              {{ unreadCount > 99 ? "99+" : unreadCount }}
+            </div>
+          </div>
+
           <CpSvg
             name="logout"
             @click="loginOut()"
@@ -135,6 +188,54 @@ const loginOut = () => {
   box-shadow: none !important;
   &::after {
     display: none !important;
+  }
+}
+
+// 通知图标容器
+.notification-wrapper {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+// 未读数量徽章
+.badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #ff4444;
+  color: white;
+  border-radius: 10px;
+  min-width: 18px;
+  height: 18px;
+  font-size: 10px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  // 数字较多时的样式
+  &.badge-large {
+    font-size: 9px;
+    padding: 0 3px;
+    min-width: 22px;
+  }
+}
+
+// 响应式调整
+@media (max-width: 768px) {
+  .badge {
+    min-width: 16px;
+    height: 16px;
+    font-size: 9px;
+
+    &.badge-large {
+      font-size: 8px;
+      min-width: 20px;
+    }
   }
 }
 </style>
