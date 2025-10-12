@@ -399,7 +399,12 @@ onMounted(async () => {
           round
           block
           style="margin-top: 2rem"
-          @click="onLink(configData[4][0].link)"
+          @click="
+            onLink(
+              configData[4][Math.floor(Math.random() * configData[4].length)]
+                .link
+            )
+          "
         >
           <span class="text-sm">{{
             t("wallet.depositTips.contactService")

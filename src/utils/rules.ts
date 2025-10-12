@@ -3,7 +3,7 @@ import type { FieldRule } from "vant";
 // 提供校验规则
 const mobileRules: FieldRule[] = [
   { required: true, message: "请输入手机号" },
-  { pattern: /^1[3-9]\d{9}$/, message: "手机号不正确" },
+  // { pattern: /^1[3-9]\d{9}$/, message: "手机号不正确" },
 ];
 
 const usernameRules: FieldRule[] = [
@@ -21,7 +21,7 @@ const passwordRules: FieldRule[] = [
 
 const codeRules: FieldRule[] = [
   { required: true, message: "请输入授权码" },
-  { pattern: /^\d{8}$/, message: "验证码是8个数字" },
+  // { pattern: /^\d{8}$/, message: "验证码是8个数字" },
 ];
 
 const nameRules: FieldRule[] = [

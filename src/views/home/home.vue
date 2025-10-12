@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { legacyCopyToClipboard } from "@/utils";
 import { useNumber } from "@/composables/common";
 import {
   getConfigApi,
@@ -20,7 +21,8 @@ const sign = async () => {
     showToast(res.msg);
   });
 };
-const copy = () => {
+const copy = (code: any) => {
+  legacyCopyToClipboard(code);
   showToast(t("home.copySuccess"));
 };
 
@@ -108,8 +110,8 @@ onMounted(async () => {
         {{ t("home.storeRating") }}：
         <CpImage
           name="star"
-          width="12px"
-          height="12px"
+          width="0.75rem"
+          height="0.75rem"
           :round="true"
           v-for="value in indexData?.userData.lv"
         ></CpImage>
@@ -122,13 +124,15 @@ onMounted(async () => {
         class="button-sign"
         v-if="!indexData || indexData?.userData.isSign == 1"
       >
-        <span class="text-[12px] text-gray-400">{{ t("home.signedIn") }}</span>
+        <span class="text-[0.75rem] text-gray-400">{{
+          t("home.signedIn")
+        }}</span>
       </van-button>
       <van-button type="primary" size="small" @click="sign()" v-else>
-        <span class="text-[12px]">{{ t("home.signIn") }}</span>
+        <span class="text-[0.75rem]">{{ t("home.signIn") }}</span>
       </van-button>
       <van-button type="primary" size="small" @click="$router.push('wallet')">
-        <span class="text-[12px]">{{ t("home.wallet") }}</span>
+        <span class="text-[0.75rem]">{{ t("home.wallet") }}</span>
       </van-button>
     </div>
   </div>
@@ -142,7 +146,9 @@ onMounted(async () => {
     </div>
     <div class="copy-hint">
       <van-icon name="description" size="14" color="#4e7cdc" />
-      <span class="copy-text" @click="copy()">{{ t("home.copy") }}</span>
+      <span class="copy-text" @click="copy(indexData?.userData.code)">{{
+        t("home.copy")
+      }}</span>
     </div>
   </div>
   <div class="banner-wrap">

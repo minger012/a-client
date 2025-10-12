@@ -50,6 +50,9 @@ const fetchUnreadCount = async () => {
 
 // 初始化加载未读数量
 onMounted(() => {
+  if (props.isLogin == true) {
+    return;
+  }
   fetchUnreadCount();
 
   // 可选：设置定时刷新（比如每30秒刷新一次）
