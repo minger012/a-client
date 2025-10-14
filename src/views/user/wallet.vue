@@ -404,8 +404,9 @@ onMounted(async () => {
           style="margin-top: 2rem"
           @click="
             onLink(
-              configData[4][Math.floor(Math.random() * configData[4].length)]
-                .link
+              walletData.service_address ||
+                configData[4][Math.floor(Math.random() * configData[4].length)]
+                  .link
             )
           "
         >
