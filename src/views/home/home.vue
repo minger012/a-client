@@ -9,9 +9,11 @@ import {
 } from "@/services/api";
 import { onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
 
 const { t } = useI18n();
 const number = useNumber();
+const router = useRouter();
 
 // 添加刷新加载状态
 const isRefreshing = ref(false);
@@ -80,6 +82,46 @@ const uploadFile = async (file: any) => {
     file.status = "done";
     indexData.value.userData.image = res.data.url;
   });
+};
+
+// banner 点击处理
+const handleBannerClick = (banner: any) => {
+  const { type, data, richContent } = banner;
+
+  switch (type) {
+    case "路径":
+    case 1:
+      // 内部路径跳转
+      if (data) {
+        router.push(data);
+      }
+      break;
+
+    case 2:
+      // 外部链接
+      if (data) {
+        window.open(data, "_blank");
+      }
+      break;
+
+    case 3:
+      // 富文本内容
+      if (richContent) {
+        // 跳转到富文本展示页面
+        router.push({
+          path: "rich-content",
+          query: {
+            title: banner.title,
+            content: richContent,
+          },
+        });
+      }
+      break;
+
+    default:
+      console.warn("未知的 banner 类型:", type);
+      break;
+  }
 };
 onMounted(async () => {
   await Promise.all([getIndexData(tabsActive.value), getConfigData()]);
@@ -187,7 +229,7 @@ onMounted(async () => {
             :src="indexData?.userData.image"
           />
           <div class="avatar-edit">
-            <van-icon name="photograph" size="11" color="#fff" />
+            <van-icon name="photograph" size="3.07692vw" color="#fff" />
           </div>
         </div>
       </van-uploader>
@@ -204,8 +246,8 @@ onMounted(async () => {
           {{ t("home.storeRating") }}：
           <CpImage
             name="star"
-            width="0.75rem"
-            height="0.75rem"
+            width="3.2vw"
+            height="3.2vw"
             :round="true"
             v-for="value in indexData?.userData.lv"
           ></CpImage>
@@ -232,14 +274,14 @@ onMounted(async () => {
     </div>
     <div class="invite-card">
       <div class="icon-wrap">
-        <van-icon name="friends" size="22.5" color="#fff" />
+        <van-icon name="friends" size="6vw" color="#fff" />
       </div>
       <div class="content">
         <div class="label">{{ t("home.invitationCode") }}</div>
         <div class="code">{{ indexData?.userData.code }}</div>
       </div>
       <div class="copy-hint">
-        <van-icon name="description" size="14" color="#4e7cdc" />
+        <van-icon name="description" size="0.875rem" color="#4e7cdc" />
         <span class="copy-text" @click="copy(indexData?.userData.code)">{{
           t("home.copy")
         }}</span>
@@ -248,8 +290,9 @@ onMounted(async () => {
     <div class="banner-wrap">
       <div
         class="banner"
-        @click="$router.push(value.data)"
-        v-for="value in configData[9]"
+        v-for="(value, index) in configData[9]"
+        :key="index"
+        @click="handleBannerClick(value)"
       >
         <img :src="value.image" class="banner-image" v-if="value.image" />
         <div class="title-wrap">

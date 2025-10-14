@@ -18,6 +18,11 @@ const router = createRouter({
       meta: { title: t("routes.home") },
     },
     {
+      path: "/rich-content", // 富文本页面
+      component: () => import("@/views/home/richContent.vue"),
+      meta: { title: "" },
+    },
+    {
       path: "/news", // 文章
       component: () => import("@/views/home/news.vue"),
       meta: { title: t("routes.news") },

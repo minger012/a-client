@@ -6,7 +6,7 @@ const props = withDefaults(
     color?: string;
   }>(),
   {
-    size: () => "0.9375rem",
+    size: () => "4vw",
     color: () => "#333",
   }
 );

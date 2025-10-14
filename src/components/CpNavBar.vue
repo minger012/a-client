@@ -142,20 +142,18 @@ defineExpose({
     </template>
     <template #right>
       <slot name="right">
-        <div class="flex justify-center items-center space-x-2">
-          <CpSvg
-            name="language"
-            @click="showPicker = true"
-            v-if="props.isLang"
-          ></CpSvg>
+        <div class="header-right">
+          <div class="icon">
+            <CpSvg
+              name="language"
+              @click="showPicker = true"
+              v-if="props.isLang"
+            ></CpSvg>
+          </div>
 
           <!-- 通知图标带未读数量 -->
-          <div class="notification-wrapper" v-if="props.isLogin == false">
-            <van-icon
-              name="bell"
-              size="1.203125rem"
-              @click="goToNotification"
-            />
+          <div class="icon notification-wrapper" v-if="props.isLogin == false">
+            <van-icon name="bell" size="5.12821vw" @click="goToNotification" />
             <!-- 未读数量徽章 -->
             <div
               v-if="unreadCount > 0"
@@ -165,12 +163,13 @@ defineExpose({
               {{ unreadCount > 99 ? "99+" : unreadCount }}
             </div>
           </div>
-
-          <CpSvg
-            name="logout"
-            @click="loginOut()"
-            v-if="props.isLoginOut == true"
-          ></CpSvg>
+          <div class="icon">
+            <CpSvg
+              name="logout"
+              @click="loginOut()"
+              v-if="props.isLoginOut == true"
+            ></CpSvg>
+          </div>
         </div>
         <van-popup
           v-model:show="showPicker"
@@ -195,6 +194,16 @@ defineExpose({
   box-shadow: none !important;
   &::after {
     display: none !important;
+  }
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 2.66667vw;
+  .icon {
+    font-size: 5.12821vw;
+    color: var(--color);
   }
 }
 
