@@ -216,6 +216,7 @@ export default {
     isExpired: "Đã hết hạn",
     all: "Tất cả",
     expired: "Hết hạn",
+    validUntil: "Có hiệu lực đến {date}",
   },
   notification: {
     allMessages: "Tất cả tin nhắn",

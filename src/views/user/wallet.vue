@@ -120,13 +120,16 @@ const onWithdrawal = async () => {
     return;
   }
   showBottom2.value = false;
-  await withdrawApi(withdrawal.value, password.value).then((res) => {
-    showBottom3.value = false;
-    withdrawal.value = "";
-    password.value = "";
-    location.reload();
-    showSuccessToast(res.msg);
-  });
+  await withdrawApi(withdrawal.value, password.value)
+    .then((res) => {
+      showBottom3.value = false;
+      withdrawal.value = "";
+      location.reload();
+      showSuccessToast(res.msg);
+    })
+    .finally(() => {
+      password.value = "";
+    });
 };
 
 const onLink = (link: string) => {

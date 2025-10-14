@@ -216,6 +216,7 @@ export default {
     isExpired: "期限切れ",
     all: "すべて",
     expired: "期限切れ",
+    validUntil: "{date} まで有効",
   },
   notification: {
     allMessages: "すべてのメッセージ",

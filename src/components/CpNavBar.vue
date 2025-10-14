@@ -142,7 +142,7 @@ defineExpose({
     </template>
     <template #right>
       <slot name="right">
-        <div class="flex items-center space-x-2">
+        <div class="flex justify-center items-center space-x-2">
           <CpSvg
             name="language"
             @click="showPicker = true"
@@ -151,7 +151,11 @@ defineExpose({
 
           <!-- 通知图标带未读数量 -->
           <div class="notification-wrapper" v-if="props.isLogin == false">
-            <van-icon name="bell" size="1.25rem" @click="goToNotification" />
+            <van-icon
+              name="bell"
+              size="1.203125rem"
+              @click="goToNotification"
+            />
             <!-- 未读数量徽章 -->
             <div
               v-if="unreadCount > 0"

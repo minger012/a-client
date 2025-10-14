@@ -111,8 +111,11 @@ let stateName = {
               </div>
               <div class="name">{{ value.intro }}</div>
               <div class="time">
-                {{ time.formatToMonthDay(value.create_time, 1) }}
-                {{ t("coupons.expired") }}
+                {{
+                  t("coupons.validUntil", {
+                    date: time.formatToMonthDay(value.create_time, 1),
+                  })
+                }}
               </div>
             </div>
           </div>
@@ -190,7 +193,7 @@ let stateName = {
         font-weight: 600;
         line-height: 1;
         margin-bottom: 2.05128vw;
-        word-break: break-all;
+        word-break: break-word;
         text-align: center;
         padding-left: 3.02564vw;
       }

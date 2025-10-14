@@ -47,31 +47,37 @@ const orderAdd = async () => {
       pay_password.value,
       cd.value,
       checkCouponData.value?.id || ""
-    ).then((res) => {
-      showBottom.value = false;
-      money.value = "";
-      cd.value = "";
-      pay_password.value = "";
-      plan_id.value = "";
-      showSuccessToast(res.msg);
-      getUserInfo();
-    });
+    )
+      .then((res) => {
+        showBottom.value = false;
+        money.value = "";
+        cd.value = "";
+        plan_id.value = "";
+        showSuccessToast(res.msg);
+        getUserInfo();
+      })
+      .finally(() => {
+        pay_password.value = "";
+      });
   } else {
     await planOrderSendAddApi(
       order_id.value,
       money.value,
       pay_password.value,
       checkCouponData.value?.id || ""
-    ).then((res) => {
-      showBottom3.value = false;
-      money.value = "";
-      pay_password.value = "";
-      order_id.value = "";
-      min.value = "";
-      max.value = "";
-      showSuccessToast(res.msg);
-      getUserInfo();
-    });
+    )
+      .then((res) => {
+        showBottom3.value = false;
+        money.value = "";
+        order_id.value = "";
+        min.value = "";
+        max.value = "";
+        showSuccessToast(res.msg);
+        getUserInfo();
+      })
+      .finally(() => {
+        pay_password.value = "";
+      });
   }
 };
 // 玩家信息
@@ -109,9 +115,8 @@ const onLoad = async () => {
       if (params.value.page >= res.data.total_page) {
         finished.value = true;
       }
-      loading.value = false;
     })
-    .catch(() => {
+    .finally(() => {
       loading.value = false;
     });
 };
@@ -135,9 +140,8 @@ watch(tabsActive, async (newVal) => {
   await getCouponListApi(params.value, newVal)
     .then((res) => {
       CouponList.value = res.data.list;
-      refreshing.value = false;
     })
-    .catch(() => {
+    .finally(() => {
       refreshing.value = false;
     });
 });
@@ -375,8 +379,11 @@ onMounted(async () => {
                 </div>
                 <div class="name">{{ value.intro }}</div>
                 <div class="time">
-                  {{ time.formatToMonthDay(value.create_time, 1) }}
-                  {{ t("putin.expired") }}
+                  {{
+                    t("coupons.validUntil", {
+                      date: time.formatToMonthDay(value.create_time, 1),
+                    })
+                  }}
                 </div>
               </div>
             </div>
@@ -603,7 +610,7 @@ onMounted(async () => {
         font-weight: 600;
         line-height: 1;
         margin-bottom: 2.05128vw;
-        word-break: break-all;
+        word-break: break-word;
         text-align: center;
         padding-left: 3.02564vw;
       }

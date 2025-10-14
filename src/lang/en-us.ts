@@ -216,6 +216,8 @@ export default {
     isExpired: "Expired",
     all: "All",
     expired: "Expired",
+    expiredAt: "Expired at {date}",
+    validUntil: "Valid until {date}",
   },
   notification: {
     allMessages: "All Messages",

@@ -247,6 +247,7 @@ export default {
     isExpired: "已过期",
     all: "全部",
     expired: "过期",
+    validUntil: "有效期至 {date}",
   },
   notification: {
     allMessages: "全部消息",

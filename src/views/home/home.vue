@@ -13,6 +13,9 @@ import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 const number = useNumber();
 
+// 添加刷新加载状态
+const isRefreshing = ref(false);
+
 // 签到
 const sign = async () => {
   await signApi().then((res) => {
@@ -30,9 +33,14 @@ const copy = (code: any) => {
 const tabsActive = ref(0);
 const indexData = ref();
 const getIndexData = async (id: number) => {
-  await getIndexApi(id).then((res) => {
-    indexData.value = res.data;
-  });
+  isRefreshing.value = true; // 开始加载
+  await getIndexApi(id)
+    .then((res) => {
+      indexData.value = res.data;
+    })
+    .finally(() => {
+      isRefreshing.value = false; // 加载完成
+    });
 };
 // 后台配置
 const configData = ref<any>([]);
@@ -177,7 +185,10 @@ onMounted(async () => {
       <div class="title">{{ t("home.dataOverview") }}</div>
       <div class="desc" @click="getIndexData(tabsActive)">
         <span>{{ t("home.dataUpdateHint") }}</span>
-        <CpSvg name="refresh"></CpSvg>
+        <CpSvg
+          name="refresh"
+          :class="{ 'refresh-spinning': isRefreshing }"
+        ></CpSvg>
       </div>
     </div>
     <div class="data-list">
@@ -468,6 +479,7 @@ onMounted(async () => {
     align-items: center;
     font-size: 3.07692vw;
     color: var(--van-gray-7);
+    cursor: pointer;
   }
   .data-list {
     display: grid;
@@ -542,6 +554,21 @@ onMounted(async () => {
     }
   }
 }
+
+// 添加旋转动画
+.refresh-spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 ::v-deep() {
   .van-button--small {
     width: 5.3125rem;

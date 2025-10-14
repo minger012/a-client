@@ -216,6 +216,7 @@ export default {
     isExpired: "만료됨",
     all: "전체",
     expired: "만료",
+    validUntil: "{date}까지 유효",
   },
   notification: {
     allMessages: "모든 메시지",
