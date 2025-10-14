@@ -10,15 +10,31 @@ const route = useRoute();
 const router = useRouter();
 const number = useNumber();
 const detail = ref<any>();
+
+// 添加刷新状态
+const isRefreshing = ref(false);
+
 const getDetail = async () => {
+  isRefreshing.value = true; // 开始加载
   await planOrderDetailApi(route.query.id as unknown as number)
     .then((res) => {
       detail.value = res.data;
     })
     .catch(() => {
       router.back();
+    })
+    .finally(() => {
+      isRefreshing.value = false; // 加载完成
     });
 };
+
+// 刷新数据函数
+const refreshData = () => {
+  if (!isRefreshing.value) {
+    getDetail();
+  }
+};
+
 let stateName = {
   0: t("orderDetail.pendingPlacement"),
   1: t("orderDetail.matching"),
@@ -84,9 +100,13 @@ onMounted(() => {
       <div class="section">
         <div class="section-title">
           <div class="title">{{ t("orderDetail.dataOverview") }}</div>
-          <div class="desc space-x-1">
+          <div class="desc space-x-1" @click="refreshData">
             <span>{{ t("orderDetail.dataUpdateHint") }}</span>
-            <CpSvg name="refresh" size="1rem"></CpSvg>
+            <CpSvg
+              name="refresh"
+              size="1rem"
+              :class="{ 'refresh-spinning': isRefreshing }"
+            ></CpSvg>
           </div>
         </div>
         <div class="data-section">
@@ -249,8 +269,24 @@ onMounted(() => {
       }
       .desc {
         display: flex;
+        align-items: center;
         font-size: 3.07692vw;
         color: var(--van-gray-7);
+        cursor: pointer;
+
+        // 添加旋转动画
+        .refresh-spinning {
+          animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
       }
     }
     .put-goods {

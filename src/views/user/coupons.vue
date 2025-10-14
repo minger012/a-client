@@ -138,8 +138,10 @@ let stateName = {
     -webkit-align-items: center;
     align-items: stretch;
     min-height: 28.61538vw;
-    margin-bottom: 3.84615vw;
     padding-left: 30.76923vw;
+    &:not(:last-child) {
+      margin-bottom: 3.84615vw;
+    }
     &.used .item-left,
     &.used .item-left .tab {
       background: #adadad;

@@ -53,6 +53,7 @@ const orderAdd = async () => {
         money.value = "";
         cd.value = "";
         plan_id.value = "";
+        checkCouponData.value = null;
         showSuccessToast(res.msg);
         getUserInfo();
       })
@@ -72,6 +73,7 @@ const orderAdd = async () => {
         order_id.value = "";
         min.value = "";
         max.value = "";
+        checkCouponData.value = null;
         showSuccessToast(res.msg);
         getUserInfo();
       })
@@ -557,6 +559,9 @@ onMounted(async () => {
     align-items: stretch;
     min-height: 28.61538vw;
     padding-left: 30.76923vw;
+    &:not(:last-child) {
+      margin-bottom: 3.84615vw;
+    }
     &.used .item-left,
     &.used .item-left .tab {
       background: #adadad;
