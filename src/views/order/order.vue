@@ -60,7 +60,9 @@ watch(tabsActive, async (newVal: OrderListType) => {
 });
 // 弹出层-下单
 const childRef = ref<any>(null);
-const updateChildData = (detail: any) => {
+const updateChildData = (detail: any, event: Event) => {
+  // 阻止事件冒泡
+  event.stopPropagation();
   if (childRef.value) {
     // 直接修改子组件的变量
     childRef.value.showBottom3 = true;
@@ -116,17 +118,18 @@ onMounted(() => {
           @load="onLoad"
           :finished-text="t('common.noMore')"
         >
-          <div class="plan-item" v-for="value in planOrderList">
+          <div
+            class="plan-item"
+            v-for="value in planOrderList"
+            @click="$router.push('orderDetail?id=' + value.id)"
+          >
             <div class="push-tag">{{ (formName as any)[value.form] }}</div>
             <div class="title-line">
               <span class="title"
                 >{{ t("order.planNumber") }}: {{ value.order_no }}</span
               ><span class="status">{{ (stateName as any)[value.state] }}</span>
             </div>
-            <div
-              class="plan-content"
-              @click="$router.push('orderDetail?id=' + value.id)"
-            >
+            <div class="plan-content">
               <div class="banner">
                 <div class="van-swipe my-swipe">
                   <div
@@ -204,7 +207,7 @@ onMounted(() => {
                 size="small"
                 round
                 class="button"
-                @click="updateChildData(value)"
+                @click="updateChildData(value, $event)"
                 style="width: 6.5rem; height: 2.125rem; z-index: 999"
               >
                 <span class="text-[3.2vw]">{{ t("order.placement") }}</span>
@@ -378,6 +381,11 @@ onMounted(() => {
       display: flex;
       align-items: center;
       justify-content: end;
+
+      // 确保按钮区域不会触发父元素的点击事件
+      .button {
+        pointer-events: auto;
+      }
     }
   }
 }
