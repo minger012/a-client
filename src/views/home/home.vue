@@ -435,7 +435,7 @@ onMounted(async () => {
           @click="$router.push('news?id=' + key)"
           v-for="(value, key) in configData[7]"
         >
-          <div class="name">{{ value.answer }}</div>
+          <div class="name">{{ value.question }}</div>
           <van-icon name="arrow" />
         </div>
       </div>

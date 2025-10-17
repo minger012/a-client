@@ -174,7 +174,7 @@ onMounted(() => {
               </div>
             </div>
             <div class="plan-text">
-              {{ value.goods_intro }}
+              {{ value.intro }}
             </div>
             <div class="put-wrap">
               <div class="put-item">

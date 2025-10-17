@@ -9,8 +9,8 @@ import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 const userStore = useUserStore();
 const router = useRouter();
-const username = ref("155555");
-const password = ref("123456");
+const username = ref("");
+const password = ref("");
 const onSubmit = async () => {
   await loginApi(username.value, password.value).then((res) => {
     userStore.setUser(res.data);
@@ -47,6 +47,7 @@ const onSubmit = async () => {
           />
           <van-field
             v-model="password"
+            type="password"
             left-icon="shield-o"
             :placeholder="t('login.enterPassword')"
             :rules="passwordRules"

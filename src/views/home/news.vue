@@ -23,7 +23,7 @@ onMounted(() => {
 <template>
   <CpNavBar :isLogin="true" :is-lang="false"> </CpNavBar>
   <div class="page">
-    <div class="content">{{ configData.question }}</div>
+    <div class="content">{{ configData.answer }}</div>
   </div>
 </template>
 <style lang="scss" scoped>
