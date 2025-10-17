@@ -152,13 +152,14 @@ defineExpose({
 
           <!-- 通知图标带未读数量 -->
           <div
-            class="flex items-center notification-wrapper"
+            class="notification-wrapper"
             v-if="props.isLogin == false"
+            @click="goToNotification()"
           >
             <van-icon
               name="bell"
               class="nav-icon bell-icon"
-              @click="goToNotification"
+              @click="goToNotification()"
             />
             <!-- 未读数量徽章 -->
             <div
@@ -239,8 +240,9 @@ defineExpose({
 
 // 通知图标容器
 .notification-wrapper {
+  display: flex;
+  align-items: center;
   position: relative;
-  display: inline-block;
   cursor: pointer;
 }
 
