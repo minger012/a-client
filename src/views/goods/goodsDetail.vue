@@ -46,11 +46,13 @@ onMounted(() => {
           name="google-play-nQbvKhbh"
           width="9.5rem"
           height="2.875rem"
+          @click="onLink(detail.google_play)"
         ></CpImage>
         <CpImage
           name="apple-store-Da3dkSd7"
           width="8.5rem"
           height="2.875rem"
+          @click="onLink(detail.app_store)"
         ></CpImage>
       </div>
     </div>

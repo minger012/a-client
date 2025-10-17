@@ -133,7 +133,7 @@ defineExpose({
       <slot name="left">
         <CpSvg
           name="back"
-          size="5.12821vw"
+          class="nav-icon"
           @click="back()"
           v-if="isBack == true"
         >
@@ -143,17 +143,23 @@ defineExpose({
     <template #right>
       <slot name="right">
         <div class="header-right">
-          <div class="icon">
-            <CpSvg
-              name="language"
-              @click="showPicker = true"
-              v-if="props.isLang"
-            ></CpSvg>
-          </div>
+          <CpSvg
+            name="language"
+            class="nav-icon nav-icon2"
+            @click="showPicker = true"
+            v-if="props.isLang"
+          ></CpSvg>
 
           <!-- 通知图标带未读数量 -->
-          <div class="icon notification-wrapper" v-if="props.isLogin == false">
-            <van-icon name="bell" size="5.12821vw" @click="goToNotification" />
+          <div
+            class="flex items-center notification-wrapper"
+            v-if="props.isLogin == false"
+          >
+            <van-icon
+              name="bell"
+              class="nav-icon bell-icon"
+              @click="goToNotification"
+            />
             <!-- 未读数量徽章 -->
             <div
               v-if="unreadCount > 0"
@@ -163,13 +169,12 @@ defineExpose({
               {{ unreadCount > 99 ? "99+" : unreadCount }}
             </div>
           </div>
-          <div class="icon">
-            <CpSvg
-              name="logout"
-              @click="loginOut()"
-              v-if="props.isLoginOut == true"
-            ></CpSvg>
-          </div>
+          <CpSvg
+            name="logout"
+            class="nav-icon nav-icon2"
+            @click="loginOut()"
+            v-if="props.isLoginOut == true"
+          ></CpSvg>
         </div>
         <van-popup
           v-model:show="showPicker"
@@ -195,15 +200,40 @@ defineExpose({
   &::after {
     display: none !important;
   }
+  ::v-deep() {
+    .van-nav-bar__title {
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+  }
 }
 
 .header-right {
   display: flex;
   align-items: center;
   gap: 2.66667vw;
-  .icon {
+}
+
+// 导航图标基础样式
+.nav-icon {
+  // 移动端默认使用 vw 单位
+  width: 5.12821vw;
+  height: 5.12821vw;
+  &.nav-icon2 {
+    width: 4vw;
+    height: 4vw;
+  }
+
+  // 特殊处理 bell 图标
+  &.bell-icon {
     font-size: 5.12821vw;
-    color: var(--color);
+  }
+
+  // 确保 SVG 图标居中显示
+  :deep(svg) {
+    width: 100%;
+    height: 100%;
   }
 }
 
@@ -241,16 +271,51 @@ defineExpose({
   }
 }
 
-// 响应式调整
-@media (max-width: 768px) {
+// 大屏幕下的徽章调整
+@media (min-width: 751px) {
+  .header-right {
+    gap: 16px; // 固定间距
+  }
+  ::v-deep() {
+    .van-nav-bar__title {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      font-size: 30px;
+    }
+  }
+  .nav-icon {
+    // 固定尺寸 30.77px
+    width: 30.77px;
+    height: 30.77px;
+    &.nav-icon2 {
+      width: 24px;
+      height: 24px;
+    }
+    // 特殊处理 bell 图标
+    &.bell-icon {
+      font-size: 30.77px;
+    }
+  }
+
+  // 调整返回图标尺寸
+  :deep(.van-nav-bar__left) {
+    .nav-icon {
+      width: 30.77px;
+      height: 30.77px;
+    }
+  }
   .badge {
-    min-width: 16px;
-    height: 16px;
-    font-size: 9px;
+    min-width: 20px;
+    height: 20px;
+    font-size: 12px;
+    top: -8px;
+    right: -8px;
 
     &.badge-large {
-      font-size: 8px;
-      min-width: 20px;
+      font-size: 10px;
+      min-width: 24px;
+      height: 20px;
     }
   }
 }

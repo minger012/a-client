@@ -14,7 +14,7 @@ const getDetail = async () => {
   const res = await planDetailApi(route.query.id as unknown as number);
   detail.value = res.data;
 };
-const childRef = ref(null);
+const childRef = ref<any>(null);
 const updateChildData = () => {
   if (childRef.value) {
     // 直接修改子组件的变量
