@@ -253,22 +253,33 @@ onMounted(async () => {
           ></CpImage>
         </div>
       </div>
-      <div class="flex flex-col space-y-2">
+      <div class="action-buttons">
         <van-button
-          type="primary"
           size="small"
-          class="button-sign"
+          disabled
+          class="sign-in-btn"
           v-if="!indexData || indexData?.userData.isSign == 1"
         >
-          <span class="text-[0.75rem] text-gray-400">{{
-            t("home.signedIn")
-          }}</span>
+          {{ t("home.signedIn") }}
         </van-button>
-        <van-button type="primary" size="small" @click="sign()" v-else>
-          <span class="text-[0.75rem]">{{ t("home.signIn") }}</span>
+        <van-button
+          block
+          type="primary"
+          size="small"
+          class="sign-in-btn"
+          @click="sign()"
+          v-else
+        >
+          {{ t("home.signIn") }}
         </van-button>
-        <van-button type="primary" size="small" @click="$router.push('wallet')">
-          <span class="text-[0.75rem]">{{ t("home.wallet") }}</span>
+        <van-button
+          block
+          type="primary"
+          size="small"
+          @click="$router.push('wallet')"
+          class="sign-in-btn"
+        >
+          {{ t("home.wallet") }}
         </van-button>
       </div>
     </div>
@@ -470,6 +481,27 @@ onMounted(async () => {
     background-color: #f7f8fa;
     color: #cbcccd;
     border-color: rgb(240, 242, 245) !important;
+  }
+  .action-buttons {
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2.05128vw;
+    .sign-in-btn {
+      min-width: 22.5641vw;
+      border-radius: 1.02564vw;
+      font-size: 3.33333vw;
+      height: 8.20513vw;
+      transition: all 0.3s ease;
+    }
+  }
+  ::v-deep() {
+    .van-button--disabled {
+      background-color: #f0f2f5 !important;
+      border-color: #f0f2f5 !important;
+      color: #65676a !important;
+      cursor: not-allowed;
+    }
   }
 }
 .invite-card {
