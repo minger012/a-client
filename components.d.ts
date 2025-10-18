@@ -8,6 +8,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    CpGlobalFloatBtn: typeof import('./src/components/CpGlobalFloatBtn.vue')['default']
     CpImage: typeof import('./src/components/CpImage.vue')['default']
     CpNavBar: typeof import('./src/components/CpNavBar.vue')['default']
     CpSvg: typeof import('./src/components/CpSvg.vue')['default']
@@ -20,6 +21,7 @@ declare module 'vue' {
     VanDropdownMenu: typeof import('vant/es')['DropdownMenu']
     VanEmpty: typeof import('vant/es')['Empty']
     VanField: typeof import('vant/es')['Field']
+    VanFloatingBubble: typeof import('vant/es')['FloatingBubble']
     VanForm: typeof import('vant/es')['Form']
     VanIcon: typeof import('vant/es')['Icon']
     VanImage: typeof import('vant/es')['Image']

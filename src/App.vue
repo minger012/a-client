@@ -2,6 +2,7 @@
 
 <template>
   <router-view></router-view>
+  <CpGlobalFloatBtn />
 </template>
 
 <style scoped></style>

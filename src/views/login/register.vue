@@ -144,7 +144,7 @@ onMounted(async () => {
       {{ t("register.termsOfService") }}
     </h1>
     <div class="p-3">
-      {{ configData[8].length > 0 ? configData[8] : "" }}
+      <div v-html="configData[8].length > 0 ? configData[8] : ''"></div>
     </div>
   </van-popup>
 </template>
