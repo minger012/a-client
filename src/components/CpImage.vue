@@ -40,6 +40,7 @@ if (props.src) {
     :height="props.height"
     :round="props.round"
     :radius="props.radius"
+    fit="contain"
   >
     <template v-slot:loading>
       <van-loading type="spinner" size="20" />
