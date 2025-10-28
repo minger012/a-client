@@ -222,14 +222,14 @@ onMounted(async () => {
         <div class="link-list">
           <div class="link-item" @click="$router.push('bindCard')">
             <div class="link-title">
-              <CpSvg name="card-pos-2" size="5vw"></CpSvg>
+              <CpSvg name="card-pos-2" size="1.1719rem"></CpSvg>
               <span class="label">{{ t("wallet.bindBankCard") }}</span>
             </div>
             <van-icon name="arrow" />
           </div>
           <div class="link-item" @click="$router.push('paypassword')">
             <div class="link-title">
-              <CpSvg name="edit-password" size="5vw"></CpSvg>
+              <CpSvg name="edit-password" size="1.1719rem"></CpSvg>
               <span class="label">{{ t("wallet.changePaymentPassword") }}</span>
             </div>
             <van-icon name="arrow" />
@@ -425,7 +425,7 @@ onMounted(async () => {
   margin-top: var(--van-nav-bar-height);
   min-height: calc(100vh - var(--van-nav-bar-height));
   .section {
-    padding: 5.12821vw 4.10256vw 0;
+    padding: 1.2019rem 0.9615rem 0;
     .title-line {
       display: flex;
       align-items: center;
@@ -434,97 +434,97 @@ onMounted(async () => {
         flex: 1;
         display: flex;
         align-items: center;
-        font-size: 5.12821vw;
+        font-size: 1.2019rem;
         color: var(--van-black);
         span {
-          margin-right: 1vw;
+          margin-right: 0.2344rem;
         }
       }
       .tag {
-        font-size: 3.07692vw;
+        font-size: 0.7212rem;
       }
     }
     .money {
-      font-size: 8.97436vw;
+      font-size: 2.1034rem;
       color: var(--van-black);
       font-weight: 700;
-      margin-top: 4.10256vw;
-      line-height: 8.97436vw;
+      margin-top: 0.9615rem;
+      line-height: 2.1034rem;
       .currency {
-        margin-right: 0.5vw;
+        margin-right: 0.1172rem;
       }
     }
     .money-content {
-      margin-top: 7.69231vw;
-      padding: 4.61538vw 6.15385vw 4.61538vw 3.07692vw;
-      border-radius: 3.07692vw;
+      margin-top: 1.8029rem;
+      padding: 1.0817rem 1.4423rem 1.0817rem 0.7212rem;
+      border-radius: 0.7212rem;
       background: #f0f2f5;
       .money-item {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        font-size: 3.07692vw;
+        font-size: 0.7212rem;
         color: var(--van-black);
         &:not(:last-child) {
-          margin-bottom: 4.10256vw;
+          margin-bottom: 0.9615rem;
         }
       }
     }
     .btn-wrap {
-      margin-top: 5.12821vw;
+      margin-top: 1.2019rem;
       display: -webkit-box;
       display: -webkit-flex;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding-bottom: 5.12821vw;
+      padding-bottom: 1.2019rem;
       border-bottom: 1px solid #e5e5e5;
     }
     .link-list {
-      padding: 7.17949vw 0 6.15385vw;
+      padding: 1.6827rem 0 1.4423rem;
       .link-item {
         display: flex;
         align-items: center;
         justify-content: space-between;
         color: #65676a;
         &:not(:last-child) {
-          margin-bottom: 5.64103vw;
+          margin-bottom: 1.3221rem;
         }
         .link-title {
           display: flex;
           align-items: center;
-          font-size: 4.10256vw;
+          font-size: 0.9615rem;
           color: var(--van-black);
           flex: 1;
-          margin-right: 2.5641vw;
+          margin-right: 0.6010rem;
           .label {
-            margin-left: 1.5vw;
+            margin-left: 0.3516rem;
           }
         }
       }
     }
   }
   .record-wrap {
-    border-top: 2.05128vw solid #f0f2f5;
-    padding: 6.15385vw 4.10256vw;
+    border-top: 0.4808rem solid #f0f2f5;
+    padding: 1.4423rem 0.9615rem;
     min-height: 250px;
     .record-wrap {
-      border-top: 2.05128vw solid #f0f2f5;
-      padding: 6.15385vw 4.10256vw;
+      border-top: 0.4808rem solid #f0f2f5;
+      padding: 1.4423rem 0.9615rem;
     }
     .record-title {
       line-height: 1;
-      font-size: 4.61538vw;
+      font-size: 1.0817rem;
       color: var(--van-black);
       font-weight: 500;
-      padding-bottom: 5.12821vw;
+      padding-bottom: 1.2019rem;
       border-bottom: 1px solid #e5e5e5;
     }
     .record-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 5.12821vw 0;
+      padding: 1.2019rem 0;
       border-bottom: 1px solid #e5e5e5;
       .record-content {
         flex: 1;
@@ -534,8 +534,8 @@ onMounted(async () => {
         justify-content: center;
         line-height: 1;
         .time {
-          margin-top: 3.07692vw;
-          font-size: 3.33333vw;
+          margin-top: 0.7212rem;
+          font-size: 0.7812rem;
           color: var(--van-black);
         }
       }

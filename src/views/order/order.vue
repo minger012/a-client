@@ -210,7 +210,7 @@ onMounted(() => {
                 @click="updateChildData(value, $event)"
                 style="width: 6.5rem; height: 2.125rem; z-index: 999"
               >
-                <span class="text-[3.2vw]">{{ t("order.placement") }}</span>
+                <span class="text-[0.7500rem]">{{ t("order.placement") }}</span>
               </van-button>
             </div>
           </div>
@@ -225,7 +225,7 @@ onMounted(() => {
   margin-top: var(--van-nav-bar-height);
   .tab-wrap {
     position: relative;
-    margin-top: 2.5641vw;
+    margin-top: 0.6010rem;
     &:after {
       content: "";
       position: absolute;
@@ -239,17 +239,17 @@ onMounted(() => {
   }
   .plan-item {
     border: 1px solid #e4e6eb;
-    border-radius: 2.05128vw;
-    padding: 3.58974vw 4.10256vw;
-    margin-bottom: 3.84615vw;
+    border-radius: 0.4808rem;
+    padding: 0.8413rem 0.9615rem;
+    margin-bottom: 0.9014rem;
     .push-tag {
       display: inline-block;
-      font-size: 3.07692vw;
+      font-size: 0.7212rem;
       color: #fff;
       background: var(--van-primary-color);
-      padding: 1.02564vw 3.07692vw;
-      border-radius: 1.53846vw;
-      margin-bottom: 1.53846vw;
+      padding: 0.2404rem 0.7212rem;
+      border-radius: 0.3606rem;
+      margin-bottom: 0.3606rem;
     }
     .title-line {
       display: flex;
@@ -258,16 +258,16 @@ onMounted(() => {
       .title {
         font-weight: 500;
         color: var(--van-black);
-        line-height: 5.64103vw;
+        line-height: 1.3221rem;
       }
       .status {
-        font-size: 2.5641vw;
+        font-size: 0.6010rem;
         color: #0265d1;
         background: #ebf5ff;
-        padding: 0 3.07692vw;
-        line-height: 5.12821vw;
-        height: 5.12821vw;
-        border-radius: 5.12821vw;
+        padding: 0 0.7212rem;
+        line-height: 1.2019rem;
+        height: 1.2019rem;
+        border-radius: 1.2019rem;
         white-space: nowrap;
       }
     }
@@ -275,33 +275,33 @@ onMounted(() => {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      margin-top: 5.12821vw;
+      margin-top: 1.2019rem;
       .banner {
-        width: 44.10256vw;
-        height: 24.61538vw;
+        width: 10.3365rem;
+        height: 5.7692rem;
         flex-shrink: 0;
       }
       .app-content {
         flex: 1;
-        margin-left: 3.84615vw;
+        margin-left: 0.9014rem;
         .app-title {
           display: flex;
           align-items: center;
           height: 2.75rem;
           .logo {
-            width: 8.20513vw;
-            height: 8.20513vw;
+            width: 1.9231rem;
+            height: 1.9231rem;
             flex-shrink: 0;
-            margin-right: 3.07692vw;
+            margin-right: 0.7212rem;
           }
           .app-title-wrap {
             color: var(--van-black);
             .app-name {
-              font-size: 3.33333vw;
+              font-size: 0.7812rem;
               font-weight: 500;
             }
             .app-desc {
-              font-size: 2.30769vw;
+              font-size: 0.5409rem;
             }
           }
         }
@@ -310,38 +310,38 @@ onMounted(() => {
           align-items: center;
           flex-wrap: wrap;
           .tag {
-            min-width: 14.35897vw;
-            height: 5.12821vw;
+            min-width: 3.3654rem;
+            height: 1.2019rem;
             text-align: center;
-            line-height: 5.12821vw;
+            line-height: 1.2019rem;
             background: #f0f2f5;
-            font-size: 2.5641vw;
+            font-size: 0.6010rem;
             color: var(--van-black);
-            margin-right: 2.05128vw;
-            margin-top: 2.05128vw;
+            margin-right: 0.4808rem;
+            margin-top: 0.4808rem;
           }
         }
       }
     }
     .plan-text {
-      font-size: 3.07692vw;
-      line-height: 4.61538vw;
+      font-size: 0.7212rem;
+      line-height: 1.0817rem;
       color: var(--van-black);
-      margin-top: 3.84615vw;
+      margin-top: 0.9014rem;
     }
     .put-wrap {
       background: #f0f2f5;
-      border-radius: 3.07692vw;
-      padding: 3.84615vw 4.61538vw;
-      margin-top: 3.33333vw;
+      border-radius: 0.7212rem;
+      padding: 0.9014rem 1.0817rem;
+      margin-top: 0.7812rem;
       .put-item {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        font-size: 3.07692vw;
+        font-size: 0.7212rem;
         color: var(--van-black);
         &:not(:last-child) {
-          margin-bottom: 3.58974vw;
+          margin-bottom: 0.8413rem;
         }
         .label {
           flex-shrink: 0;
@@ -350,18 +350,18 @@ onMounted(() => {
           font-weight: 500;
           text-align: right;
           flex: 1;
-          margin-left: 3.84615vw;
+          margin-left: 0.9014rem;
         }
         .progress {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          width: 33.33333vw;
+          width: 7.8125rem;
           .progress-text {
-            font-size: 3.07692vw;
+            font-size: 0.7212rem;
             color: var(--van-black);
             font-weight: 500;
-            margin-left: 1.02564vw;
+            margin-left: 0.2404rem;
           }
         }
       }
@@ -373,11 +373,11 @@ onMounted(() => {
       .title {
         font-weight: 500;
         color: var(--van-black);
-        line-height: 5.64103vw;
+        line-height: 1.3221rem;
       }
     }
     .btn-wrap {
-      margin-top: 3.33333vw;
+      margin-top: 0.7812rem;
       display: flex;
       align-items: center;
       justify-content: end;

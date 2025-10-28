@@ -141,28 +141,28 @@ const updateChildData = (plan_id: number, plan_name: string) => {
   background: #f5f5f5;
   .header-info {
     background: #fff;
-    padding: 4.10256vw;
-    margin-bottom: 2.5641vw;
+    padding: 0.9615rem;
+    margin-bottom: 0.6010rem;
     .title {
-      font-size: 4.61538vw;
+      font-size: 1.0817rem;
       font-weight: 600;
       color: #333;
-      margin-bottom: 2.05128vw;
+      margin-bottom: 0.4808rem;
     }
     .description {
-      font-size: 3.33333vw;
+      font-size: 0.7812rem;
       color: #666;
       line-height: 1.5;
     }
   }
   .plan-items {
-    padding: 0 4.10256vw;
+    padding: 0 0.9615rem;
     .plan-card {
       background: #fff;
-      border-radius: 2.5641vw;
-      padding: 4.10256vw;
-      margin-bottom: 3.07692vw;
-      box-shadow: 0 0.51282vw 2.05128vw #0000000d;
+      border-radius: 0.6010rem;
+      padding: 0.9615rem;
+      margin-bottom: 0.7212rem;
+      box-shadow: 0 0.1202rem 0.4808rem #0000000d;
       transition: all 0.3s ease;
       &:active {
         transform: scale(0.98);
@@ -171,39 +171,39 @@ const updateChildData = (plan_id: number, plan_name: string) => {
       .plan-header {
         display: flex;
         align-items: flex-start;
-        margin-bottom: 3.07692vw;
+        margin-bottom: 0.7212rem;
         .plan-logo {
-          width: 15.38462vw;
-          height: 15.38462vw;
-          margin-right: 3.07692vw;
+          width: 3.6058rem;
+          height: 3.6058rem;
+          margin-right: 0.7212rem;
           flex-shrink: 0;
         }
         .plan-main-info {
           flex: 1;
-          margin-right: 2.05128vw;
+          margin-right: 0.4808rem;
           .plan-name {
-            font-size: 4.10256vw;
+            font-size: 0.9615rem;
             font-weight: 600;
             color: #333;
-            margin-bottom: 1.02564vw;
+            margin-bottom: 0.2404rem;
             line-height: 1.2;
           }
           .plan-company {
-            font-size: 3.07692vw;
+            font-size: 0.7212rem;
             color: #666;
-            margin-bottom: 1.02564vw;
+            margin-bottom: 0.2404rem;
           }
           .plan-time {
-            font-size: 2.5641vw;
+            font-size: 0.6010rem;
             color: #999;
           }
         }
       }
       .plan-desc {
-        font-size: 3.07692vw;
+        font-size: 0.7212rem;
         color: #666;
         line-height: 1.4;
-        margin-bottom: 3.07692vw;
+        margin-bottom: 0.7212rem;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
@@ -214,7 +214,7 @@ const updateChildData = (plan_id: number, plan_name: string) => {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        gap: 2.5641vw;
+        gap: 0.6010rem;
         .button {
           width: 9.375rem;
           &.button-detail {

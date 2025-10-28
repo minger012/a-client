@@ -136,47 +136,47 @@ onMounted(() => {
   .plan-header {
     display: flex;
     align-items: flex-start;
-    margin: 2vw 0;
+    margin: 0.4688rem 0;
     .plan-logo {
-      width: 15.38462vw;
-      height: 15.38462vw;
-      margin-right: 3.07692vw;
+      width: 3.6058rem;
+      height: 3.6058rem;
+      margin-right: 0.7212rem;
       flex-shrink: 0;
     }
     .plan-main-info {
       flex: 1;
-      margin-right: 2.05128vw;
+      margin-right: 0.4808rem;
       .plan-name {
-        font-size: 4.10256vw;
+        font-size: 0.9615rem;
         font-weight: 600;
         color: #333;
-        margin-bottom: 1.02564vw;
+        margin-bottom: 0.2404rem;
         line-height: 1.2;
       }
       .plan-company {
-        font-size: 3.07692vw;
+        font-size: 0.7212rem;
         color: #666;
-        margin-bottom: 1.02564vw;
+        margin-bottom: 0.2404rem;
       }
       .plan-time {
-        font-size: 2.5641vw;
+        font-size: 0.6010rem;
         color: #999;
       }
     }
   }
   .plan-desc {
-    font-size: 3.07692vw;
+    font-size: 0.7212rem;
     color: #666;
     line-height: 1.6;
-    margin-bottom: 3.07692vw;
+    margin-bottom: 0.7212rem;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
   }
 }
 .form-cell-wrap {
-  padding: 3.58974vw 4.61538vw;
-  border-radius: 3.07692vw;
+  padding: 0.8413rem 1.0817rem;
+  border-radius: 0.7212rem;
   background: #f0f2f5;
   .cell-item {
     display: flex;
@@ -184,17 +184,17 @@ onMounted(() => {
     justify-content: space-between;
     color: var(--van-black);
     &:not(:last-child) {
-      margin-bottom: 5.12821vw;
+      margin-bottom: 1.2019rem;
     }
     .label {
       flex-shrink: 0;
-      font-size: 3.07692vw;
-      width: 20.51282vw;
+      font-size: 0.7212rem;
+      width: 4.8077rem;
     }
     .content {
-      font-size: 3.07692vw;
+      font-size: 0.7212rem;
       flex: 1;
-      margin-left: 10.25641vw;
+      margin-left: 2.4038rem;
       text-align: right;
       word-break: break-all;
     }

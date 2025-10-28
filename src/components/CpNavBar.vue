@@ -213,22 +213,21 @@ defineExpose({
 .header-right {
   display: flex;
   align-items: center;
-  gap: 2.66667vw;
+  gap: 0.6250rem;
 }
 
 // 导航图标基础样式
 .nav-icon {
-  // 移动端默认使用 vw 单位
-  width: 5.12821vw;
-  height: 5.12821vw;
+  width: 1.2019rem;
+  height: 1.2019rem;
   &.nav-icon2 {
-    width: 4vw;
-    height: 4vw;
+    width: 0.9375rem;
+    height: 0.9375rem;
   }
 
   // 特殊处理 bell 图标
   &.bell-icon {
-    font-size: 5.12821vw;
+    font-size: 1.2019rem;
   }
 
   // 确保 SVG 图标居中显示
@@ -273,52 +272,4 @@ defineExpose({
   }
 }
 
-// 大屏幕下的徽章调整
-@media (min-width: 751px) {
-  .header-right {
-    gap: 16px; // 固定间距
-  }
-  ::v-deep() {
-    .van-nav-bar__title {
-      display: flex;
-      align-items: center;
-      height: 100%;
-      font-size: 30px;
-    }
-  }
-  .nav-icon {
-    // 固定尺寸 30.77px
-    width: 30.77px;
-    height: 30.77px;
-    &.nav-icon2 {
-      width: 24px;
-      height: 24px;
-    }
-    // 特殊处理 bell 图标
-    &.bell-icon {
-      font-size: 30.77px;
-    }
-  }
-
-  // 调整返回图标尺寸
-  :deep(.van-nav-bar__left) {
-    .nav-icon {
-      width: 30.77px;
-      height: 30.77px;
-    }
-  }
-  .badge {
-    min-width: 20px;
-    height: 20px;
-    font-size: 12px;
-    top: -8px;
-    right: -8px;
-
-    &.badge-large {
-      font-size: 10px;
-      min-width: 24px;
-      height: 20px;
-    }
-  }
-}
 </style>

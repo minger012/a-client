@@ -89,14 +89,14 @@ const onSubmit = async () => {
     top: 0;
     left: 0;
     right: 0;
-    height: 53.33333vw;
+    height: 12.5rem; // 53.33333vw = 200px = 12.5rem
     background: linear-gradient(45deg, #1877f21a, #1877f20d);
     clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%);
     z-index: 0;
   }
   ::v-deep() {
     .van-field {
-      padding: 4.26667vw;
+      padding: 1rem; // 4.26667vw = 16px = 1rem
       transition: all 0.3s ease;
       &:hover {
         background-color: #1877f20d;
@@ -106,8 +106,8 @@ const onSubmit = async () => {
       }
       .van-field__left-icon {
         color: #1877f2;
-        font-size: 5.33333vw;
-        margin-right: 3.2vw;
+        font-size: 1.25rem; // 5.33333vw = 20px = 1.25rem
+        margin-right: 0.75rem; // 3.2vw = 12px = 0.75rem
         transition: transform 0.3s ease;
       }
     }

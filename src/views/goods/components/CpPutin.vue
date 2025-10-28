@@ -341,7 +341,7 @@ onMounted(async () => {
   <van-popup v-model:show="showCoupon" position="bottom" style="height: 100%">
     <CpNavBar :title="t('putin.coupon')">
       <template #left>
-        <CpSvg name="back" size="5.12821vw" @click="showCoupon = false"></CpSvg>
+        <CpSvg name="back" size="1.2019rem" @click="showCoupon = false"></CpSvg>
       </template>
     </CpNavBar>
     <div class="tab-wrap">
@@ -425,7 +425,7 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   .modal-header {
-    padding: 4.10256vw;
+    padding: 0.9615rem /* 4.10256vw = 15.38px */;
     border-bottom: 1px solid #eee;
     h3 {
       font-weight: 600;
@@ -433,52 +433,52 @@ onMounted(async () => {
   }
   .modal-content {
     flex: 1;
-    padding: 4.10256vw;
+    padding: 0.9615rem /* 4.10256vw = 15.38px */;
     overflow-y: auto;
     .plan-summary {
-      margin-bottom: 4.10256vw;
+      margin-bottom: 0.9615rem /* 4.10256vw = 15.38px */;
       h4 {
         font-weight: 600;
-        margin-bottom: 1vw;
+        margin-bottom: 0.2344rem /* 1vw = 3.75px */;
       }
     }
     .summary-item {
       display: flex;
-      margin-bottom: 1.53846vw;
+      margin-bottom: 0.3606rem /* 1.53846vw = 5.77px */;
       .label {
-        font-size: 3.33333vw;
+        font-size: 0.7812rem /* 3.33333vw = 12.50px */;
         color: #666;
-        min-width: 25.64103vw;
+        min-width: 6.0096rem /* 25.64103vw = 96.15px */;
       }
       .compact {
-        min-width: 18.46154vw;
+        min-width: 4.3269rem /* 18.46154vw = 69.23px */;
       }
       .value {
-        font-size: 3.33333vw;
+        font-size: 0.7812rem /* 3.33333vw = 12.50px */;
         color: #333;
         flex: 1;
       }
     }
     .form-field-group {
-      margin-bottom: 4.61538vw;
+      margin-bottom: 1.0817rem /* 4.61538vw = 17.31px */;
       .field-wrapper {
-        margin-bottom: 4.10256vw;
+        margin-bottom: 0.9615rem /* 4.10256vw = 15.38px */;
         .field-label {
           color: #333;
-          font-size: 3.33333vw;
+          font-size: 0.7812rem /* 3.33333vw = 12.50px */;
         }
         .field-input-wrapper {
-          margin-top: 1vw;
+          margin-top: 0.2344rem /* 1vw = 3.75px */;
           display: flex;
           align-items: center;
           background: #f7f8fa;
-          border-radius: 1.53846vw;
-          padding: 0 3.07692vw;
-          height: 11.28205vw;
+          border-radius: 0.3606rem /* 1.53846vw = 5.77px */;
+          padding: 0 0.7212rem /* 3.07692vw = 11.54px */;
+          height: 2.6442rem /* 11.28205vw = 42.31px */;
           border: 1px solid #ebedf0;
           .currency-symbol {
-            margin-right: 2.05128vw;
-            font-size: 3.33333vw;
+            margin-right: 0.4808rem /* 2.05128vw = 7.69px */;
+            font-size: 0.7812rem /* 3.33333vw = 12.50px */;
             color: #969799;
             flex-shrink: 0;
           }
@@ -487,11 +487,11 @@ onMounted(async () => {
             border: none;
             outline: none;
             background: transparent;
-            font-size: 3.33333vw;
+            font-size: 0.7812rem /* 3.33333vw = 12.50px */;
             color: #323233;
           }
           .duration-unit {
-            font-size: 3.33333vw;
+            font-size: 0.7812rem /* 3.33333vw = 12.50px */;
             color: #9ca3af;
           }
         }
@@ -502,20 +502,20 @@ onMounted(async () => {
       justify-content: space-between;
       align-items: center;
       background: #f7f8fa;
-      border-radius: 1.53846vw;
-      padding: 0 3.07692vw;
-      height: 11.28205vw;
+      border-radius: 0.3606rem /* 1.53846vw = 5.77px */;
+      padding: 0 0.7212rem /* 3.07692vw = 11.54px */;
+      height: 2.6442rem /* 11.28205vw = 42.31px */;
       border: 1px solid #ebedf0;
       .title {
-        font-size: 3.33333vw;
+        font-size: 0.7812rem /* 3.33333vw = 12.50px */;
       }
       .status {
         display: flex;
         align-items: center;
         .status-text {
-          font-size: 3.33333vw;
+          font-size: 0.7812rem /* 3.33333vw = 12.50px */;
           color: #9ca3af;
-          margin-right: 1vw;
+          margin-right: 0.2344rem /* 1vw = 3.75px */;
         }
       }
     }
@@ -523,10 +523,10 @@ onMounted(async () => {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      margin-top: 4vw;
+      margin-top: 0.9375rem /* 4vw = 15.00px */;
       background: #f7f8fa;
-      border-radius: 1.53846vw;
-      padding: 2vw 3.07692vw;
+      border-radius: 0.3606rem /* 1.53846vw = 5.77px */;
+      padding: 0.4688rem /* 2vw = 7.50px */ 0.7212rem /* 3.07692vw = 11.54px */;
       border: 1px solid #ebedf0;
       .tip-item {
         display: flex;
@@ -536,13 +536,13 @@ onMounted(async () => {
         }
       }
       span {
-        margin-left: 1vw;
+        margin-left: 0.2344rem /* 1vw = 3.75px */;
         font-size: 10px;
         color: #666666;
       }
     }
     .form-actions {
-      margin-top: 3vw;
+      margin-top: 0.7031rem /* 3vw = 11.25px */;
     }
   }
 }
@@ -550,17 +550,17 @@ onMounted(async () => {
   margin-top: var(--van-nav-bar-height);
 }
 .coupon-list {
-  padding: 5.89744vw 8.10256vw;
+  padding: 1.3822rem /* 5.89744vw = 22.12px */ 1.8990rem /* 8.10256vw = 30.38px */;
   .coupon-item {
     position: relative;
     display: flex;
     -webkit-box-align: center;
     -webkit-align-items: center;
     align-items: stretch;
-    min-height: 28.61538vw;
-    padding-left: 30.76923vw;
+    min-height: 6.7067rem /* 28.61538vw = 107.31px */;
+    padding-left: 7.2115rem /* 30.76923vw = 115.38px */;
     &:not(:last-child) {
-      margin-bottom: 3.84615vw;
+      margin-bottom: 0.9014rem /* 3.84615vw = 14.42px */;
     }
     &.used .item-left,
     &.used .item-left .tab {
@@ -591,9 +591,9 @@ onMounted(async () => {
       flex-direction: column;
       -webkit-flex-shrink: 0;
       flex-shrink: 0;
-      width: 30.76923vw;
+      width: 7.2115rem /* 30.76923vw = 115.38px */;
       height: 100%;
-      border-radius: 4.10256vw 0 0 4.10256vw;
+      border-radius: 0.9615rem /* 4.10256vw = 15.38px */ 0 0 0.9615rem /* 4.10256vw = 15.38px */;
       background: var(--van-primary-color);
       position: absolute;
       left: 0;
@@ -601,31 +601,31 @@ onMounted(async () => {
       &::before {
         content: "";
         position: absolute;
-        width: 6.66667vw;
-        height: 6.66667vw;
+        width: 1.5625rem /* 6.66667vw = 25.00px */;
+        height: 1.5625rem /* 6.66667vw = 25.00px */;
         border-radius: 50%;
-        left: -3.33333vw;
-        top: 8.97436vw;
+        left: -0.7812rem /* 3.33333vw = 12.50px */;
+        top: 2.1034rem /* 8.97436vw = 33.65px */;
         z-index: 1;
         background: var(--van-white);
       }
       .coupon-type {
         color: var(--van-white);
-        font-size: 5.02821vw;
+        font-size: 1.1785rem /* 5.02821vw = 18.86px */;
         font-weight: 600;
         line-height: 1;
-        margin-bottom: 2.05128vw;
+        margin-bottom: 0.4808rem /* 2.05128vw = 7.69px */;
         word-break: break-word;
         text-align: center;
-        padding-left: 3.02564vw;
+        padding-left: 0.7091rem /* 3.02564vw = 11.35px */;
       }
       .tag {
         color: #adadad;
-        padding: 1.02564vw 3.07692vw;
-        border-radius: 7.69231vw;
+        padding: 0.2404rem /* 1.02564vw = 3.85px */ 0.7212rem /* 3.07692vw = 11.54px */;
+        border-radius: 1.8029rem /* 7.69231vw = 28.85px */;
         background: var(--van-white);
         color: var(--van-primary-color);
-        font-size: 2.5641vw;
+        font-size: 0.6010rem /* 2.5641vw = 9.62px */;
         line-height: 1;
         position: absolute;
         bottom: -1px;
@@ -633,7 +633,7 @@ onMounted(async () => {
     }
     .item-content {
       background: #edf5fe;
-      min-height: 28.61538vw;
+      min-height: 6.7067rem /* 28.61538vw = 107.31px */;
       position: relative;
       display: -webkit-box;
       display: -webkit-flex;
@@ -647,18 +647,18 @@ onMounted(async () => {
       -webkit-flex: 1;
       flex: 1;
       background: #edf5fe;
-      border-radius: 0 4.10256vw 4.10256vw 0;
-      padding: 4.10256vw 6.15385vw 4.10256vw 5.12821vw;
+      border-radius: 0 0.9615rem /* 4.10256vw = 15.38px */ 0.9615rem /* 4.10256vw = 15.38px */ 0;
+      padding: 0.9615rem /* 4.10256vw = 15.38px */ 1.4423rem /* 6.15385vw = 23.08px */ 0.9615rem /* 4.10256vw = 15.38px */ 1.2019rem /* 5.12821vw = 19.23px */;
       height: 100%;
       line-height: 1;
       &::after {
         content: "";
         position: absolute;
-        width: 6.66667vw;
-        height: 6.66667vw;
+        width: 1.5625rem /* 6.66667vw = 25.00px */;
+        height: 1.5625rem /* 6.66667vw = 25.00px */;
         border-radius: 50%;
-        right: -3.33333vw;
-        top: 8.97436vw;
+        right: -0.7812rem /* 3.33333vw = 12.50px */;
+        top: 2.1034rem /* 8.97436vw = 33.65px */;
         z-index: 1;
         background: var(--van-white);
       }
@@ -666,16 +666,16 @@ onMounted(async () => {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 1.53846vw;
+        margin-bottom: 0.3606rem /* 1.53846vw = 5.77px */;
         .title {
-          font-size: 4.82821vw;
+          font-size: 1.1316rem /* 4.82821vw = 18.11px */;
           font-weight: 600;
           color: var(--van-black);
           word-break: break-all;
         }
         .text {
           color: var(--van-primary-color);
-          font-size: 2.5641vw;
+          font-size: 0.6010rem /* 2.5641vw = 9.62px */;
           white-space: nowrap;
         }
       }
@@ -683,10 +683,10 @@ onMounted(async () => {
         color: #8e8e8e;
       }
       .time {
-        font-size: 2.5641vw;
+        font-size: 0.6010rem /* 2.5641vw = 9.62px */;
         color: var(--van-black);
         opacity: 0.3;
-        margin-top: 1.37692vw;
+        margin-top: 0.3227rem /* 1.37692vw = 5.16px */;
       }
     }
   }

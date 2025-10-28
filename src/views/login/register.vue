@@ -163,14 +163,14 @@ onMounted(async () => {
     top: 0;
     left: 0;
     right: 0;
-    height: 53.33333vw;
+    height: 12.5000rem;
     background: linear-gradient(45deg, #1877f21a, #1877f20d);
     clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%);
     z-index: 0;
   }
   ::v-deep() {
     .van-field {
-      padding: 3.2vw 4.26667vw;
+      padding: 0.7500rem 1.0000rem;
       transition: all 0.3s ease;
       &:hover {
         background-color: #1877f20d;
@@ -180,8 +180,8 @@ onMounted(async () => {
       }
       .van-field__left-icon {
         color: #1877f2;
-        font-size: 5.33333vw;
-        margin-right: 3.2vw;
+        font-size: 1.2500rem;
+        margin-right: 0.7500rem;
         transition: transform 0.3s ease;
       }
     }

@@ -22,8 +22,8 @@ const href = "#icon-" + props.name;
 .svg-icon {
   display: inline-block;
   vertical-align: middle;
-  width: 4vw;
-  height: 4vw;
+  width: 0.9375rem;
+  height: 0.9375rem;
 }
 
 /* 确保 SVG 图标能够继承外部样式 */

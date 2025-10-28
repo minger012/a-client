@@ -7,13 +7,17 @@
 }
 
 @tailwind utilities;
-
+html {
+  font-size: 16px;
+}
 /* 全局样式 */
 body {
   line-height: 1.5;
-  font-size: 3.733333333333333vw; //14px
+  font-size: 0.8750rem; //14px
   color: var(--cp-text1);
   margin: 0 auto;
+  max-width: 480px;
+  
 }
 
 :root:root {
@@ -38,42 +42,48 @@ body {
   --van-cell-group-inset-radius:1rem;
   --van-padding-base:0.75rem;
   --van-nav-bar-icon-color:#323233;
-  --van-nav-bar-title-font-size:4.26667vw;
+  --van-nav-bar-title-font-size:1rem;
+  .van-nav-bar--fixed{
+    max-width: 480px;
+    margin: 0 auto;
+    left:0;
+    right: 0;
+  }
 }
 // 弹窗样式
 .dialog-wrap {
   display: flex;
   flex-direction: column;
-  padding: 10.25641vw 8.10256vw 4.10256vw;
+  padding: 2.4038rem 1.8990rem 0.9615rem;
   background: var(--van-white);
   .dialog-title {
     text-align: center;
     font-weight: 700;
-    font-size: 6.41026vw;
-    margin-bottom: 12.82051vw;
+    font-size: 1.5024rem;
+    margin-bottom: 3.0048rem;
   }
   .content-wrap {
-    margin-top: 12.82051vw;
+    margin-top: 3.0048rem;
     .content-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 4.35897vw;
-      margin-bottom: 8.71795vw;
+      font-size: 1.0216rem;
+      margin-bottom: 2.0433rem;
       .label {
         color: var(--van-gray-7);
-        min-width: 20.51282vw;
+        min-width: 4.8077rem;
       }
       .input-wrap {
         display: flex;
         align-items: center;
-        height: 16.9231vw;
+        height: 3.9664rem;
         border-bottom: 1px solid rgb(229, 229, 229);
       }
       .text {
         flex: 1;
         flex-shrink: 0;
-        margin-left: 2.5641vw;
+        margin-left: 0.6010rem;
         text-align: right;
         color: var(--van-black);
         font-weight: 500;
@@ -83,28 +93,28 @@ body {
   }
   .desc {
     text-align: center;
-    font-size: 3.84615vw;
+    font-size: 0.9014rem;
     color: var(--van-gray-7);
-    margin-bottom: 7.69231vw;
+    margin-bottom: 1.8029rem;
   }
   .form-wrap {
     .label {
-      font-size: 3.84615vw;
+      font-size: 0.9014rem;
       color: var(--van-gray-7);
     }
     .input-wrap {
       display: flex;
       align-items: center;
-      height: 16.9231vw;
+      height: 3.9664rem;
       border-bottom: 1px solid rgb(229, 229, 229);
       .label {
-        margin-right: 2.5641vw;
-        font-size: 5.64103vw;
+        margin-right: 0.6010rem;
+        font-size: 1.3221rem;
         color: var(--van-black);
         font-weight: 700;
       }
       .van-cell {
-        font-size: 5.64103vw;
+        font-size: 1.3221rem;
         font-weight: 700;
         padding-left: 0;
       }
@@ -112,11 +122,11 @@ body {
     .form-tips {
       display: flex;
       align-items: center;
-      margin-top: 3.84615vw;
-      font-size: 3.07692vw;
+      margin-top: 0.9014rem;
+      font-size: 0.7212rem;
       color: var(--van-primary-color);
       .count-money {
-        margin-right: 2.5641vw;
+        margin-right: 0.6010rem;
         color: var(--van-black);
       }
       .all-text {
@@ -129,18 +139,18 @@ body {
       align-items: center;
       justify-content: space-between;
       background: #f0f2f5;
-      border-radius: 3.07692vw;
-      height: 12.82051vw;
-      padding: 0 4.61538vw;
+      border-radius: 0.7212rem;
+      height: 3.0048rem;
+      padding: 0 1.0817rem;
       color: var(--van-black);
-      font-size: 3.07692vw;
-      margin-top: 4.61538vw;
+      font-size: 0.7212rem;
+      margin-top: 1.0817rem;
       .status {
         display: flex;
         align-items: center;
         .status-text{
-          margin-right: 1.53846vw;
-          font-size: 3.07692vw;
+          margin-right: 0.3606rem;
+          font-size: 0.7212rem;
           font-weight: 500;
           color: #adadad;
         }
@@ -149,14 +159,14 @@ body {
   }
   .banner {
     display: block;
-    margin: 5.12821vw auto;
+    margin: 1.2019rem auto;
   }
   .text {
-    font-size: 4.61538vw;
+    font-size: 1.0817rem;
     font-weight: 500;
     color: var(--van-black);
     text-align: center;
-    padding: 0 4.10256vw;
+    padding: 0 0.9615rem;
   }
 }
 #nprogress .bar {

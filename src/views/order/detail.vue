@@ -69,7 +69,7 @@ onMounted(() => {
         </div>
         <CpSvg
           :name="`status-` + detail.state"
-          size="10vw"
+          size="2.3438rem"
           color="#fff"
         ></CpSvg>
       </div>
@@ -234,43 +234,43 @@ onMounted(() => {
 <style lang="scss" scoped>
 .page {
   margin-top: var(--van-nav-bar-height);
-  padding: 0 4.10256vw 5.12821vw;
+  padding: 0 0.9615rem 1.2019rem;
   .plan-status-wrap {
     display: flex;
     align-items: center;
     justify-content: space-between;
     background: var(--van-primary-color);
-    border-radius: 3.07692vw;
-    padding: 6.15385vw 7.69231vw;
+    border-radius: 0.7212rem;
+    padding: 1.4423rem 1.8029rem;
     line-height: 1;
     .status-content {
       flex: 1;
       color: var(--van-white);
-      margin-right: 3.84615vw;
+      margin-right: 0.9014rem;
       .title {
-        font-size: 6.15385vw;
+        font-size: 1.4423rem;
         font-weight: 500;
-        margin-bottom: 5.12821vw;
+        margin-bottom: 1.2019rem;
       }
     }
   }
   .section {
-    margin-top: 6.15385vw;
+    margin-top: 1.4423rem;
     .section-title {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 4.10256vw;
-      font-size: 4.61538vw;
+      margin-bottom: 0.9615rem;
+      font-size: 1.0817rem;
       .title {
-        font-size: 4.61538vw;
+        font-size: 1.0817rem;
         font-weight: 500;
         color: var(--van-black);
       }
       .desc {
         display: flex;
         align-items: center;
-        font-size: 3.07692vw;
+        font-size: 0.7212rem;
         color: var(--van-gray-7);
         cursor: pointer;
 
@@ -293,38 +293,38 @@ onMounted(() => {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-radius: 2.05128vw;
+      border-radius: 0.4808rem;
       background: #f0f2f5;
-      padding: 3.07692vw;
+      padding: 0.7212rem;
       .goods-content {
         display: flex;
         align-items: center;
         flex: 1;
-        margin-right: 2.5641vw;
+        margin-right: 0.6010rem;
         .goods-info {
           flex: 1;
           display: flex;
           flex-direction: column;
-          margin-left: 4.61538vw;
+          margin-left: 1.0817rem;
           .goods-name {
-            font-size: 3.84615vw;
+            font-size: 0.9014rem;
             font-weight: 500;
             color: var(--van-black);
-            margin-bottom: 2.05128vw;
+            margin-bottom: 0.4808rem;
           }
           .goods-desc {
-            font-size: 2.5641vw;
+            font-size: 0.6010rem;
             color: var(--van-black);
-            margin-bottom: 2.82051vw;
+            margin-bottom: 0.6611rem;
           }
           .goods-sub {
-            font-size: 2.5641vw;
+            font-size: 0.6010rem;
             color: var(--van-gray-6);
           }
         }
       }
       .link {
-        font-size: 2.82051vw;
+        font-size: 0.6611rem;
         color: var(--van-primary-color);
         cursor: pointer;
       }
@@ -332,14 +332,14 @@ onMounted(() => {
     .data-section {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 2.05128vw;
+      gap: 0.4808rem;
       .data-item {
-        padding: 3.84615vw 3.58974vw 3.84615vw 4.61538vw;
+        padding: 0.9014rem 0.8413rem 0.9014rem 1.0817rem;
         background: var(--van-white);
-        border-radius: 2.05128vw;
+        border-radius: 0.4808rem;
         border: 1px solid #c9ccd1;
         .number-row {
-          font-size: 4.61538vw;
+          font-size: 1.0817rem;
           font-weight: 700;
           color: var(--van-black);
           display: flex;
@@ -347,27 +347,27 @@ onMounted(() => {
           justify-content: space-between;
           .progress-wrap {
             flex: 1;
-            margin-right: 7.69231vw;
-            margin-bottom: 1.28205vw;
+            margin-right: 1.8029rem;
+            margin-bottom: 0.3005rem;
           }
         }
         .name-row {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          font-size: 3.07692vw;
+          font-size: 0.7212rem;
           color: var(--van-black);
         }
       }
     }
     .put-desc {
-      font-size: 3.07692vw;
+      font-size: 0.7212rem;
       color: var(--color-black);
-      margin: 5.89744vw 0 5.12821vw;
+      margin: 1.3822rem 0 1.2019rem;
     }
     .form-cell-wrap {
-      padding: 3.58974vw 4.61538vw;
-      border-radius: 3.07692vw;
+      padding: 0.8413rem 1.0817rem;
+      border-radius: 0.7212rem;
       background: #f0f2f5;
       .cell-item {
         display: flex;
@@ -375,17 +375,17 @@ onMounted(() => {
         justify-content: space-between;
         color: var(--van-black);
         &:not(:last-child) {
-          margin-bottom: 5.12821vw;
+          margin-bottom: 1.2019rem;
         }
         .label {
           flex-shrink: 0;
-          font-size: 3.07692vw;
-          width: 20.51282vw;
+          font-size: 0.7212rem;
+          width: 4.8077rem;
         }
         .content {
-          font-size: 3.07692vw;
+          font-size: 0.7212rem;
           flex: 1;
-          margin-left: 10.25641vw;
+          margin-left: 2.4038rem;
           text-align: right;
           word-break: break-all;
         }

@@ -42,18 +42,18 @@ onMounted(async () => {
   .scrollable-container {
     height: 100%;
     overflow-y: auto;
-    padding-right: 2.66667vw;
+    padding-right: 0.6250rem;
     .item-card {
       width: 90%;
-      border-radius: 3.2vw;
-      margin: 5vw auto 0;
+      border-radius: 0.7500rem;
+      margin: 1.1719rem auto 0;
       display: flex;
       align-items: center;
-      padding: 4vw;
-      box-shadow: 0 0 0.53333vw #ccc;
-      min-height: 28vw;
+      padding: 0.9375rem;
+      box-shadow: 0 0 0.1250rem #ccc;
+      min-height: 6.5625rem;
       &:last-child {
-        margin-bottom: 5vw;
+        margin-bottom: 1.1719rem;
       }
       .content {
         flex: 1;
@@ -64,8 +64,8 @@ onMounted(async () => {
           color: #65676a;
           max-width: 100%;
           word-break: break-all;
-          font-size: 4.26667vw;
-          margin-top: 1.06667vw;
+          font-size: 1.0000rem;
+          margin-top: 0.2500rem;
         }
       }
     }

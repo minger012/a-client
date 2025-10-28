@@ -36,8 +36,8 @@ onMounted(() => {
       <div class="logo">
         <CpImage
           :name="detail.logo"
-          width="24.61538vw"
-          height="24.61538vw"
+          width="5.7692rem"
+          height="5.7692rem"
         ></CpImage>
       </div>
       <div class="title">{{ detail.name }}</div>
@@ -89,46 +89,46 @@ onMounted(() => {
     flex-direction: column;
     background: url(../../assets/img/goods-detail-header-bg-BbrPUqL6.png)
       no-repeat;
-    padding: 6.66667vw 6.41026vw;
-    padding-top: calc(constant(safe-area-inset-top) + 20vw);
-    padding-top: calc(env(safe-area-inset-top) + 20vw);
+    padding: 1.5625rem 1.5024rem;
+    padding-top: calc(constant(safe-area-inset-top) + 4.6875rem);
+    padding-top: calc(env(safe-area-inset-top) + 4.6875rem);
     .logo {
-      width: 24.61538vw;
-      height: 24.61538vw;
+      width: 5.7692rem;
+      height: 5.7692rem;
     }
     .title {
-      font-size: 5.89744vw;
+      font-size: 1.3822rem;
       font-weight: 600;
-      margin-top: 6.66667vw;
+      margin-top: 1.5625rem;
     }
     .btn-wrap {
       width: 100%;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 2.82051vw;
-      margin-top: 7.17949vw;
+      padding: 0 0.6611rem;
+      margin-top: 1.6827rem;
     }
   }
   .section {
-    margin-top: 6.15385vw;
-    padding: 0 3.84615vw;
+    margin-top: 1.4423rem;
+    padding: 0 0.9014rem;
     &:last-child {
-      margin-bottom: 3.84615vw;
+      margin-bottom: 0.9014rem;
     }
     .section-title {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 4.10256vw;
+      margin-bottom: 0.9615rem;
     }
     .put-desc {
-      font-size: 3.07692vw;
+      font-size: 0.7212rem;
       color: var(--color-black);
     }
     .form-cell-wrap {
-      padding: 3.58974vw 4.61538vw;
-      border-radius: 3.07692vw;
+      padding: 0.8413rem 1.0817rem;
+      border-radius: 0.7212rem;
       background: #f0f2f5;
       .cell-item {
         display: flex;
@@ -137,13 +137,13 @@ onMounted(() => {
         color: var(--van-black);
         .label {
           flex-shrink: 0;
-          font-size: 3.07692vw;
-          width: 20.51282vw;
+          font-size: 0.7212rem;
+          width: 4.8077rem;
         }
         .content {
-          font-size: 3.07692vw;
+          font-size: 0.7212rem;
           flex: 1;
-          margin-left: 10.25641vw;
+          margin-left: 2.4038rem;
           text-align: right;
           word-break: break-all;
         }

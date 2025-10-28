@@ -130,17 +130,17 @@ let stateName = {
   margin-top: var(--van-nav-bar-height);
 }
 .coupon-list {
-  padding: 5.89744vw 8.10256vw;
+  padding: 1.3822rem 1.8990rem;
   .coupon-item {
     position: relative;
     display: flex;
     -webkit-box-align: center;
     -webkit-align-items: center;
     align-items: stretch;
-    min-height: 28.61538vw;
-    padding-left: 30.76923vw;
+    min-height: 6.7067rem;
+    padding-left: 7.2115rem;
     &:not(:last-child) {
-      margin-bottom: 3.84615vw;
+      margin-bottom: 0.9014rem;
     }
     &.used .item-left,
     &.used .item-left .tab {
@@ -171,9 +171,9 @@ let stateName = {
       flex-direction: column;
       -webkit-flex-shrink: 0;
       flex-shrink: 0;
-      width: 30.76923vw;
+      width: 7.2115rem;
       height: 100%;
-      border-radius: 4.10256vw 0 0 4.10256vw;
+      border-radius: 0.9615rem 0 0 0.9615rem;
       background: var(--van-primary-color);
       position: absolute;
       left: 0;
@@ -181,31 +181,31 @@ let stateName = {
       &::before {
         content: "";
         position: absolute;
-        width: 6.66667vw;
-        height: 6.66667vw;
+        width: 1.5625rem;
+        height: 1.5625rem;
         border-radius: 50%;
-        left: -3.33333vw;
-        top: 8.97436vw;
+        left: -0.7812rem;
+        top: 2.1034rem;
         z-index: 1;
         background: var(--van-white);
       }
       .coupon-type {
         color: var(--van-white);
-        font-size: 5.02821vw;
+        font-size: 1.1785rem;
         font-weight: 600;
         line-height: 1;
-        margin-bottom: 2.05128vw;
+        margin-bottom: 0.4808rem;
         word-break: break-word;
         text-align: center;
-        padding-left: 3.02564vw;
+        padding-left: 0.7091rem;
       }
       .tag {
         color: #adadad;
-        padding: 1.02564vw 3.07692vw;
-        border-radius: 7.69231vw;
+        padding: 0.2404rem 0.7212rem;
+        border-radius: 1.8029rem;
         background: var(--van-white);
         color: var(--van-primary-color);
-        font-size: 2.5641vw;
+        font-size: 0.6010rem;
         line-height: 1;
         position: absolute;
         bottom: -1px;
@@ -213,7 +213,7 @@ let stateName = {
     }
     .item-content {
       background: #edf5fe;
-      min-height: 28.61538vw;
+      min-height: 6.7067rem;
       position: relative;
       display: -webkit-box;
       display: -webkit-flex;
@@ -227,18 +227,18 @@ let stateName = {
       -webkit-flex: 1;
       flex: 1;
       background: #edf5fe;
-      border-radius: 0 4.10256vw 4.10256vw 0;
-      padding: 4.10256vw 6.15385vw 4.10256vw 5.12821vw;
+      border-radius: 0 0.9615rem 0.9615rem 0;
+      padding: 0.9615rem 1.4423rem 0.9615rem 1.2019rem;
       height: 100%;
       line-height: 1;
       &::after {
         content: "";
         position: absolute;
-        width: 6.66667vw;
-        height: 6.66667vw;
+        width: 1.5625rem;
+        height: 1.5625rem;
         border-radius: 50%;
-        right: -3.33333vw;
-        top: 8.97436vw;
+        right: -0.7812rem;
+        top: 2.1034rem;
         z-index: 1;
         background: var(--van-white);
       }
@@ -246,16 +246,16 @@ let stateName = {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 1.53846vw;
+        margin-bottom: 0.3606rem;
         .title {
-          font-size: 4.82821vw;
+          font-size: 1.1316rem;
           font-weight: 600;
           color: var(--van-black);
           word-break: break-all;
         }
         .text {
           color: var(--van-primary-color);
-          font-size: 2.5641vw;
+          font-size: 0.6010rem;
           white-space: nowrap;
         }
       }
@@ -263,10 +263,10 @@ let stateName = {
         color: #8e8e8e;
       }
       .time {
-        font-size: 2.5641vw;
+        font-size: 0.6010rem;
         color: var(--van-black);
         opacity: 0.3;
-        margin-top: 1.37692vw;
+        margin-top: 0.3227rem;
       }
     }
   }

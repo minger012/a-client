@@ -29,10 +29,10 @@ onMounted(() => {
 <style lang="scss" scoped>
 .page {
   margin-top: var(--van-nav-bar-height);
-  padding: 5.12821vw 4.10256vw;
+  padding: 1.2019rem 0.9615rem;
   .content {
-    font-size: 3.58974vw;
-    line-height: 8.20513vw;
+    font-size: 0.8413rem;
+    line-height: 1.9231rem;
     word-break: break-all;
     color: #000000e0;
   }

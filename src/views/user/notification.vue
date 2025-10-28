@@ -192,10 +192,10 @@ const class3 = {
   display: flex;
   flex-direction: column;
   .message-item {
-    margin-bottom: 3.2vw;
-    border-radius: 2.13333vw;
+    margin-bottom: 0.7500rem;
+    border-radius: 0.5000rem;
     background-color: #fff;
-    box-shadow: 0 1px 1.06667vw #0000000d;
+    box-shadow: 0 1px 0.2500rem #0000000d;
     overflow: hidden;
     position: relative;
     transition: all 0.2s ease;
@@ -205,15 +205,15 @@ const class3 = {
     .message-item-header {
       display: flex;
       align-items: center;
-      padding: 2.13333vw 3.2vw;
+      padding: 0.5000rem 0.7500rem;
       background-color: #fff;
       border-bottom: 1px solid #dce0e7;
       position: relative;
       .message-type-indicator {
-        width: 1.06667vw;
-        height: 4.26667vw;
-        border-radius: 0.53333vw;
-        margin-right: 2.13333vw;
+        width: 0.2500rem;
+        height: 1.0000rem;
+        border-radius: 0.1250rem;
+        margin-right: 0.5000rem;
         flex-shrink: 0;
       }
       .icon-blue {
@@ -222,40 +222,40 @@ const class3 = {
       }
       .message-time {
         margin-left: auto;
-        font-size: 3.2vw;
+        font-size: 0.7500rem;
         color: #606a78;
       }
     }
     .message-item-content {
       display: flex;
-      padding: 3.2vw;
+      padding: 0.7500rem;
       .message-icon-wrapper {
-        margin-right: 3.2vw;
+        margin-right: 0.7500rem;
         flex-shrink: 0;
         .message-icon {
           display: flex;
           justify-content: center;
           align-items: center;
-          width: 9.6vw;
-          height: 9.6vw;
-          border-radius: 2.13333vw;
+          width: 2.2500rem;
+          height: 2.2500rem;
+          border-radius: 0.5000rem;
         }
       }
       .message-body {
         flex: 1;
         min-width: 0;
         .message-title {
-          font-size: 4vw;
+          font-size: 0.9375rem;
           font-weight: 500;
           color: #303133;
-          margin: 0 0 1.6vw;
+          margin: 0 0 0.3750rem;
           line-height: 1.4;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
         .message-text {
-          font-size: 3.73333vw;
+          font-size: 0.8750rem;
           color: #606266;
           line-height: 1.5;
           margin: 0;
@@ -281,11 +281,11 @@ const class3 = {
     background-color: #ff976a1a;
   }
   .unread-dot {
-    width: 2.13333vw;
-    height: 2.13333vw;
+    width: 0.5000rem;
+    height: 0.5000rem;
     border-radius: 50%;
     background-color: #ff4d4f;
-    margin-left: 2.13333vw;
+    margin-left: 0.5000rem;
   }
   .unread {
     background-color: #ecf5ff !important;

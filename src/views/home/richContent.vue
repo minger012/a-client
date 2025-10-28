@@ -31,45 +31,45 @@ onMounted(() => {
 }
 
 .content-container {
-  padding: 4.10256vw;
+  padding: 0.9615rem;
   margin-top: var(--van-nav-bar-height);
 }
 
 .rich-content {
-  font-size: 4.10256vw;
+  font-size: 0.9615rem;
   line-height: 1.6;
   color: #333;
 
   // 富文本内容样式
   :deep(p) {
-    margin-bottom: 3.07692vw;
+    margin-bottom: 0.7212rem;
   }
 
   :deep(img) {
     max-width: 100%;
     height: auto;
-    border-radius: 2.05128vw;
-    margin: 2.05128vw 0;
+    border-radius: 0.4808rem;
+    margin: 0.4808rem 0;
   }
 
   :deep(ul, ol) {
-    padding-left: 6.15385vw;
-    margin-bottom: 3.07692vw;
+    padding-left: 1.4423rem;
+    margin-bottom: 0.7212rem;
   }
 
   :deep(li) {
-    margin-bottom: 1.53846vw;
+    margin-bottom: 0.3606rem;
   }
 
   :deep(h1, h2, h3, h4, h5, h6) {
-    margin: 4.10256vw 0 2.05128vw;
+    margin: 0.9615rem 0 0.4808rem;
     font-weight: bold;
   }
 
   :deep(blockquote) {
     border-left: 4px solid #4e7cdc;
-    padding-left: 3.07692vw;
-    margin: 3.07692vw 0;
+    padding-left: 0.7212rem;
+    margin: 0.7212rem 0;
     color: #666;
     font-style: italic;
   }
@@ -77,12 +77,12 @@ onMounted(() => {
   :deep(table) {
     width: 100%;
     border-collapse: collapse;
-    margin: 3.07692vw 0;
+    margin: 0.7212rem 0;
 
     th,
     td {
       border: 1px solid #e5e5e5;
-      padding: 2.05128vw;
+      padding: 0.4808rem;
       text-align: left;
     }
 

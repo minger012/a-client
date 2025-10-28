@@ -336,12 +336,12 @@ onMounted(async () => {
         <div class="relative">
           <van-image
             round
-            width="18.4103vw"
-            height="18.4103vw"
+            width="4.3149rem"
+            height="4.3149rem"
             :src="indexData?.userData.image"
           />
           <div class="avatar-edit">
-            <van-icon name="photograph" size="3.07692vw" color="#fff" />
+            <van-icon name="photograph" size="0.7212rem" color="#fff" />
           </div>
         </div>
       </van-uploader>
@@ -358,8 +358,8 @@ onMounted(async () => {
           {{ t("home.storeRating") }}：
           <CpImage
             name="star"
-            width="3.2vw"
-            height="3.2vw"
+            width="0.7500rem"
+            height="0.7500rem"
             :round="true"
             v-for="value in indexData?.userData.lv"
           ></CpImage>
@@ -397,7 +397,7 @@ onMounted(async () => {
     </div>
     <!-- <div class="invite-card">
       <div class="icon-wrap">
-        <van-icon name="friends" size="6vw" color="#fff" />
+        <van-icon name="friends" size="1.4063rem" color="#fff" />
       </div>
       <div class="content">
         <div class="label">{{ t("home.invitationCode") }}</div>
@@ -562,17 +562,17 @@ onMounted(async () => {
     </div>
     <div class="tab-bar">
       <div class="tab-bar-item" @click="$router.push('coupons')">
-        <CpSvg name="discount-shape" size="5vw"></CpSvg>
+        <CpSvg name="discount-shape" size="1.1719rem"></CpSvg>
         <div class="name">{{ t("home.coupons") }}</div>
       </div>
       <!-- <div class="tab-bar-item">
-        <svg aria-hidden="true" class="svg-icon" style="width: 5vw; height: 5vw">
+        <svg aria-hidden="true" class="svg-icon" style="width: 1.1719rem; height: 1.1719rem">
           <use href="#icon-device-message" fill="#333"></use>
         </svg>
         <div class="name">{{ t('home.feedback') }}</div>
       </div> -->
       <div class="tab-bar-item" @click="$router.push('password')">
-        <CpSvg name="edit-password" size="5vw"></CpSvg>
+        <CpSvg name="edit-password" size="1.1719rem"></CpSvg>
         <div class="name">{{ t("home.changeLoginPassword") }}</div>
       </div>
     </div>
@@ -595,7 +595,7 @@ onMounted(async () => {
 <style lang="scss" scoped>
 .head {
   margin-top: var(--van-nav-bar-height);
-  padding: 4.61538vw 4.10256vw;
+  padding: 1.0817rem 0.9615rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -603,27 +603,27 @@ onMounted(async () => {
     position: absolute;
     right: 0;
     bottom: 0;
-    width: 6.15385vw;
-    height: 6.15385vw;
+    width: 1.4423rem;
+    height: 1.4423rem;
     display: flex;
     align-items: center;
     justify-content: center;
     background: #4e7cdc;
     border-radius: 50%;
-    border: 0.53333vw solid #fff;
+    border: 0.1250rem solid #fff;
   }
   .tag {
     display: flex;
     justify-content: center;
     align-items: center;
     width: max-content;
-    font-size: 2.5641vw;
+    font-size: 0.6010rem;
     color: #65676a;
-    padding: 1.28205vw 3.07692vw;
+    padding: 0.3005rem 0.7212rem;
     background: #f0f2f5;
-    border-radius: 1.02564vw;
+    border-radius: 0.2404rem;
     line-height: 1;
-    margin-top: 0.8vw;
+    margin-top: 0.1875rem;
   }
   .button-sign {
     cursor: not-allowed;
@@ -635,12 +635,12 @@ onMounted(async () => {
     margin-left: auto;
     display: flex;
     flex-direction: column;
-    gap: 2.05128vw;
+    gap: 0.4808rem;
     .sign-in-btn {
-      min-width: 22.5641vw;
-      border-radius: 1.02564vw;
-      font-size: 3.33333vw;
-      height: 8.20513vw;
+      min-width: 5.2885rem;
+      border-radius: 0.2404rem;
+      font-size: 0.7812rem;
+      height: 1.9231rem;
       transition: all 0.3s ease;
     }
   }
@@ -657,9 +657,9 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   position: relative;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 0.53333vw 2.13333vw;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0.1250rem 0.5000rem;
   cursor: pointer;
-  margin: 0px 4.10256vw 4vw;
+  margin: 0px 0.9615rem 0.9375rem;
   background: linear-gradient(
     135deg,
     rgba(78, 124, 220, 0.02),
@@ -669,8 +669,8 @@ onMounted(async () => {
   border-style: solid;
   border-color: rgba(78, 124, 220, 0.082);
   border-image: initial;
-  border-radius: 2vw;
-  padding: 3vw;
+  border-radius: 0.4688rem;
+  padding: 0.7031rem;
   transition: 0.3s;
   &:active {
     transform: scale(0.98);
@@ -679,12 +679,12 @@ onMounted(async () => {
     min-width: 0px;
     flex: 1 1 0%;
     .label {
-      font-size: 3.2vw;
+      font-size: 0.7500rem;
       color: rgb(102, 102, 102);
-      margin-bottom: 1vw;
+      margin-bottom: 0.2344rem;
     }
     .code {
-      font-size: 5vw;
+      font-size: 1.1719rem;
       font-weight: 700;
       color: rgb(78, 124, 220);
     }
@@ -692,30 +692,30 @@ onMounted(async () => {
   .copy-hint {
     display: flex;
     align-items: center;
-    margin-left: 3vw;
-    padding: 1.5vw 3vw;
+    margin-left: 0.7031rem;
+    padding: 0.3516rem 0.7031rem;
     background: rgba(78, 124, 220, 0.1);
-    border-radius: 1vw;
+    border-radius: 0.2344rem;
     .copy-text {
       margin-left: 4px;
-      font-size: 3vw;
+      font-size: 0.7031rem;
       color: rgb(78, 124, 220);
       white-space: nowrap;
     }
   }
   .icon-wrap {
-    width: 10vw;
-    height: 10vw;
+    width: 2.3438rem;
+    height: 2.3438rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 3vw;
-    border-radius: 2vw;
+    margin-right: 0.7031rem;
+    border-radius: 0.4688rem;
     background: linear-gradient(135deg, rgb(78, 124, 220), rgb(60, 90, 166));
   }
 }
 .banner-wrap {
-  padding: 0px 4.10256vw;
+  padding: 0px 0.9615rem;
   .banner {
     display: flex;
     width: 100%;
@@ -725,9 +725,9 @@ onMounted(async () => {
     padding-bottom: 22.5%;
     overflow: hidden;
     background: rgb(78, 124, 220);
-    border-radius: 4.10256vw;
+    border-radius: 0.9615rem;
     &:not(:last-child) {
-      margin-bottom: 2.13333vw;
+      margin-bottom: 0.5000rem;
     }
   }
   .banner-image {
@@ -750,18 +750,18 @@ onMounted(async () => {
     transform: translateY(-50%);
   }
   .title {
-    font-size: 6.15385vw;
+    font-size: 1.4423rem;
     font-weight: 900;
   }
   .desc {
-    font-size: 4.10256vw;
-    margin-top: 2.07692vw;
+    font-size: 0.9615rem;
+    margin-top: 0.4868rem;
   }
 }
 .tab-wrap {
   position: relative;
-  margin-top: 2.5641vw;
-  padding: 0px 4.10256vw;
+  margin-top: 0.6010rem;
+  padding: 0px 0.9615rem;
   &:after {
     content: "";
     position: absolute;
@@ -774,37 +774,37 @@ onMounted(async () => {
   }
 }
 .data-view {
-  margin-top: 5.64103vw;
-  padding: 0 4.10256vw 4.61538vw;
+  margin-top: 1.3221rem;
+  padding: 0 0.9615rem 1.0817rem;
   .title-wrap {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 6.15385vw;
+    margin-bottom: 1.4423rem;
   }
   .title {
-    font-size: 4.61538vw;
+    font-size: 1.0817rem;
     font-weight: 500;
     color: var(--van-black);
   }
   .desc {
     display: flex;
     align-items: center;
-    font-size: 3.07692vw;
+    font-size: 0.7212rem;
     color: var(--van-gray-7);
     cursor: pointer;
   }
   .data-list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 2.05128vw;
+    gap: 0.4808rem;
     .data-item {
-      padding: 3.84615vw 3.58974vw 3.84615vw 4.61538vw;
+      padding: 0.9014rem 0.8413rem 0.9014rem 1.0817rem;
       background: var(--van-white);
-      border-radius: 2.05128vw;
+      border-radius: 0.4808rem;
       border: 1px solid #c9ccd1;
       .number-row {
-        font-size: 4.61538vw;
+        font-size: 1.0817rem;
         font-weight: 700;
         color: var(--van-black);
       }
@@ -812,7 +812,7 @@ onMounted(async () => {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        font-size: 3.07692vw;
+        font-size: 0.7212rem;
         color: var(--van-black);
       }
     }
@@ -822,47 +822,47 @@ onMounted(async () => {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 4.10256vw 0;
+  padding: 0.9615rem 0;
   background: var(--van-white);
   border-bottom: 1px solid #e5e5e5;
-  border-top: 2.05128vw solid #f0f2f5;
+  border-top: 0.4808rem solid #f0f2f5;
   .tab-bar-item {
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: 3.33333vw;
+    font-size: 0.7812rem;
     color: var(--van-black);
-    padding: 0 0.5vw;
+    padding: 0 0.1172rem;
   }
   .name {
-    margin-top: 2.05128vw;
-    font-size: 3.07692vw;
+    margin-top: 0.4808rem;
+    font-size: 0.7212rem;
     white-space: break-word;
     text-align: center;
   }
 }
 .section {
-  margin-top: 5.64103vw;
-  padding: 0 4.10256vw 4.61538vw;
+  margin-top: 1.3221rem;
+  padding: 0 0.9615rem 1.0817rem;
   .section-title {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 6.15385vw;
-    font-size: 4.61538vw;
+    margin-bottom: 1.4423rem;
+    font-size: 1.0817rem;
   }
   .question-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
     &:not(:last-child) {
-      margin-bottom: 9.23077vw;
+      margin-bottom: 2.1635rem;
     }
     .name {
       flex: 1;
-      font-size: 4.10256vw;
+      font-size: 0.9615rem;
       color: #65676a;
     }
   }
@@ -885,18 +885,18 @@ onMounted(async () => {
 // 骨架屏样式
 .skeleton-container {
   margin-top: var(--van-nav-bar-height);
-  padding: 0 4.10256vw;
+  padding: 0 0.9615rem;
 }
 
 .skeleton-head {
   display: flex;
   align-items: center;
-  padding: 4.61538vw 0;
+  padding: 1.0817rem 0;
   .skeleton-avatar {
-    margin-right: 5vw;
+    margin-right: 1.1719rem;
     .skeleton-circle {
-      width: 18.4103vw;
-      height: 18.4103vw;
+      width: 4.3149rem;
+      height: 4.3149rem;
       border-radius: 50%;
       background: #f0f2f5;
     }
@@ -904,18 +904,18 @@ onMounted(async () => {
   .skeleton-user-info {
     flex: 1;
     .skeleton-name {
-      width: 30vw;
-      height: 5vw;
-      margin-bottom: 2vw;
+      width: 7.0313rem;
+      height: 1.1719rem;
+      margin-bottom: 0.4688rem;
     }
     .skeleton-tags {
       display: flex;
       flex-direction: column;
-      gap: 1.5vw;
+      gap: 0.3516rem;
       .skeleton-tag {
-        width: 25vw;
-        height: 4vw;
-        border-radius: 1.02564vw;
+        width: 5.8594rem;
+        height: 0.9375rem;
+        border-radius: 0.2404rem;
         background: #f0f2f5;
       }
     }
@@ -923,7 +923,7 @@ onMounted(async () => {
   .skeleton-buttons {
     display: flex;
     flex-direction: column;
-    gap: 2vw;
+    gap: 0.4688rem;
     .skeleton-button {
       width: 5.3125rem;
       height: 2rem;
@@ -936,100 +936,100 @@ onMounted(async () => {
 .skeleton-invite-card {
   display: flex;
   align-items: center;
-  margin: 0 0 4vw;
-  padding: 3vw;
+  margin: 0 0 0.9375rem;
+  padding: 0.7031rem;
   background: #f8f9fa;
-  border-radius: 2vw;
+  border-radius: 0.4688rem;
   .skeleton-icon {
-    width: 10vw;
-    height: 10vw;
-    border-radius: 2vw;
+    width: 2.3438rem;
+    height: 2.3438rem;
+    border-radius: 0.4688rem;
     background: #f0f2f5;
-    margin-right: 3vw;
+    margin-right: 0.7031rem;
   }
   .skeleton-content {
     flex: 1;
     .skeleton-label {
-      width: 25vw;
-      height: 3.2vw;
-      margin-bottom: 1vw;
+      width: 5.8594rem;
+      height: 0.7500rem;
+      margin-bottom: 0.2344rem;
     }
     .skeleton-code {
-      width: 35vw;
-      height: 5vw;
+      width: 8.2031rem;
+      height: 1.1719rem;
     }
   }
   .skeleton-copy {
-    width: 15vw;
-    height: 8vw;
-    border-radius: 1vw;
+    width: 3.5156rem;
+    height: 1.8750rem;
+    border-radius: 0.2344rem;
     background: #f0f2f5;
-    margin-left: 3vw;
+    margin-left: 0.7031rem;
   }
 }
 
 .skeleton-banner-wrap {
-  margin-bottom: 4vw;
+  margin-bottom: 0.9375rem;
   .skeleton-banner {
     width: 100%;
     padding-bottom: 22.5%;
-    border-radius: 4.10256vw;
+    border-radius: 0.9615rem;
     background: #f0f2f5;
   }
 }
 
 .skeleton-tab-wrap {
-  margin-top: 2.5641vw;
-  padding-bottom: 2.5641vw;
+  margin-top: 0.6010rem;
+  padding-bottom: 0.6010rem;
   border-bottom: 1px solid #e5e5e5;
   .skeleton-tabs {
     display: flex;
-    gap: 8vw;
+    gap: 1.8750rem;
     .skeleton-tab {
-      width: 15vw;
-      height: 4vw;
-      border-radius: 2vw;
+      width: 3.5156rem;
+      height: 0.9375rem;
+      border-radius: 0.4688rem;
       background: #f0f2f5;
     }
   }
 }
 
 .skeleton-data-view {
-  margin-top: 5.64103vw;
-  padding-bottom: 4.61538vw;
+  margin-top: 1.3221rem;
+  padding-bottom: 1.0817rem;
   .skeleton-title-wrap {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 6.15385vw;
+    margin-bottom: 1.4423rem;
     .skeleton-title {
-      width: 25vw;
-      height: 4.61538vw;
+      width: 5.8594rem;
+      height: 1.0817rem;
     }
     .skeleton-refresh {
-      width: 20vw;
-      height: 3.07692vw;
-      border-radius: 1.5vw;
+      width: 4.6875rem;
+      height: 0.7212rem;
+      border-radius: 0.3516rem;
       background: #f0f2f5;
     }
   }
   .skeleton-data-list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 2.05128vw;
+    gap: 0.4808rem;
     .skeleton-data-item {
-      padding: 3.84615vw 3.58974vw 3.84615vw 4.61538vw;
+      padding: 0.9014rem 0.8413rem 0.9014rem 1.0817rem;
       background: var(--van-white);
-      border-radius: 2.05128vw;
+      border-radius: 0.4808rem;
       border: 1px solid #e5e5e5;
       .skeleton-number {
         width: 60%;
-        height: 4.61538vw;
-        margin-bottom: 2.5vw;
+        height: 1.0817rem;
+        margin-bottom: 0.5859rem;
       }
       .skeleton-name-row {
         width: 80%;
-        height: 3.07692vw;
+        height: 0.7212rem;
       }
     }
   }
@@ -1039,10 +1039,10 @@ onMounted(async () => {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 4.10256vw 0;
+  padding: 0.9615rem 0;
   background: var(--van-white);
   border-bottom: 1px solid #e5e5e5;
-  border-top: 2.05128vw solid #f0f2f5;
+  border-top: 0.4808rem solid #f0f2f5;
   .skeleton-tab-item {
     flex: 1;
     display: flex;
@@ -1050,43 +1050,43 @@ onMounted(async () => {
     align-items: center;
     justify-content: center;
     .skeleton-icon-small {
-      width: 5vw;
-      height: 5vw;
-      border-radius: 1vw;
+      width: 1.1719rem;
+      height: 1.1719rem;
+      border-radius: 0.2344rem;
       background: #f0f2f5;
     }
     .skeleton-tab-name {
-      width: 20vw;
-      height: 3.07692vw;
-      margin-top: 2.05128vw;
+      width: 4.6875rem;
+      height: 0.7212rem;
+      margin-top: 0.4808rem;
     }
   }
 }
 
 .skeleton-section {
-  margin-top: 5.64103vw;
-  padding-bottom: 4.61538vw;
+  margin-top: 1.3221rem;
+  padding-bottom: 1.0817rem;
   .skeleton-section-title {
-    width: 15vw;
-    height: 4.61538vw;
-    margin-bottom: 6.15385vw;
+    width: 3.5156rem;
+    height: 1.0817rem;
+    margin-bottom: 1.4423rem;
   }
   .skeleton-question-list {
     .skeleton-question-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 9.23077vw;
+      margin-bottom: 2.1635rem;
       .skeleton-question {
         flex: 1;
-        height: 4.10256vw;
+        height: 0.9615rem;
       }
       .skeleton-arrow {
-        width: 4vw;
-        height: 4vw;
+        width: 0.9375rem;
+        height: 0.9375rem;
         border-radius: 50%;
         background: #f0f2f5;
-        margin-left: 4vw;
+        margin-left: 0.9375rem;
       }
     }
   }
