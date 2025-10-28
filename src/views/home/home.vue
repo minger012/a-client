@@ -419,7 +419,7 @@ onMounted(async () => {
         <div class="text-lg font-bold">
           {{ formatCurrency(randomInt(80000, 90000), 0) }}
         </div>
-        <div class="text-11">{{ t("home.onlineUsers") }}</div>
+        <div class="text-xs">{{ t("home.onlineUsers") }}</div>
       </div>
       <div
         class="flex flex-col items-center text-white my-3 w-full border-r border-[#5f8de8]"
@@ -427,13 +427,13 @@ onMounted(async () => {
         <div class="text-lg font-bold">
           {{ formatCurrency(randomInt(40000, 50000), 0) }}
         </div>
-        <div class="text-11">{{ t("home.adDemand") }}</div>
+        <div class="text-xs">{{ t("home.adDemand") }}</div>
       </div>
       <div class="flex flex-col items-center text-white my-2 w-full">
         <div class="text-lg font-bold">
           {{ formatCurrency(indexData.planOrderData.allCount, 0) }}
         </div>
-        <div class="text-11">{{ t("home.totalOrders") }}</div>
+        <div class="text-xs">{{ t("home.totalOrders") }}</div>
       </div>
     </div>
     <div class="gunping-container">
