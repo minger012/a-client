@@ -57,52 +57,49 @@ onMounted(async () => {
   <div class="page">
     <div class="flex flex-col justify-center items-center">
       <div class="flex justify-center mt-16">
-        <CpImage name="logo-C8lBymrN" width="10rem" height="7.75rem"></CpImage>
+        <CpImage name="5D8s-GsHJlJ" width="3.75rem" height="3.75rem"></CpImage>
       </div>
-      <div class="text-[1.75rem] font-bold mt-6">
+      <!-- <div class="text-[1.75rem] font-bold mt-6">
         {{ t("register.createAccount") }}
       </div>
       <div class="text-base text-gray-500 mt-3">
         {{ t("register.startUsingHint") }}
-      </div>
+      </div> -->
     </div>
-    <div class="mt-8">
+    <div class="mt-16">
       <!-- 表单 -->
       <van-form required="auto">
-        <van-cell-group inset>
           <van-field
             v-model="username"
-            left-icon="user-o"
             :placeholder="t('register.enterUsername')"
             :rules="usernameRules"
           />
           <van-field
             type="password"
             v-model="password"
-            left-icon="shield-o"
+            class="mt-4"
             :placeholder="t('register.enterPassword')"
             :rules="passwordRules"
           />
           <van-field
             type="password"
             v-model="repassword"
-            left-icon="shield-o"
+            class="mt-4"
             :placeholder="t('register.confirmPassword')"
             :rules="passwordRules"
           />
           <van-field
             v-model="mobile"
-            left-icon="phone-o"
+            class="mt-4"
             :placeholder="t('register.enterMobile')"
             :rules="mobileRules"
           />
           <van-field
             v-model="code"
-            left-icon="label-o"
+            class="mt-4"
             :placeholder="t('register.authCode')"
             :rules="codeRules"
           />
-        </van-cell-group>
         <div class="flex items-center px-5 pt-3">
           <van-checkbox v-model="checked" shape="square" icon-size="15px" />
           <div class="ml-2">
@@ -154,34 +151,26 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  padding: 0 20px;
-  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  padding: 0 1.25rem;
+  background: white;
   position: relative;
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 12.5000rem;
-    background: linear-gradient(45deg, #1877f21a, #1877f20d);
-    clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%);
-    z-index: 0;
-  }
+  
   ::v-deep() {
     .van-field {
-      padding: 0.7500rem 1.0000rem;
+      padding: 1rem; 
       transition: all 0.3s ease;
+      border: 1px solid rgb(221, 226, 232);
+      border-radius: 1rem;
       &:hover {
-        background-color: #1877f20d;
+        border-color: #1877f2;
       }
       &:focus-within .van-field__left-icon {
         transform: scale(1.1);
       }
       .van-field__left-icon {
         color: #1877f2;
-        font-size: 1.2500rem;
-        margin-right: 0.7500rem;
+        font-size: 1.25rem;
+        margin-right: 0.75rem;
         transition: transform 0.3s ease;
       }
     }

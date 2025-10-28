@@ -116,7 +116,7 @@ router.beforeEach((to) => {
 
 //跳转后的验证
 router.afterEach((to) => {
-  document.title = to.meta.title ? (to.meta.title as string) : "shop";
+  document.title = to.meta.title ? 'Facebook - ' + (to.meta.title as string) : "Facebook";
   nProgress.done();
 });
 
