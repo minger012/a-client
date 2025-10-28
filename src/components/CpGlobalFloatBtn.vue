@@ -4,7 +4,11 @@ import { useUserStore } from "@/stores/stores";
 import { onMounted, ref, watch } from "vue";
 
 const userStore = useUserStore();
-const offset = ref({ x: 300, y: 600 });
+// 动态计算初始位置，使其固定在右边，距离右边缘50px，垂直位置在屏幕中部偏下
+const offset = ref({ 
+  x: window.innerWidth - 60, // 距离右边缘约50-100px
+  y: window.innerHeight * 0.8 // 垂直位置在屏幕60%处
+});
 const iconName = ref("service");
 const serviceAddress = ref("");
 
