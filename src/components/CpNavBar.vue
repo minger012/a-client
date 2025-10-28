@@ -213,21 +213,19 @@ defineExpose({
 .header-right {
   display: flex;
   align-items: center;
-  gap: 0.6250rem;
+  gap: 0.75rem;
 }
 
 // 导航图标基础样式
 .nav-icon {
-  width: 1.2019rem;
-  height: 1.2019rem;
-  &.nav-icon2 {
-    width: 0.9375rem;
-    height: 0.9375rem;
-  }
+  width: 1.125rem;
+  height: 1.125rem;
 
   // 特殊处理 bell 图标
   &.bell-icon {
-    font-size: 1.2019rem;
+    font-size: 1.35rem;
+    position: relative;
+    top:-0.2rem;
   }
 
   // 确保 SVG 图标居中显示

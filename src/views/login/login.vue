@@ -93,6 +93,12 @@ const onSubmit = async () => {
       &:focus-within .van-field__left-icon {
         transform: scale(1.1);
       }
+      .van-field__control {
+        font-size: 1rem;
+        &::placeholder {
+          color:#5d6c7b;
+        }
+      }
       .van-field__left-icon {
         color: #1877f2;
         font-size: 1.25rem; // 5.33333vw = 20px = 1.25rem

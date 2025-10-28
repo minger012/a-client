@@ -71,4 +71,10 @@ onMounted(() => {
   </van-floating-bubble>
 </template>
 
-<style scoped></style>
+<style>
+.van-floating-bubble {
+  border:1px solid var(--cp-primary);
+  background: #fff;
+  color:var(--cp-primary);
+}
+</style>
