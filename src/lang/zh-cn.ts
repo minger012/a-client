@@ -348,4 +348,30 @@ export default {
       remarks: "备注",
     },
   },
+  rules: {
+    mobile: {
+      required: "请输入手机号",
+      pattern: "手机号不正确",
+    },
+    username: {
+      required: "请输入用户名",
+      pattern: "手机号不正确",
+    },
+    password: {
+      required: "请输入密码",
+      pattern: "密码必须是8-24个字符",
+    },
+    code: {
+      required: "请输入授权码",
+      pattern: "验证码是8个数字",
+    },
+    name: {
+      required: "请输入真实姓名",
+      pattern: "中文字符2-16个字符",
+    },
+    idCard: {
+      required: "请输入身份证号",
+      pattern: "身份证号格式不正确",
+    },
+  },
 };

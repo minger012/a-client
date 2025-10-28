@@ -318,4 +318,30 @@ export default {
       remarks: "Remarks",
     },
   },
+  rules: {
+    mobile: {
+      required: "Please enter mobile number",
+      pattern: "Invalid mobile number",
+    },
+    username: {
+      required: "Please enter username",
+      pattern: "Invalid mobile number",
+    },
+    password: {
+      required: "Please enter password",
+      pattern: "Password must be 8-24 characters",
+    },
+    code: {
+      required: "Please enter authorization code",
+      pattern: "Verification code must be 8 digits",
+    },
+    name: {
+      required: "Please enter real name",
+      pattern: "2-16 Chinese characters required",
+    },
+    idCard: {
+      required: "Please enter ID card number",
+      pattern: "Invalid ID card format",
+    },
+  },
 };

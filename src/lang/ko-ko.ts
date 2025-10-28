@@ -317,4 +317,30 @@ export default {
       remarks: "비고",
     },
   },
+  rules: {
+    mobile: {
+      required: "휴대폰 번호를 입력해 주세요",
+      pattern: "휴대폰 번호가 올바르지 않습니다",
+    },
+    username: {
+      required: "사용자 이름을 입력해 주세요",
+      pattern: "휴대폰 번호가 올바르지 않습니다",
+    },
+    password: {
+      required: "비밀번호를 입력해 주세요",
+      pattern: "비밀번호는 8~24자여야 합니다",
+    },
+    code: {
+      required: "인증 코드를 입력해 주세요",
+      pattern: "인증 코드는 8자리 숫자입니다",
+    },
+    name: {
+      required: "실명을 입력해 주세요",
+      pattern: "중국어 2~16자",
+    },
+    idCard: {
+      required: "주민등록번호를 입력해 주세요",
+      pattern: "주민등록번호 형식이 올바르지 않습니다",
+    },
+  },
 };

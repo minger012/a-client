@@ -317,4 +317,30 @@ export default {
       remarks: "備註",
     },
   },
+  rules: {
+    mobile: {
+      required: "請輸入手機號碼",
+      pattern: "手機號碼不正確",
+    },
+    username: {
+      required: "請輸入用戶名稱",
+      pattern: "手機號碼不正確",
+    },
+    password: {
+      required: "請輸入密碼",
+      pattern: "密碼必須是8-24個字符",
+    },
+    code: {
+      required: "請輸入授權碼",
+      pattern: "驗證碼是8個數字",
+    },
+    name: {
+      required: "請輸入真實姓名",
+      pattern: "中文字元2-16個字符",
+    },
+    idCard: {
+      required: "請輸入身份證號碼",
+      pattern: "身份證號碼格式不正確",
+    },
+  },
 };

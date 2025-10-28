@@ -75,10 +75,10 @@ export default {
     coupons: "クーポン",
     changeLoginPassword: "ログインパスワード変更",
     faq: "よくある質問",
-    onlineUsers: "オンラインユーザー",
+    onlineUsers: "オンライン",
     adDemand: "広告需要",
-    totalOrders: "総注文件数",
-    earned: " 獲得額 ",
+    totalOrders: "総注文",
+    earned: "獲得額",
   },
   login: {
     welcomeBack: "おかえりなさい",
@@ -315,6 +315,32 @@ export default {
       time: "時間",
       amount: "金額",
       remarks: "備考",
+    },
+  },
+  rules: {
+    mobile: {
+      required: "携帯電話番号を入力してください",
+      pattern: "携帯電話番号が正しくありません",
+    },
+    username: {
+      required: "ユーザー名を入力してください",
+      pattern: "携帯電話番号が正しくありません",
+    },
+    password: {
+      required: "パスワードを入力してください",
+      pattern: "パスワードは8〜24文字である必要があります",
+    },
+    code: {
+      required: "認証コードを入力してください",
+      pattern: "認証コードは8桁の数字です",
+    },
+    name: {
+      required: "本名を入力してください",
+      pattern: "中国語2〜16文字",
+    },
+    idCard: {
+      required: "身分証番号を入力してください",
+      pattern: "身分証番号の形式が正しくありません",
     },
   },
 };

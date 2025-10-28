@@ -75,10 +75,10 @@ export default {
     coupons: "Phiếu giảm giá",
     changeLoginPassword: "Đổi mật khẩu",
     faq: "Câu hỏi thường gặp",
-    onlineUsers: "Số người trực tuyến",
-    adDemand: "Nhu cầu quảng cáo",
-    totalOrders: "Tổng số đơn hàng",
-    earned: " Đã kiếm được ",
+    onlineUsers: "Người online",
+    adDemand: "Nhu cầu QC",
+    totalOrders: "Tổng đơn",
+    earned: "Đã kiếm",
   },
   login: {
     welcomeBack: "Chào mừng trở lại",
@@ -315,6 +315,32 @@ export default {
       time: "Thời gian",
       amount: "Số tiền",
       remarks: "Ghi chú",
+    },
+  },
+  rules: {
+    mobile: {
+      required: "Vui lòng nhập số điện thoại",
+      pattern: "Số điện thoại không chính xác",
+    },
+    username: {
+      required: "Vui lòng nhập tên người dùng",
+      pattern: "Số điện thoại không chính xác",
+    },
+    password: {
+      required: "Vui lòng nhập mật khẩu",
+      pattern: "Mật khẩu phải có 8-24 ký tự",
+    },
+    code: {
+      required: "Vui lòng nhập mã ủy quyền",
+      pattern: "Mã xác minh là 8 chữ số",
+    },
+    name: {
+      required: "Vui lòng nhập tên thật",
+      pattern: "2-16 ký tự tiếng Trung",
+    },
+    idCard: {
+      required: "Vui lòng nhập số CMND",
+      pattern: "Định dạng số CMND không chính xác",
     },
   },
 };
