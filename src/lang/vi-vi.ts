@@ -75,6 +75,10 @@ export default {
     coupons: "Phiếu giảm giá",
     changeLoginPassword: "Đổi mật khẩu",
     faq: "Câu hỏi thường gặp",
+    onlineUsers: "Số người trực tuyến",
+    adDemand: "Nhu cầu quảng cáo",
+    totalOrders: "Tổng số đơn hàng",
+    earned: " Đã kiếm được ",
   },
   login: {
     welcomeBack: "Chào mừng trở lại",

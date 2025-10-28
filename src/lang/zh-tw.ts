@@ -75,6 +75,10 @@ export default {
     coupons: "優惠券",
     changeLoginPassword: "修改登入密碼",
     faq: "常見問題",
+    onlineUsers: "在線人數",
+    adDemand: "廣告需求",
+    totalOrders: "訂單總數",
+    earned: " 賺了 ",
   },
   login: {
     welcomeBack: "歡迎回來",

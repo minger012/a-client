@@ -75,6 +75,10 @@ export default {
     coupons: "クーポン",
     changeLoginPassword: "ログインパスワード変更",
     faq: "よくある質問",
+    onlineUsers: "オンラインユーザー",
+    adDemand: "広告需要",
+    totalOrders: "総注文件数",
+    earned: " 獲得額 ",
   },
   login: {
     welcomeBack: "おかえりなさい",

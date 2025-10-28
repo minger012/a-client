@@ -75,6 +75,10 @@ export default {
     coupons: "优惠卷",
     changeLoginPassword: "修改登录密码",
     faq: "常见问题",
+    onlineUsers: "在线人数",
+    adDemand: "广告需求",
+    totalOrders: "订单总数",
+    earned: " 赚了 ",
   },
   login: {
     welcomeBack: "欢迎回来",

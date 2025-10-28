@@ -75,6 +75,10 @@ export default {
     coupons: "Coupons",
     changeLoginPassword: "Change Password",
     faq: "FAQ",
+    onlineUsers: "Online Users",
+    adDemand: "Ad Demand",
+    totalOrders: "Total Orders",
+    earned: " Earned ",
   },
   login: {
     welcomeBack: "Welcome Back",

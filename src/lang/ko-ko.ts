@@ -75,6 +75,10 @@ export default {
     coupons: "쿠폰",
     changeLoginPassword: "로그인 비밀번호 변경",
     faq: "자주 묻는 질문",
+    onlineUsers: "온라인 인원",
+    adDemand: "광고 수요",
+    totalOrders: "총 주문 수",
+    earned: " 수익 ",
   },
   login: {
     welcomeBack: "돌아오신 것을 환영합니다",

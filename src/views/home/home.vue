@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { legacyCopyToClipboard } from "@/utils";
+import { legacyCopyToClipboard, formatCurrency, randomInt } from "@/utils";
 import { useNumber } from "@/composables/common";
 import {
   getConfigApi,
@@ -123,8 +123,120 @@ const handleBannerClick = (banner: any) => {
       break;
   }
 };
+// 滚屏数据
+const scrollingItems = ref<Array<{ name: string; amount: number }>>([]);
+
+// 外国名字列表
+const foreignNames = [
+  "James",
+  "Mary",
+  "John",
+  "Patricia",
+  "Robert",
+  "Jennifer",
+  "Michael",
+  "Linda",
+  "William",
+  "Elizabeth",
+  "David",
+  "Barbara",
+  "Richard",
+  "Susan",
+  "Joseph",
+  "Jessica",
+  "Thomas",
+  "Sarah",
+  "Charles",
+  "Karen",
+  "Christopher",
+  "Nancy",
+  "Daniel",
+  "Lisa",
+  "Matthew",
+  "Betty",
+  "Anthony",
+  "Margaret",
+  "Mark",
+  "Sandra",
+  "Donald",
+  "Ashley",
+  "Steven",
+  "Dorothy",
+  "Paul",
+  "Kimberly",
+  "Andrew",
+  "Emily",
+  "Joshua",
+  "Donna",
+  "Kenneth",
+  "Michelle",
+  "Kevin",
+  "Carol",
+  "Brian",
+  "Amanda",
+  "George",
+  "Melissa",
+  "Edward",
+  "Deborah",
+  "Ronald",
+  "Stephanie",
+  "Timothy",
+  "Rebecca",
+  "Jason",
+  "Laura",
+  "Jeffrey",
+  "Helen",
+  "Ryan",
+  "Sharon",
+  "Jacob",
+  "Cynthia",
+  "Gary",
+  "Kathleen",
+  "Nicholas",
+  "Amy",
+  "Eric",
+  "Shirley",
+  "Jonathan",
+  "Angela",
+  "Stephen",
+  "Anna",
+  "Larry",
+  "Ruth",
+  "Justin",
+  "Brenda",
+  "Scott",
+  "Pamela",
+  "Brandon",
+  "Nicole",
+  "Benjamin",
+  "Katherine",
+  "Samuel",
+  "Samantha",
+  "Gregory",
+  "Christine",
+  "Frank",
+  "Emma",
+];
+// 生成滚屏数据
+const generateScrollingItems = () => {
+  const items = [];
+
+  for (let i = 0; i < 50; i++) {
+    const randomName =
+      foreignNames[Math.floor(Math.random() * foreignNames.length)];
+    const randomAmount = Math.floor(Math.random() * 9000) + 100; // 100-9099
+
+    items.push({
+      name: randomName,
+      amount: randomAmount,
+    });
+  }
+  return items;
+};
+
 onMounted(async () => {
   await Promise.all([getIndexData(tabsActive.value), getConfigData()]);
+  scrollingItems.value = generateScrollingItems();
 });
 </script>
 
@@ -283,7 +395,7 @@ onMounted(async () => {
         </van-button>
       </div>
     </div>
-    <div class="invite-card">
+    <!-- <div class="invite-card">
       <div class="icon-wrap">
         <van-icon name="friends" size="6vw" color="#fff" />
       </div>
@@ -296,6 +408,43 @@ onMounted(async () => {
         <span class="copy-text" @click="copy(indexData?.userData.code)">{{
           t("home.copy")
         }}</span>
+      </div>
+    </div> -->
+    <div
+      class="flex justify-evenly items-center bg-[#4c7ada] my-2 rounded-tr-xl px-2"
+    >
+      <div
+        class="flex flex-col items-center text-white my-2 w-full border-r border-[#5f8de8]"
+      >
+        <div class="text-lg font-bold">
+          {{ formatCurrency(randomInt(80000, 90000), 0) }}
+        </div>
+        <div class="text-11">{{ t("home.onlineUsers") }}</div>
+      </div>
+      <div
+        class="flex flex-col items-center text-white my-3 w-full border-r border-[#5f8de8]"
+      >
+        <div class="text-lg font-bold">
+          {{ formatCurrency(randomInt(40000, 50000), 0) }}
+        </div>
+        <div class="text-11">{{ t("home.adDemand") }}</div>
+      </div>
+      <div class="flex flex-col items-center text-white my-2 w-full">
+        <div class="text-lg font-bold">
+          {{ formatCurrency(indexData.planOrderData.allCount, 0) }}
+        </div>
+        <div class="text-11">{{ t("home.totalOrders") }}</div>
+      </div>
+    </div>
+    <div class="gunping-container">
+      <div class="gunping flex items-center mb-4">
+        <div class="mr-10" v-for="value in scrollingItems">
+          <span class="text-sm">{{ value.name }}</span>
+          <span class="text-gray-500"> {{ t("home.earned") }} </span>
+          <span class="text-[#4c7ada] font-bold">
+            {{ configData[1] }}{{ value.amount }}</span
+          >
+        </div>
       </div>
     </div>
     <div class="banner-wrap">
@@ -972,6 +1121,30 @@ onMounted(async () => {
 ::v-deep() {
   .van-button--small {
     width: 5.3125rem;
+  }
+}
+.gunping-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.gunping {
+  animation: scrollHorizontal 60s linear infinite;
+  white-space: nowrap;
+  width: max-content;
+
+  &:hover {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes scrollHorizontal {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
   }
 }
 </style>
