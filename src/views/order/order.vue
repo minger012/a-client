@@ -131,26 +131,12 @@ onMounted(() => {
             </div>
             <div class="plan-content">
               <div class="banner">
-                <div class="van-swipe my-swipe">
-                  <div
-                    class="van-swipe__track"
-                    style="
-                      transition-duration: 0ms;
-                      transform: translateX(0px);
-                      width: 165px;
-                    "
-                  >
-                    <div class="van-swipe-item" style="width: 165px">
-                      <CpImage
-                        :name="value.image"
-                        width="10.3rem"
-                        height="5.75rem"
-                        radius="10%"
-                      ></CpImage>
-                    </div>
-                  </div>
-                  <!---->
-                </div>
+                <CpImage
+                  :name="value.image"
+                  width="8.3rem"
+                  height="5.75rem"
+                  radius="10%"
+                ></CpImage>
               </div>
               <div class="app-content">
                 <div class="app-title">
@@ -276,11 +262,7 @@ onMounted(() => {
       align-items: flex-start;
       justify-content: space-between;
       margin-top: 1.2019rem;
-      .banner {
-        width: 10.3365rem;
-        height: 5.7692rem;
-        flex-shrink: 0;
-      }
+     
       .app-content {
         flex: 1;
         margin-left: 0.9014rem;
