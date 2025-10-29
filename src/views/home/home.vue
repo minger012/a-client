@@ -37,6 +37,9 @@ const copy = (code: any) => {
 const tabsActive = ref(0);
 const indexData = ref();
 const getIndexData = async (id: number) => {
+  if (isRefreshing.value) {
+    return;
+  }
   isRefreshing.value = true; // 开始加载
   await getIndexApi(id)
     .then((res) => {
@@ -123,120 +126,8 @@ const handleBannerClick = (banner: any) => {
       break;
   }
 };
-// 滚屏数据
-const scrollingItems = ref<Array<{ name: string; amount: number }>>([]);
-
-// 外国名字列表
-const foreignNames = [
-  "James",
-  "Mary",
-  "John",
-  "Patricia",
-  "Robert",
-  "Jennifer",
-  "Michael",
-  "Linda",
-  "William",
-  "Elizabeth",
-  "David",
-  "Barbara",
-  "Richard",
-  "Susan",
-  "Joseph",
-  "Jessica",
-  "Thomas",
-  "Sarah",
-  "Charles",
-  "Karen",
-  "Christopher",
-  "Nancy",
-  "Daniel",
-  "Lisa",
-  "Matthew",
-  "Betty",
-  "Anthony",
-  "Margaret",
-  "Mark",
-  "Sandra",
-  "Donald",
-  "Ashley",
-  "Steven",
-  "Dorothy",
-  "Paul",
-  "Kimberly",
-  "Andrew",
-  "Emily",
-  "Joshua",
-  "Donna",
-  "Kenneth",
-  "Michelle",
-  "Kevin",
-  "Carol",
-  "Brian",
-  "Amanda",
-  "George",
-  "Melissa",
-  "Edward",
-  "Deborah",
-  "Ronald",
-  "Stephanie",
-  "Timothy",
-  "Rebecca",
-  "Jason",
-  "Laura",
-  "Jeffrey",
-  "Helen",
-  "Ryan",
-  "Sharon",
-  "Jacob",
-  "Cynthia",
-  "Gary",
-  "Kathleen",
-  "Nicholas",
-  "Amy",
-  "Eric",
-  "Shirley",
-  "Jonathan",
-  "Angela",
-  "Stephen",
-  "Anna",
-  "Larry",
-  "Ruth",
-  "Justin",
-  "Brenda",
-  "Scott",
-  "Pamela",
-  "Brandon",
-  "Nicole",
-  "Benjamin",
-  "Katherine",
-  "Samuel",
-  "Samantha",
-  "Gregory",
-  "Christine",
-  "Frank",
-  "Emma",
-];
-// 生成滚屏数据
-const generateScrollingItems = () => {
-  const items = [];
-
-  for (let i = 0; i < 50; i++) {
-    const randomName =
-      foreignNames[Math.floor(Math.random() * foreignNames.length)];
-    const randomAmount = Math.floor(Math.random() * 9000) + 100; // 100-9099
-
-    items.push({
-      name: randomName,
-      amount: randomAmount,
-    });
-  }
-  return items;
-};
-
 onMounted(async () => {
   await Promise.all([getIndexData(tabsActive.value), getConfigData()]);
-  scrollingItems.value = generateScrollingItems();
 });
 </script>
 
@@ -417,7 +308,7 @@ onMounted(async () => {
         class="flex flex-col items-center text-white my-2 w-full border-r border-[#5f8de8]"
       >
         <div class="text-lg font-bold">
-          {{ formatCurrency(randomInt(80000, 90000), 0) }}
+          {{ formatCurrency(indexData.onlineCount, 0) }}
         </div>
         <div class="text-xs">{{ t("home.onlineUsers") }}</div>
       </div>
@@ -425,24 +316,24 @@ onMounted(async () => {
         class="flex flex-col items-center text-white my-3 w-full border-r border-[#5f8de8]"
       >
         <div class="text-lg font-bold">
-          {{ formatCurrency(randomInt(40000, 50000), 0) }}
+          {{ formatCurrency(indexData.adCount, 0) }}
         </div>
         <div class="text-xs">{{ t("home.adDemand") }}</div>
       </div>
       <div class="flex flex-col items-center text-white my-2 w-full">
         <div class="text-lg font-bold">
-          {{ formatCurrency(indexData.planOrderData.allCount, 0) }}
+          {{ formatCurrency(indexData.planOrderCount, 0) }}
         </div>
         <div class="text-xs">{{ t("home.totalOrders") }}</div>
       </div>
     </div>
     <div class="gunping-container">
       <div class="gunping flex items-center mb-4">
-        <div class="mr-10" v-for="value in scrollingItems">
-          <span class="text-sm">{{ value.name }}</span>
+        <div class="mr-10" v-for="value in indexData.withdrawList">
+          <span class="text-sm">{{ value.username }}</span>
           <span class="text-gray-500"> {{ t("home.earned") }} </span>
           <span class="text-[#4c7ada] font-bold">
-            {{ configData[1] }}{{ value.amount }}</span
+            {{ configData[1] }}{{ value.money }}</span
           >
         </div>
       </div>
@@ -610,14 +501,14 @@ onMounted(async () => {
     justify-content: center;
     background: #4e7cdc;
     border-radius: 50%;
-    border: 0.1250rem solid #fff;
+    border: 0.125rem solid #fff;
   }
   .tag {
     display: flex;
     justify-content: center;
     align-items: center;
     width: max-content;
-    font-size: 0.6010rem;
+    font-size: 0.601rem;
     color: #65676a;
     padding: 0.3005rem 0.7212rem;
     background: #f0f2f5;
@@ -657,7 +548,7 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   position: relative;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 0.1250rem 0.5000rem;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0.125rem 0.5rem;
   cursor: pointer;
   margin: 0px 0.9615rem 0.9375rem;
   background: linear-gradient(
@@ -679,7 +570,7 @@ onMounted(async () => {
     min-width: 0px;
     flex: 1 1 0%;
     .label {
-      font-size: 0.7500rem;
+      font-size: 0.75rem;
       color: rgb(102, 102, 102);
       margin-bottom: 0.2344rem;
     }
@@ -727,7 +618,7 @@ onMounted(async () => {
     background: rgb(78, 124, 220);
     border-radius: 0.9615rem;
     &:not(:last-child) {
-      margin-bottom: 0.5000rem;
+      margin-bottom: 0.5rem;
     }
   }
   .banner-image {
@@ -760,7 +651,7 @@ onMounted(async () => {
 }
 .tab-wrap {
   position: relative;
-  margin-top: 0.6010rem;
+  margin-top: 0.601rem;
   padding: 0px 0.9615rem;
   &:after {
     content: "";
@@ -951,7 +842,7 @@ onMounted(async () => {
     flex: 1;
     .skeleton-label {
       width: 5.8594rem;
-      height: 0.7500rem;
+      height: 0.75rem;
       margin-bottom: 0.2344rem;
     }
     .skeleton-code {
@@ -961,7 +852,7 @@ onMounted(async () => {
   }
   .skeleton-copy {
     width: 3.5156rem;
-    height: 1.8750rem;
+    height: 1.875rem;
     border-radius: 0.2344rem;
     background: #f0f2f5;
     margin-left: 0.7031rem;
@@ -979,12 +870,12 @@ onMounted(async () => {
 }
 
 .skeleton-tab-wrap {
-  margin-top: 0.6010rem;
-  padding-bottom: 0.6010rem;
+  margin-top: 0.601rem;
+  padding-bottom: 0.601rem;
   border-bottom: 1px solid #e5e5e5;
   .skeleton-tabs {
     display: flex;
-    gap: 1.8750rem;
+    gap: 1.875rem;
     .skeleton-tab {
       width: 3.5156rem;
       height: 0.9375rem;
