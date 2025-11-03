@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { legacyCopyToClipboard, formatCurrency, randomInt } from "@/utils";
+import { legacyCopyToClipboard } from "@/utils";
 import { useNumber } from "@/composables/common";
 import {
   getConfigApi,
@@ -257,7 +257,7 @@ onMounted(async () => {
         </div>
       </div>
       <div class="action-buttons">
-        <van-button
+        <!-- <van-button
           size="small"
           disabled
           class="sign-in-btn"
@@ -274,70 +274,35 @@ onMounted(async () => {
           v-else
         >
           {{ t("home.signIn") }}
-        </van-button>
+        </van-button> -->
         <van-button
           block
           type="primary"
           size="small"
-          @click="$router.push('wallet')"
+          @click="$router.push('level')"
           class="sign-in-btn"
         >
-          {{ t("home.wallet") }}
+          <img src="@/assets/img/ic_vip.png" />
+          <span class="h-[0.8125rem] text-[0.8125rem] mr-1 leading-none">{{ t("home.vipPrivileges") }}</span>
+          <van-icon name="arrow" />
         </van-button>
       </div>
     </div>
-    <!-- <div class="invite-card">
-      <div class="icon-wrap">
-        <van-icon name="friends" size="1.4063rem" color="#fff" />
+    
+    <!-- 账户余额卡片 -->
+    <div class="account-card" @click="$router.push('wallet')">
+      <div class="account-icon">
+        <img src="@/assets/img/ic_wallet.png" />
       </div>
-      <div class="content">
-        <div class="label">{{ t("home.invitationCode") }}</div>
-        <div class="code">{{ indexData?.userData.code }}</div>
-      </div>
-      <div class="copy-hint">
-        <van-icon name="description" size="0.875rem" color="#4e7cdc" />
-        <span class="copy-text" @click="copy(indexData?.userData.code)">{{
-          t("home.copy")
-        }}</span>
-      </div>
-    </div> -->
-    <div
-      class="flex justify-evenly items-center bg-[#4c7ada] my-2 rounded-tr-xl px-2"
-    >
-      <div
-        class="flex flex-col items-center text-white my-2 w-full border-r border-[#5f8de8]"
-      >
-        <div class="text-lg font-bold">
-          {{ formatCurrency(indexData.onlineCount, 0) }}
+      <div class="account-info">
+        <div class="account-label">{{ t("home.account") }}</div>
+        <div class="account-amount">
+          {{ configData[1] }}{{ number.formatMoney(indexData?.userData.money) }}
         </div>
-        <div class="text-xs">{{ t("home.onlineUsers") }}</div>
       </div>
-      <div
-        class="flex flex-col items-center text-white my-3 w-full border-r border-[#5f8de8]"
-      >
-        <div class="text-lg font-bold">
-          {{ formatCurrency(indexData.adCount, 0) }}
-        </div>
-        <div class="text-xs">{{ t("home.adDemand") }}</div>
-      </div>
-      <div class="flex flex-col items-center text-white my-2 w-full">
-        <div class="text-lg font-bold">
-          {{ formatCurrency(indexData.planOrderCount, 0) }}
-        </div>
-        <div class="text-xs">{{ t("home.totalOrders") }}</div>
-      </div>
+      <van-icon name="arrow" size="20" />
     </div>
-    <div class="gunping-container">
-      <div class="gunping flex items-center mb-4">
-        <div class="mr-10" v-for="value in indexData.withdrawList">
-          <span class="text-sm">{{ value.username }}</span>
-          <span class="text-gray-500"> {{ t("home.earned") }} </span>
-          <span class="text-[#4c7ada] font-bold">
-            {{ configData[1] }}{{ value.money }}</span
-          >
-        </div>
-      </div>
-    </div>
+    
     <div class="banner-wrap">
       <div
         class="banner"
@@ -456,15 +421,18 @@ onMounted(async () => {
         <CpSvg name="discount-shape" size="1.1719rem"></CpSvg>
         <div class="name">{{ t("home.coupons") }}</div>
       </div>
-      <!-- <div class="tab-bar-item">
-        <svg aria-hidden="true" class="svg-icon" style="width: 1.1719rem; height: 1.1719rem">
-          <use href="#icon-device-message" fill="#333"></use>
-        </svg>
-        <div class="name">{{ t('home.feedback') }}</div>
-      </div> -->
       <div class="tab-bar-item" @click="$router.push('password')">
         <CpSvg name="edit-password" size="1.1719rem"></CpSvg>
         <div class="name">{{ t("home.changeLoginPassword") }}</div>
+      </div>
+      <div class="tab-bar-item" @click="$router.push('feedback')">
+        <CpSvg name="edit" size="1.1719rem"></CpSvg>
+        <div class="name">{{ t('feedback.title') }}</div>
+      </div>
+      
+      <div class="tab-bar-item" @click="$router.push('agentInvite')">
+        <CpSvg name="device-message" size="1.1719rem"></CpSvg>
+        <div class="name">{{ t('agentInvite.title') }}</div>
       </div>
     </div>
     <div class="section">
@@ -529,10 +497,22 @@ onMounted(async () => {
     gap: 0.4808rem;
     .sign-in-btn {
       min-width: 5.2885rem;
-      border-radius: 0.2404rem;
-      font-size: 0.7812rem;
-      height: 1.9231rem;
+      border-radius: 1.1rem;
+      height: 2.2rem;
+      box-shadow: 0 0.25rem 0.5rem #dee6f8;
+      padding:0 1rem;
       transition: all 0.3s ease;
+      background: linear-gradient(to right,#4f75d1,#3f5eab);
+      :deep(.van-button__text){
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap:0.25rem;
+        img {
+          width: 1rem;
+          height: 1rem;
+        }
+      }
     }
   }
   ::v-deep() {
@@ -544,6 +524,41 @@ onMounted(async () => {
     }
   }
 }
+
+.account-card {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  margin: 0 0.9615rem 0.9375rem;
+  padding: 0.8125rem 1rem;
+  border-radius: 0.625rem;
+  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+ 
+  .account-icon {
+    flex-shrink: 0;
+    margin-right: 0.9615rem;
+    img {
+      width: 2.875rem;
+      height: 2.875rem;
+    }
+  }
+  
+  .account-info {
+    flex: 1;
+    min-width: 0;
+    
+    .account-label {
+      font-size: 0.8125rem;
+    }
+    
+    .account-amount {
+      font-size: 1.275rem;
+      font-weight: bold;
+    }
+  }
+}
+
 .invite-card {
   display: flex;
   align-items: center;
@@ -1009,11 +1024,6 @@ onMounted(async () => {
   }
 }
 
-::v-deep() {
-  .van-button--small {
-    width: 5.3125rem;
-  }
-}
 .gunping-container {
   width: 100%;
   overflow: hidden;

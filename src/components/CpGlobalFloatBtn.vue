@@ -67,14 +67,13 @@ onMounted(() => {
     @click="onLink()"
     v-if="configData[3] || serviceAddress"
   >
-    <van-icon :name="iconName" size="1.5rem" />
+    <CpSvg name="onlineCustomerService" size="1.25rem" color="white"></CpSvg>
   </van-floating-bubble>
 </template>
 
 <style>
 .van-floating-bubble {
-  border:1px solid var(--cp-primary);
-  background: #fff;
-  color:var(--cp-primary);
+  background: linear-gradient(to right,#2f77f1,#00abf2);
+  color:#fff;
 }
 </style>

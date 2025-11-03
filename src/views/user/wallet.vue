@@ -4,7 +4,6 @@ import {
   flowListApi,
   getConfigApi,
   getwalletApi,
-  withdrawApi,
 } from "@/services/api";
 import { useUserStore } from "@/stores/stores";
 import { onMounted, ref, watch } from "vue";
@@ -64,36 +63,7 @@ const onRefresh = () => {
 
 // 弹出层
 const showBottom = ref(false);
-const showBottom2 = ref(false);
-const showBottom3 = ref(false);
 const showBottom4 = ref(false);
-const password = ref("");
-const disabled = ref(true);
-
-watch(password, (newVal) => {
-  // 限制只能输入数字且最多6位
-  const filtered = newVal.replace(/[^\d]/g, "").slice(0, 6);
-  if (filtered !== newVal) {
-    password.value = filtered;
-  }
-  if (password.value.length == 6) {
-    disabled.value = false;
-  } else {
-    disabled.value = true;
-  }
-});
-
-// 余额提现
-const withdrawal = ref();
-const withdrawalDisabled = ref(true);
-
-watch(withdrawal, (newVal) => {
-  if (newVal > 0 && newVal <= walletData.value.money) {
-    withdrawalDisabled.value = false;
-  } else {
-    withdrawalDisabled.value = true;
-  }
-});
 
 // 打开提现页面
 const openWithdrawal = () => {
@@ -110,26 +80,13 @@ const openWithdrawal = () => {
     router.push("paypassword?isJump=1");
     return;
   }
-  showBottom3.value = true;
-};
-
-// 提现
-const onWithdrawal = async () => {
-  if (!password.value) {
-    showBottom2.value = true;
-    return;
-  }
-  showBottom2.value = false;
-  await withdrawApi(withdrawal.value, password.value)
-    .then((res) => {
-      showBottom3.value = false;
-      withdrawal.value = "";
-      location.reload();
-      showSuccessToast(res.msg);
-    })
-    .finally(() => {
-      password.value = "";
-    });
+  // 跳转到提现
+  router.push({
+    path: "/withdrawal",
+    query: {
+      config: JSON.stringify(configData.value),
+    },
+  });
 };
 
 const onLink = (link: string) => {
@@ -219,22 +176,7 @@ onMounted(async () => {
             <span class="text-sm">{{ t("wallet.deposit") }}</span>
           </van-button>
         </div>
-        <div class="link-list">
-          <div class="link-item" @click="$router.push('bindCard')">
-            <div class="link-title">
-              <CpSvg name="card-pos-2" size="1.1719rem"></CpSvg>
-              <span class="label">{{ t("wallet.bindBankCard") }}</span>
-            </div>
-            <van-icon name="arrow" />
-          </div>
-          <div class="link-item" @click="$router.push('paypassword')">
-            <div class="link-title">
-              <CpSvg name="edit-password" size="1.1719rem"></CpSvg>
-              <span class="label">{{ t("wallet.changePaymentPassword") }}</span>
-            </div>
-            <van-icon name="arrow" />
-          </div>
-        </div>
+        
       </div>
 
       <div class="record-wrap">
@@ -306,75 +248,7 @@ onMounted(async () => {
     </div>
   </van-popup>
 
-  <!-- 密码输入弹窗 -->
-  <van-popup
-    v-model:show="showBottom2"
-    position="bottom"
-    round
-    :style="{ height: '95%' }"
-  >
-    <div class="dialog-wrap">
-      <div class="dialog-title">{{ t("wallet.paymentPassword.title") }}</div>
-      <div class="desc">{{ t("wallet.paymentPassword.desc") }}</div>
-      <!-- 密码输入框 -->
-      <van-password-input :value="password" :length="6" />
-      <van-number-keyboard v-model="password" :show="true" />
-      <van-button
-        type="primary"
-        round
-        block
-        style="margin-top: 2rem"
-        :disabled="disabled"
-        @click="onWithdrawal()"
-      >
-        <span class="text-sm">{{ t("wallet.paymentPassword.confirm") }}</span>
-      </van-button>
-    </div>
-  </van-popup>
 
-  <!-- 提现弹窗 -->
-  <van-popup
-    v-model:show="showBottom3"
-    position="bottom"
-    round
-    :style="{ height: '50%' }"
-  >
-    <div class="dialog-wrap">
-      <div class="dialog-title">{{ t("wallet.withdrawal.title") }}</div>
-      <div class="form-wrap">
-        <div class="label">{{ t("wallet.withdrawal.enterAmount") }}</div>
-        <div class="input-wrap">
-          <span class="label">{{ configData[1] }}</span>
-          <van-field v-model="withdrawal" />
-        </div>
-        <div class="form-tips">
-          <span class="count-money">
-            {{ t("wallet.withdrawal.available") }}
-            {{ configData[1] }}
-            {{ number.formatMoney(walletData?.money) }}
-          </span>
-          <span
-            class="all-text"
-            @click="withdrawal = number.formatMoney(walletData?.money)"
-          >
-            {{ t("wallet.withdrawal.withdrawAll") }}
-          </span>
-        </div>
-      </div>
-      <div class="flex justify-center">
-        <van-button
-          type="primary"
-          round
-          block
-          style="margin-top: 2rem"
-          :disabled="withdrawalDisabled"
-          @click="onWithdrawal()"
-        >
-          <span class="text-sm">{{ t("wallet.withdraw") }}</span>
-        </van-button>
-      </div>
-    </div>
-  </van-popup>
 
   <!-- 存款提示弹窗 -->
   <van-popup
@@ -478,31 +352,8 @@ onMounted(async () => {
       align-items: center;
       justify-content: space-between;
       padding-bottom: 1.2019rem;
-      border-bottom: 1px solid #e5e5e5;
     }
-    .link-list {
-      padding: 1.6827rem 0 1.4423rem;
-      .link-item {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        color: #65676a;
-        &:not(:last-child) {
-          margin-bottom: 1.3221rem;
-        }
-        .link-title {
-          display: flex;
-          align-items: center;
-          font-size: 0.9615rem;
-          color: var(--van-black);
-          flex: 1;
-          margin-right: 0.6010rem;
-          .label {
-            margin-left: 0.3516rem;
-          }
-        }
-      }
-    }
+    
   }
   .record-wrap {
     border-top: 0.4808rem solid #f0f2f5;
@@ -551,8 +402,6 @@ onMounted(async () => {
     border-color: #e4e6eb;
     color: #bcc0c4;
     opacity: 1;
-  }
-  .van-cell__value {
   }
 }
 </style>

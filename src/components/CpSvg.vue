@@ -2,6 +2,7 @@
 const props = defineProps<{
   name: string;
   color?: string;
+  size?: string;
 }>();
 
 const href = "#icon-" + props.name;
@@ -12,7 +13,7 @@ const href = "#icon-" + props.name;
     aria-hidden="true"
     class="svg-icon icon"
     :class="$attrs.class"
-    :style="{ color: props.color }"
+    :style="{ color: props.color, width: props.size, height: props.size }"
   >
     <use :href="href" :fill="props.color"></use>
   </svg>

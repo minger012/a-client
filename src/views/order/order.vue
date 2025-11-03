@@ -135,7 +135,7 @@ onMounted(() => {
                   :name="value.image"
                   width="8.3rem"
                   height="5.75rem"
-                  radius="10%"
+                  radius="0.5rem"
                 ></CpImage>
               </div>
               <div class="app-content">
@@ -145,7 +145,7 @@ onMounted(() => {
                       :name="value.goods_logo"
                       width="1.875rem"
                       height="1.875rem"
-                      radius="10%"
+                      radius="0.25rem"
                     ></CpImage>
                   </div>
                   <div class="app-title-wrap">
@@ -159,7 +159,7 @@ onMounted(() => {
                 </div>
               </div>
             </div>
-            <div class="plan-text">
+            <div class="plan-text line-clamp-6">
               {{ value.intro }}
             </div>
             <div class="put-wrap">
@@ -307,9 +307,10 @@ onMounted(() => {
     }
     .plan-text {
       font-size: 0.7212rem;
-      line-height: 1.0817rem;
+      line-height: 1.1rem;
       color: var(--van-black);
       margin-top: 0.9014rem;
+      overflow: hidden;
     }
     .put-wrap {
       background: #f0f2f5;

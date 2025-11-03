@@ -195,3 +195,11 @@ export const mailReadApi = (id: number) => {
 export const mailNoReadApi = () => {
   return http<any>("/user/mailNoRead", "POST", {});
 };
+
+// 提交意见反馈
+export const feedbackSubmitApi = (subject: string, content: string) => {
+  return httpLoading<any>("/feedback/submit", "POST", {
+    subject,
+    content,
+  });
+};

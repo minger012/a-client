@@ -68,6 +68,11 @@ const router = createRouter({
       meta: { title: t("routes.wallet") },
     },
     {
+      path: "/withdrawal", // 提现
+      component: () => import("@/views/user/withdrawal.vue"),
+      meta: { title: t("routes.withdrawal") },
+    },
+    {
       path: "/notification", // 消息通知
       component: () => import("@/views/user/notification.vue"),
       meta: { title: t("routes.notification") },
@@ -93,9 +98,19 @@ const router = createRouter({
       meta: { title: t("routes.coupons") },
     },
     {
-      path: "/level", // 店铺星级
+      path: "/level", // 会员特权
       component: () => import("@/views/user/level.vue"),
-      meta: { title: t("routes.level") },
+      meta: { title: t("home.vipPrivileges") },
+    },
+    {
+      path: "/feedback", // 意见反馈
+      component: () => import("@/views/home/feedback.vue"),
+      meta: { title: t("routes.feedback") },
+    },
+    {
+      path: "/agentInvite", // 代理邀请码
+      component: () => import("@/views/home/agentInvite.vue"),
+      meta: { title: t("routes.agentInvite") },
     },
   ],
 });

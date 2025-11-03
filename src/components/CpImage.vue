@@ -11,6 +11,7 @@ const props = defineProps<{
   radius?: string;
   fileType?: string;
   dir?: string;
+  fit?: any;
 }>();
 
 const image = ref();
@@ -40,7 +41,7 @@ if (props.src) {
     :height="props.height"
     :round="props.round"
     :radius="props.radius"
-    fit="contain"
+    :fit="props.fit || 'contain'"
   >
     <template v-slot:loading>
       <van-loading type="spinner" size="20" />
