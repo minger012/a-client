@@ -11,7 +11,7 @@ import { onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 const number = useNumber();
 const router = useRouter();
 
@@ -284,7 +284,7 @@ onMounted(async () => {
         >
           <img src="@/assets/img/ic_vip.png" />
           <span class="h-[0.8125rem] text-[0.8125rem] mr-1 leading-none">{{ t("home.vipPrivileges") }}</span>
-          <van-icon name="arrow" />
+          <van-icon name="arrow" v-if="locale !== 'en-us'" />
         </van-button>
       </div>
     </div>
@@ -500,12 +500,13 @@ onMounted(async () => {
       border-radius: 1.1rem;
       height: 2.2rem;
       box-shadow: 0 0.25rem 0.5rem #dee6f8;
-      padding:0 1rem;
+      padding:0 0.75rem;
       transition: all 0.3s ease;
       background: linear-gradient(to right,#4f75d1,#3f5eab);
       :deep(.van-button__text){
         display: flex;
         align-items: center;
+        white-space: nowrap;
         justify-content: center;
         gap:0.25rem;
         img {

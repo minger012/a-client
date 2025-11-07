@@ -1,16 +1,19 @@
 <script setup lang="ts">
-import { getConfigApi } from "@/services/api";
+import { getConfigApi, getUserInfoApi } from "@/services/api";
+import { useUserStore } from "@/stores/stores";
 import { onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
+const userStore = useUserStore();
 
 // 后台配置
 const configData = ref<any>({});
+const serviceAddress = ref("");
 const levelList = ref<any>([]);
 
 const getConfigData = async () => {
-  await getConfigApi("5,6").then((res) => {
+  await getConfigApi("3,5,6").then((res) => {
     configData.value = res.data;
     // 合并两个配置数据
     if (res.data[5] && res.data[6]) {
@@ -27,13 +30,37 @@ const getConfigData = async () => {
   });
 };
 
+// 获取用户服务地址
+const getUserServiceAddress = async () => {
+  if (!userStore.user?.token) {
+    serviceAddress.value = "";
+    return;
+  }
+  await getUserInfoApi().then((res) => {
+    serviceAddress.value = res.data?.service_address || "";
+  });
+};
+
+// 打开链接
+const onLink = (link: string) => {
+  if (!link) {
+    return;
+  }
+  window.open(link);
+};
+
 const activateVip = (level: any) => {
-  console.log('Activate VIP:', level);
-  // TODO: 实现VIP激活逻辑
+  // 跳转到客服页面
+  const link =
+    serviceAddress.value ||
+    (configData.value[3] && configData.value[3].length > 0
+      ? configData.value[3][Math.floor(Math.random() * configData.value[3].length)].link
+      : "");
+  onLink(link);
 };
 
 onMounted(async () => {
-  Promise.all([getConfigData()]);
+  Promise.all([getConfigData(), getUserServiceAddress()]);
 });
 </script>
 <template>
