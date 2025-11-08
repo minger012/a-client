@@ -146,7 +146,7 @@ export default {
     enterPassword: "请输入密码",
     confirmPassword: "请确认密码",
     enterMobile: "请输入手机号码",
-    authCode: "授权码",
+    authCode: "邀请码",
     readAndAgree: "我已阅读并同意",
     termsOfService: "服务条款",
     register: "注册",
@@ -413,8 +413,8 @@ export default {
       pattern: "密码必须是8-24个字符",
     },
     code: {
-      required: "请输入授权码",
-      pattern: "验证码是8个数字",
+      required: "请输入邀请码",
+      pattern: "邀请码是8个数字",
     },
     name: {
       required: "请输入真实姓名",

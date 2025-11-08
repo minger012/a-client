@@ -146,7 +146,7 @@ export default {
     enterPassword: "請輸入密碼",
     confirmPassword: "請確認密碼",
     enterMobile: "請輸入手機號碼",
-    authCode: "授權碼",
+    authCode: "邀請碼",
     readAndAgree: "我已閱讀並同意",
     termsOfService: "服務條款",
     register: "註冊",
@@ -382,8 +382,8 @@ export default {
       pattern: "密碼必須是8-24個字符",
     },
     code: {
-      required: "請輸入授權碼",
-      pattern: "驗證碼是8個數字",
+      required: "請輸入邀請碼",
+      pattern: "邀請碼是8個數字",
     },
     name: {
       required: "請輸入真實姓名",

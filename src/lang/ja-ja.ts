@@ -146,7 +146,7 @@ export default {
     enterPassword: "パスワードを入力",
     confirmPassword: "パスワード確認",
     enterMobile: "電話番号を入力",
-    authCode: "認証コード",
+    authCode: "招待コード",
     readAndAgree: "同意します",
     termsOfService: "利用規約",
     register: "登録",
@@ -382,8 +382,8 @@ export default {
       pattern: "パスワードは8〜24文字である必要があります",
     },
     code: {
-      required: "認証コードを入力してください",
-      pattern: "認証コードは8桁の数字です",
+      required: "招待コードを入力してください",
+      pattern: "招待コードは8桁の数字です",
     },
     name: {
       required: "本名を入力してください",

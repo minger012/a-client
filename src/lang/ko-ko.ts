@@ -146,7 +146,7 @@ export default {
     enterPassword: "비밀번호 입력",
     confirmPassword: "비밀번호 확인",
     enterMobile: "휴대폰 번호 입력",
-    authCode: "인증 코드",
+    authCode: "초대 코드",
     readAndAgree: "동의합니다",
     termsOfService: "이용약관",
     register: "가입",
@@ -382,8 +382,8 @@ export default {
       pattern: "비밀번호는 8~24자여야 합니다",
     },
     code: {
-      required: "인증 코드를 입력해 주세요",
-      pattern: "인증 코드는 8자리 숫자입니다",
+      required: "초대 코드를 입력해 주세요",
+      pattern: "초대 코드는 8자리 숫자입니다",
     },
     name: {
       required: "실명을 입력해 주세요",

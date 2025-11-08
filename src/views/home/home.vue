@@ -262,9 +262,9 @@ onMounted(async () => {
         <div class="tag">
           {{ t("home.creditScore") }}：{{ indexData?.userData.score }}
         </div>
-        <div class="tag">
+        <!-- <div class="tag">
           {{ t("home.signInCount") }}：{{ indexData?.userData.sign }}
-        </div>
+        </div> -->
         <div 
           class="tag vip-level-tag" 
           @click="$router.push('level')"

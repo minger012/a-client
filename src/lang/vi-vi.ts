@@ -146,7 +146,7 @@ export default {
     enterPassword: "Nhập mật khẩu",
     confirmPassword: "Xác nhận mật khẩu",
     enterMobile: "Nhập số điện thoại",
-    authCode: "Mã xác thực",
+    authCode: "Mã mời",
     readAndAgree: "Tôi đồng ý với",
     termsOfService: "Điều khoản dịch vụ",
     register: "Đăng ký",
@@ -382,8 +382,8 @@ export default {
       pattern: "Mật khẩu phải có 8-24 ký tự",
     },
     code: {
-      required: "Vui lòng nhập mã ủy quyền",
-      pattern: "Mã xác minh là 8 chữ số",
+      required: "Vui lòng nhập mã mời",
+      pattern: "Mã mời là 8 chữ số",
     },
     name: {
       required: "Vui lòng nhập tên thật",

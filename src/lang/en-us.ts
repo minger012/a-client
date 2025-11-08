@@ -146,7 +146,7 @@ export default {
     enterPassword: "Enter password",
     confirmPassword: "Confirm password",
     enterMobile: "Enter mobile",
-    authCode: "Auth Code",
+    authCode: "Invitation Code",
     readAndAgree: "I agree to",
     termsOfService: "Terms of Service",
     register: "Register",
@@ -383,8 +383,8 @@ export default {
       pattern: "Password must be 8-24 characters",
     },
     code: {
-      required: "Please enter authorization code",
-      pattern: "Verification code must be 8 digits",
+      required: "Please enter invitation code",
+      pattern: "Invitation code must be 8 digits",
     },
     name: {
       required: "Please enter real name",
