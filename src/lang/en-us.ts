@@ -277,10 +277,12 @@ export default {
     systemAnnouncement: "System Announcement",
     systemMaintenance: "System Maintenance",
     activityNotification: "Activity Notification",
+    taskOrderDispatch: "Task Order Dispatch",
     allStatus: "All Status",
     unreadMessages: "Unread",
     readMessages: "Read",
     noMessages: "No messages",
+    planOrderDispatchContent: "You have been assigned {count} new plan order(s): {plans}",
   },
   password: {
     title: "Change Password",

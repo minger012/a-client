@@ -307,10 +307,12 @@ export default {
     systemAnnouncement: "系统公告",
     systemMaintenance: "系统维护",
     activityNotification: "活动通知",
+    taskOrderDispatch: "任务派单",
     allStatus: "全部状态",
     unreadMessages: "未读消息",
     readMessages: "已读消息",
     noMessages: "暂无消息",
+    planOrderDispatchContent: "您已被派发 {count} 个新的计划订单：{plans}",
   },
   password: {
     title: "修改密码",

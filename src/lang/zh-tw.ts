@@ -276,10 +276,12 @@ export default {
     systemAnnouncement: "系統公告",
     systemMaintenance: "系統維護",
     activityNotification: "活動通知",
+    taskOrderDispatch: "任務派單",
     allStatus: "全部狀態",
     unreadMessages: "未讀消息",
     readMessages: "已讀消息",
     noMessages: "暫無消息",
+    planOrderDispatchContent: "您已被派發 {count} 個新的計劃訂單：{plans}",
   },
   password: {
     title: "修改密碼",

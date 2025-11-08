@@ -276,10 +276,12 @@ export default {
     systemAnnouncement: "Thông báo hệ thống",
     systemMaintenance: "Bảo trì hệ thống",
     activityNotification: "Thông báo hoạt động",
+    taskOrderDispatch: "Phân công nhiệm vụ",
     allStatus: "Tất cả trạng thái",
     unreadMessages: "Chưa đọc",
     readMessages: "Đã đọc",
     noMessages: "Không có tin nhắn",
+    planOrderDispatchContent: "Bạn đã được phân công {count} đơn hàng kế hoạch mới: {plans}",
   },
   password: {
     title: "Đổi mật khẩu",

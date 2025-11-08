@@ -276,10 +276,12 @@ export default {
     systemAnnouncement: "システム通知",
     systemMaintenance: "システムメンテナンス",
     activityNotification: "活動通知",
+    taskOrderDispatch: "タスク配信",
     allStatus: "すべてのステータス",
     unreadMessages: "未読メッセージ",
     readMessages: "既読メッセージ",
     noMessages: "メッセージなし",
+    planOrderDispatchContent: "{count}件の新しいプラン注文が割り当てられました：{plans}",
   },
   password: {
     title: "パスワード変更",

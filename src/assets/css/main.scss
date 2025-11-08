@@ -168,7 +168,15 @@ body {
     text-align: center;
     padding: 0 0.9615rem;
   }
+
+  .van-password-input__security,
+  .van-password-input__security li {
+    &::after{
+      border-color:#ccc;
+    }
+  }
 }
 #nprogress .bar {
   // background-color: var(--cp-price);
 }
+

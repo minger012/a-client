@@ -2,7 +2,7 @@
 import { updateI18nLanguage } from "@/plugins/i18n";
 import { loginOutApi, setLangApi, mailNoReadApi } from "@/services/api"; // 导入 API
 import { useUserStore } from "@/stores/stores";
-import { ref, onMounted, onUnmounted } from "vue"; // 添加生命周期函数
+import { ref, onMounted, onUnmounted, watch } from "vue"; // 添加生命周期函数和watch
 import { useRouter, useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 
@@ -34,7 +34,11 @@ const routeTitle = route.meta.title as string;
 
 // 未读消息数量
 const unreadCount = ref(0);
+const prevUnreadCount = ref(0); // 记录上一次的未读数量
 let refreshInterval: number | null = null;
+
+// 创建音频实例
+const notificationAudio = new Audio(new URL('@/assets/audio/dingdong.mp3', import.meta.url).href);
 
 // 获取未读消息数量
 const fetchUnreadCount = async () => {
@@ -48,17 +52,40 @@ const fetchUnreadCount = async () => {
   }
 };
 
+// 播放通知音效
+const playNotificationSound = () => {
+  try {
+    notificationAudio.currentTime = 0; // 重置到开始位置
+    notificationAudio.play().catch(err => {
+      console.warn("音频播放失败:", err);
+    });
+  } catch (error) {
+    console.error("播放音频错误:", error);
+  }
+};
+
+// 监听未读消息数量变化
+watch(unreadCount, (newValue, oldValue) => {
+  // 只有当新值大于旧值时才播放声音（表示有新消息）
+  // 并且旧值不为0（避免初始加载时播放）
+  if (newValue > oldValue && oldValue !== 0) {
+    playNotificationSound();
+  }
+});
+
 // 初始化加载未读数量
 onMounted(() => {
   if (props.isLogin == true) {
     return;
   }
   fetchUnreadCount();
+  // 记录初始值
+  prevUnreadCount.value = unreadCount.value;
 
-  // 可选：设置定时刷新（比如每30秒刷新一次）
+  // 设置定时刷新（每10秒刷新一次）
   refreshInterval = window.setInterval(() => {
     fetchUnreadCount();
-  }, 30000);
+  }, 10000);
 });
 
 // 清理定时器

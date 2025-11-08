@@ -7,7 +7,7 @@ import {
   signApi,
   uploadImageApi,
 } from "@/services/api";
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 
@@ -19,6 +19,26 @@ const router = useRouter();
 const isRefreshing = ref(false);
 // 添加页面加载状态
 const isLoading = ref(true);
+
+// 获取当前VIP等级信息
+const currentVipLevel = computed(() => {
+  // 如果配置数据不存在，返回默认对象
+  if (!configData.value[6] || !configData.value[6].length) {
+    return null;
+  }
+  
+  // 如果lv为0或不存在，返回第一条配置
+  if (!indexData.value?.userData?.lv) {
+    return configData.value[6][0];
+  }
+  
+  // 查找匹配的等级，找不到则返回第一条
+  const level = configData.value[6].find((item: any) => item.level == indexData.value.userData.lv);
+  return level || {
+    name: indexData.value.userData.lv,
+    level: indexData.value.userData.lv
+  };
+});
 
 // 签到
 const sign = async () => {
@@ -53,7 +73,7 @@ const getIndexData = async (id: number) => {
 // 后台配置
 const configData = ref<any>([]);
 const getConfigData = async () => {
-  await getConfigApi("1,7,9").then((res) => {
+  await getConfigApi("1,7,6,9").then((res) => {
     configData.value = res.data;
   });
 };
@@ -245,15 +265,20 @@ onMounted(async () => {
         <div class="tag">
           {{ t("home.signInCount") }}：{{ indexData?.userData.sign }}
         </div>
-        <div class="tag" @click="$router.push('level')">
-          {{ t("home.storeRating") }}：
+        <div 
+          class="tag vip-level-tag" 
+          @click="$router.push('level')"
+          v-if="currentVipLevel"
+        >
           <CpImage
-            name="star"
-            width="0.7500rem"
-            height="0.7500rem"
-            :round="true"
-            v-for="value in indexData?.userData.lv"
-          ></CpImage>
+              :name="currentVipLevel.icon"
+              v-if="currentVipLevel.icon"
+              class="level-icon"
+              width="0.85rem"
+              height="0.85rem"
+              fit="cover"
+            ></CpImage>
+          {{ currentVipLevel.name }}
         </div>
       </div>
       <div class="action-buttons">
@@ -483,6 +508,21 @@ onMounted(async () => {
     border-radius: 0.2404rem;
     line-height: 1;
     margin-top: 0.1875rem;
+    
+    &.vip-level-tag {
+      font-weight: 600;
+      padding: 0.35rem 0.7rem;
+      border-radius: 0.3rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      
+      &:active {
+        transform: scale(0.95);
+      }
+    }
   }
   .button-sign {
     cursor: not-allowed;

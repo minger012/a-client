@@ -276,10 +276,12 @@ export default {
     systemAnnouncement: "시스템 공지",
     systemMaintenance: "시스템 점검",
     activityNotification: "활동 알림",
+    taskOrderDispatch: "태스크 배정",
     allStatus: "모든 상태",
     unreadMessages: "읽지 않음",
     readMessages: "읽음",
     noMessages: "메시지 없음",
+    planOrderDispatchContent: "{count}개의 새로운 계획 주문이 할당되었습니다: {plans}",
   },
   password: {
     title: "비밀번호 변경",

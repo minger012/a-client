@@ -49,6 +49,21 @@ const onRefresh = async () => {
 // 查看消息
 const childRef = ref<any>(null);
 
+// 格式化计划订单消息
+const formatPlanOrderMessage = (content: string) => {
+  try {
+    const contentObj = JSON.parse(content);
+    if (contentObj.type === "plan_order_dispatch") {
+      const { count, plans } = contentObj.data;
+      const planList = plans.map((p: any) => `${p.plan_name} - ${p.goods_name}`).join(", ");
+      return t("notification.planOrderDispatchContent", { count, plans: planList });
+    }
+    return content;
+  } catch (e) {
+    return content;
+  }
+};
+
 const readMail = (detail: any) => {
   if (detail.read_time == 0) {
     mailReadApi(detail.id);
@@ -60,9 +75,13 @@ const readMail = (detail: any) => {
       return item;
     });
   }
+  
+  // 格式化消息内容
+  const displayContent = detail.type === 4 ? formatPlanOrderMessage(detail.content) : detail.content;
+  
   showDialog({
-    title: detail.title,
-    message: detail.content,
+    title: detail.type == 4 ? t("notification.taskOrderDispatch") : detail.title,
+    message: displayContent,
   }).then(() => {});
 };
 const value1 = ref(0);
@@ -87,6 +106,7 @@ const option1 = [
   { text: t("notification.systemAnnouncement"), value: 1 },
   { text: t("notification.systemMaintenance"), value: 2 },
   { text: t("notification.activityNotification"), value: 3 },
+  { text: t("notification.taskOrderDispatch"), value: 4 },
 ];
 const option2 = [
   { text: t("notification.allStatus"), value: 0 },
@@ -97,21 +117,25 @@ const typeName = {
   1: t("notification.systemAnnouncement"),
   2: t("notification.systemMaintenance"),
   3: t("notification.activityNotification"),
+  4: t("notification.taskOrderDispatch"),
 };
 const class1 = {
   1: "icon-blue",
   2: "icon-orange",
   3: "icon-red",
+  4: "icon-green",
 };
 const class2 = {
   1: "primary",
   2: "warning",
   3: "danger",
+  4: "success",
 };
 const class3 = {
   1: "volume-o",
   2: "setting-o",
   3: "gift-o",
+  4: "orders-o",
 };
 </script>
 <template>
@@ -173,8 +197,10 @@ const class3 = {
                   </div>
                 </div>
                 <div class="message-body">
-                  <h3 class="message-title">{{ value.title }}</h3>
-                  <p class="message-text">{{ value.content }}</p>
+                  <h3 class="message-title">{{ value.type == 4 ? t("notification.taskOrderDispatch") : value.title }}</h3>
+                  <p class="message-text">
+                    {{ value.type === 4 ? formatPlanOrderMessage(value.content) : value.content }}
+                  </p>
                 </div>
               </div>
             </div>
@@ -279,6 +305,10 @@ const class3 = {
   .icon-orange {
     color: #ff976a;
     background-color: #ff976a1a;
+  }
+  .icon-green {
+    color: #07c160;
+    background-color: #07c1601a;
   }
   .unread-dot {
     width: 0.5000rem;

@@ -6,7 +6,7 @@ import {
   getwalletApi,
 } from "@/services/api";
 import { useUserStore } from "@/stores/stores";
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 
@@ -175,6 +175,22 @@ onMounted(async () => {
           <van-button type="primary" round @click="showBottom4 = true" block>
             <span class="text-sm">{{ t("wallet.deposit") }}</span>
           </van-button>
+        </div>
+        <div class="link-list">
+          <div class="link-item" @click="$router.push('bindCard')">
+            <div class="link-title">
+              <CpSvg name="card-pos-2" size="1.1719rem"></CpSvg>
+              <span class="label">{{ t("wallet.bindBankCard") }}</span>
+            </div>
+            <van-icon name="arrow" />
+          </div>
+          <div class="link-item" @click="$router.push('paypassword')">
+            <div class="link-title">
+              <CpSvg name="edit-password" size="1.1719rem"></CpSvg>
+              <span class="label">{{ t("wallet.changePaymentPassword") }}</span>
+            </div>
+            <van-icon name="arrow" />
+          </div>
         </div>
         
       </div>
@@ -396,6 +412,8 @@ onMounted(async () => {
 ::v-deep() {
   .van-password-input {
     width: 90%;
+    
+    
   }
   .van-button--disabled {
     background-color: #e4e6eb;
@@ -404,4 +422,26 @@ onMounted(async () => {
     opacity: 1;
   }
 }
+
+.link-list {
+  .link-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #65676a;
+    padding:0.75rem 0.25rem;
+    .link-title {
+      display: flex;
+      align-items: center;
+      font-size: 0.9615rem;
+      color: var(--van-black);
+      flex: 1;
+      margin-right: 0.6010rem;
+      .label {
+        margin-left: 0.3516rem;
+      }
+    }
+  }
+}
+
 </style>

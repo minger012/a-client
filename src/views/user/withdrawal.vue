@@ -161,22 +161,6 @@ onMounted(async () => {
         </van-button>
       </div>
 
-      <div class="link-list">
-        <div class="link-item" @click="$router.push('bindCard')">
-          <div class="link-title">
-            <CpSvg name="card-pos-2" size="1.1719rem"></CpSvg>
-            <span class="label">{{ t("wallet.bindBankCard") }}</span>
-          </div>
-          <van-icon name="arrow" />
-        </div>
-        <div class="link-item" @click="$router.push('paypassword')">
-          <div class="link-title">
-            <CpSvg name="edit-password" size="1.1719rem"></CpSvg>
-            <span class="label">{{ t("wallet.changePaymentPassword") }}</span>
-          </div>
-          <van-icon name="arrow" />
-        </div>
-      </div>
       
     </div>
     
@@ -187,6 +171,8 @@ onMounted(async () => {
     v-model:show="showPasswordPopup"
     position="bottom"
     round
+    closeable
+    close-icon-position="top-right"
     :style="{ height: '95%' }"
   >
     <div class="dialog-wrap">
@@ -278,27 +264,6 @@ onMounted(async () => {
   }
 }
 
-.link-list {
-  .link-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: #65676a;
-    padding:0.75rem 0.25rem;
-    .link-title {
-      display: flex;
-      align-items: center;
-      font-size: 0.9615rem;
-      color: var(--van-black);
-      flex: 1;
-      margin-right: 0.6010rem;
-      .label {
-        margin-left: 0.3516rem;
-      }
-    }
-  }
-}
-
 .button-wrap {
   padding: 1rem 0;
 
@@ -320,5 +285,6 @@ onMounted(async () => {
     text-align: center;
     margin-bottom: 2rem;
   }
+  
 }
 </style>
