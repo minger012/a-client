@@ -169,7 +169,7 @@ onMounted(() => {
           </div>
           <div class="data-item">
             <div class="number-row">
-              {{ configData[1] }} {{ number.formatMoney(detail.click_money) }}
+              {{ configData[1] }} {{ number.formatMoney(detail.ad_revenue) }}
             </div>
             <div class="name-row">
               {{ t("orderDetail.adRevenue") }}

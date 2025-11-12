@@ -13,44 +13,8 @@ const activeTab = ref(0);
 const showDialog = ref(false);
 const inputAgentId = ref("");
 
-// 跟随记录假数据
-const followRecords = ref([
-  {
-    id: 1,
-    userId: "头666",
-    avatar: "https://i.pravatar.cc/150?img=1",
-    followTime: "2025-11-04 18:44:06",
-    isFollowing: true
-  },
-  {
-    id: 2,
-    userId: "头888",
-    avatar: "https://i.pravatar.cc/150?img=2",
-    followTime: "2025-11-04 15:20:33",
-    isFollowing: true
-  },
-  {
-    id: 3,
-    userId: "头999",
-    avatar: "https://i.pravatar.cc/150?img=3",
-    followTime: "2025-11-03 22:15:48",
-    isFollowing: false
-  },
-  {
-    id: 4,
-    userId: "头555",
-    avatar: "https://i.pravatar.cc/150?img=4",
-    followTime: "2025-11-03 14:30:22",
-    isFollowing: true
-  },
-  {
-    id: 5,
-    userId: "头777",
-    avatar: "https://i.pravatar.cc/150?img=5",
-    followTime: "2025-11-02 09:45:11",
-    isFollowing: true
-  }
-]);
+// 跟随记录
+const followRecords = ref<any[]>([]);
 
 // 关注计划（这里可以根据实际需求调用API）
 const followPlan = () => {
@@ -107,7 +71,7 @@ onMounted(() => {
       </div>
 
       <!-- 关注按钮 -->
-      <div class="follow-button-section">
+      <!-- <div class="follow-button-section">
         <van-button 
           type="primary" 
           block 
@@ -116,7 +80,7 @@ onMounted(() => {
           >
           {{ t("agentInvite.followPlan") }}
         </van-button>
-      </div>
+      </div> -->
 
       <!-- 标签页 -->
       <div class="tabs-section">

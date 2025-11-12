@@ -13,6 +13,10 @@ import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 const number = useNumber();
 const time = useTime();
+
+// 检测是否为PC端（通过touch事件支持判断）
+const isPC = ref(!('ontouchstart' in window));
+
 // 下单
 const money = ref("");
 const cd = ref("");
@@ -23,6 +27,7 @@ const max = ref("");
 const order_id = ref("");
 const pay_password = ref("");
 const disabled = ref(true);
+const passwordInput = ref<HTMLInputElement>();
 // 支付密码
 watch(pay_password, (newVal) => {
   // 限制只能输入数字且最多6位
@@ -404,8 +409,22 @@ onMounted(async () => {
       <div class="dialog-title">{{ t("putin.transactionPassword") }}</div>
       <div class="desc">{{ t("putin.enterTransactionPassword") }}</div>
       <!-- 密码输入框 -->
-      <van-password-input :value="pay_password" :length="6" />
-      <van-number-keyboard v-model="pay_password" :show="true" />
+      <div @click="isPC ? passwordInput?.focus() : null" :style="{ cursor: isPC ? 'pointer' : 'default' }">
+        <van-password-input :value="pay_password" :length="6" />
+      </div>
+      <!-- 隐藏的输入框，用于电脑端输入 -->
+      <input
+        v-if="isPC"
+        ref="passwordInput"
+        v-model="pay_password"
+        type="password"
+        maxlength="6"
+        inputmode="numeric"
+        pattern="[0-9]*"
+        style="position: absolute; left: -9999px; width: 1px; height: 1px;"
+      />
+      <!-- 移动端数字键盘 -->
+      <van-number-keyboard v-if="!isPC" v-model="pay_password" :show="true" />
       <van-button
         type="primary"
         round

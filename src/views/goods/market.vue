@@ -53,7 +53,7 @@ const onRefresh = async () => {
 };
 
 // 弹出层-下单
-const childRef = ref(null);
+const childRef = ref<any>(null);
 const updateChildData = (plan_id: number, plan_name: string) => {
   // 未设置支付密码
   if (userStore.user?.set_pay_password != 1) {
