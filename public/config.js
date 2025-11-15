@@ -7,3 +7,5 @@ var LANG_COLUMNS = [
   { text: "한국어", value: "ko-ko" },
   { text: "Việt nam", value: "vi-vi" },
 ];
+
+var SALESMARTLY_URL = "https://plugin-code.salesmartly.com/js/project_536120_552946_1763084939.js";

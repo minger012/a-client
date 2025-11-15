@@ -9,6 +9,8 @@ import { useUserStore } from "@/stores/stores";
 import { onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
+import { useSalesmartlyService } from "@/composables/common";
+const { chatOpen } = useSalesmartlyService();
 
 const { t } = useI18n();
 const time = useTime();
@@ -89,10 +91,16 @@ const openWithdrawal = () => {
   });
 };
 
-const onLink = (link: string) => {
+// 打开客服
+const openSupport = (link: string) => {
+  if((window as any).SALESMARTLY_URL){
+    chatOpen()
+    return;
+  }
   if (!link) {
     return;
   }
+  
   window.open(link);
 };
 
@@ -293,7 +301,7 @@ onMounted(async () => {
           block
           style="margin-top: 2rem"
           @click="
-            onLink(
+            openSupport(
               walletData.service_address ||
                 configData[4][Math.floor(Math.random() * configData[4].length)]
                   .link

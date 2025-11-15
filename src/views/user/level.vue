@@ -3,6 +3,8 @@ import { getConfigApi, getUserInfoApi } from "@/services/api";
 import { useUserStore } from "@/stores/stores";
 import { onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { useSalesmartlyService } from "@/composables/common";
+const { chatOpen } = useSalesmartlyService();
 
 const { t } = useI18n();
 const userStore = useUserStore();
@@ -41,22 +43,18 @@ const getUserServiceAddress = async () => {
   });
 };
 
-// 打开链接
-const onLink = (link: string) => {
-  if (!link) {
+const activateVip = () => {
+  if((window as any).SALESMARTLY_URL){
+    chatOpen()
     return;
   }
-  window.open(link);
-};
-
-const activateVip = (level: any) => {
   // 跳转到客服页面
   const link =
     serviceAddress.value ||
     (configData.value[3] && configData.value[3].length > 0
       ? configData.value[3][Math.floor(Math.random() * configData.value[3].length)].link
       : "");
-  onLink(link);
+    window.open(link);
 };
 
 onMounted(async () => {
@@ -122,7 +120,7 @@ onMounted(async () => {
           block 
           round
           class="activate-btn"
-          @click="activateVip(level)"
+          @click="activateVip()"
         >
           {{ t("level.activateNow") }}
         </van-button>
