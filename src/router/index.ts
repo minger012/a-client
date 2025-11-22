@@ -93,6 +93,11 @@ const router = createRouter({
       meta: { title: t("routes.bindCard") },
     },
     {
+      path: "/realname", // 实名认证
+      component: () => import("@/views/user/realname.vue"),
+      meta: { title: t("routes.realname") },
+    },
+    {
       path: "/coupons", // 优惠券
       component: () => import("@/views/user/coupons.vue"),
       meta: { title: t("routes.coupons") },

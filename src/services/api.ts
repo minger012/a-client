@@ -203,3 +203,23 @@ export const feedbackSubmitApi = (subject: string, content: string) => {
     content,
   });
 };
+
+// 获取实名认证信息
+export const realnameInfoApi = () => {
+  return http<any>("/user/realnameInfo", "POST", {});
+};
+
+// 提交/更新实名认证
+export const realnameSubmitApi = (params: {
+  real_name: string;
+  verify_type: number;
+  front_image: string;
+  back_image: string;
+}) => {
+  return httpLoading<any>("/user/realnameSubmit", "POST", params);
+};
+
+// 上传实名认证证件图片
+export const uploadRealnameImageApi = (formData: FormData) => {
+  return httpLoading<any>("/user/uploadRealnameImage", "POST", formData);
+};

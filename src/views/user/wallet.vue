@@ -199,6 +199,13 @@ onMounted(async () => {
             </div>
             <van-icon name="arrow" />
           </div>
+          <div class="link-item" @click="$router.push('realname')">
+            <div class="link-title">
+              <CpSvg name="card-pos" size="1.1719rem"></CpSvg>
+              <span class="label">{{ t("wallet.realNameVerification") }}</span>
+            </div>
+            <van-icon name="arrow" />
+          </div>
         </div>
         
       </div>
